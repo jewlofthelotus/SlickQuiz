@@ -1,0 +1,133 @@
+/* QUIZ STYLES */
+/* Styles to prettify the quiz page */
+
+html {
+    background: #eee;
+}
+
+body {
+    width: 800px;
+    margin: 0 auto;
+    border: 2px solid #ccc;
+    border-top: none;
+    background: #fff;
+    padding: 20px;
+    font-family: Trebuchet, Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    color: #353535;
+    line-height: 1.5em;
+}
+
+h1,h2,h3,h4,h5,h6 {font-weight: bold;}
+
+h1 {
+    font-size: 26px;
+    margin: 0 0 20px;
+    color: #0C4569;
+}
+h2 {
+    font-size: 22px;
+    margin: 15px 0;
+}
+h3 {
+    font-size: 18px;
+    margin: 15px 0 10px;
+}
+h4 {
+    font-size: 16px;
+    margin: 10px 0;
+}
+h5 {
+    font-size: 14px;
+    margin: 10px 0 5px;
+}
+h6 {
+    font-size: 12px;
+    margin: 5px 0;
+}
+
+strong { font-weight: bold; }
+em { font-style: italic; }
+ul { list-style-type: circle; }
+ol { list-style-type: decimal; }
+ol li { list-style-type: decimal; margin-left: 20px; }
+
+.button {
+    float: left;
+    width: auto;
+    padding: 5px 15px;
+    color:#ffffff;
+    background-color:darkcyan;
+    border: 1px solid #fff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.button:hover {
+    background-color:darkslategray;
+}
+
+.startQuiz {
+    margin-top: 40px;
+}
+
+/* clearfix */
+.quizArea, .quizResults {
+    zoom: 1;
+}
+.quizArea:before, .quizArea:after, .quizResults:before, .quizResults:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    font-size: 0;
+}
+.quizArea:after, .quizResults:after {
+    clear: both;
+}
+
+.questionCount {
+    font-size: 14px;
+    font-style: italic;
+}
+.questionCount span {
+    font-weight: bold;
+}
+
+ol.questions {
+    margin-top: 20px;
+    margin-left: 0;
+}
+ol.questions li {
+    margin-left: 0;
+}
+
+ul.answers {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+ul.responses li {
+    margin: 10px 20px 20px;
+}
+ul.responses li p span {
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+}
+ul.responses li.correct p span {
+    color: #6C9F2E;
+}ul.responses li.incorrect p span {
+    color: #B5121B;
+}
+
+.quizResults h3 {
+    margin: 0;
+}
+.quizResults h3 span {
+    font-weight: normal;
+    font-style: italic;
+}
+.quizResultsCopy {
+    margin-top: 20px;
+}
