@@ -34,7 +34,7 @@ Base HTML Structure
     <h1 class="quizName"></h1>
     <div class="quizArea">
         <div class="quizHeader">
-            <div class="startQuiz">Get Started!</div>
+            <a class="startQuiz" href="">Get Started!</a>
         </div>
     </div>
     <div class="quizResults">
