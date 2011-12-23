@@ -62,6 +62,7 @@ ol li { list-style-type: decimal; margin-left: 20px; }
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+	text-decoration: none;
 }
 .button:hover {
     background-color:darkslategray;

@@ -9,9 +9,9 @@
         plugin.config = $.extend({}, options);
 
         var triggers = {
-            starter:        'div.startQuiz',
-            checker:        'div.checkAnswer',
-            next:           'div.nextQuestion'
+            starter:        'a.startQuiz',
+            checker:        'a.checkAnswer',
+            next:           'a.nextQuestion'
         }
 
         var targets = {
@@ -94,8 +94,8 @@
                     questionHTML.append(responseHTML);
 
                     // Appends check answer / next question buttons
-                    questionHTML.append('<div class="button checkAnswer">Check My Answer!</div>');
-                    questionHTML.append('<div class="button nextQuestion">Next &raquo;</div>');
+                    questionHTML.append('<a href="" class="button checkAnswer">Check My Answer!</a>');
+                    questionHTML.append('<a href="" class="button nextQuestion">Next &raquo;</a>');
 
                     // Append question & answers to quiz
                     quiz.append(questionHTML);
@@ -238,7 +238,8 @@
             plugin.method.setupQuiz();
 
             // Bind "start" button
-            $(triggers.starter).bind('click', function() {
+            $(triggers.starter).bind('click', function(e) {
+				e.preventDefault();
                 plugin.method.startQuiz(this);
             });
 
@@ -246,12 +247,14 @@
             // on the fly in setupQuiz and thus won't be available on page load
 
             // Bind "submit answer" button
-            $(triggers.checker).live('click', function() {
+            $(triggers.checker).live('click', function(e) {
+				e.preventDefault();
                 plugin.method.checkAnswer(this);
             });
 
             // Bind "next question" button
-            $(triggers.next).live('click', function() {
+            $(triggers.next).live('click', function(e) {
+				e.preventDefault();
                 plugin.method.nextQuestion(this);
             });
         }
