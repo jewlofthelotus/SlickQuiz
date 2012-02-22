@@ -9,19 +9,19 @@
         plugin.config = $.extend({}, options);
 
         var triggers = {
-            starter:        'a.startQuiz',
-            checker:        'a.checkAnswer',
-            next:           'a.nextQuestion'
+            starter:        '.startQuiz',
+            checker:        '.checkAnswer',
+            next:           '.nextQuestion'
         }
 
         var targets = {
-            quizName:        'h1.quizName',
-            quizArea:        'div.quizArea',
-            quizResults:     'div.quizResults',
-            quizResultsCopy: 'div.quizResultsCopy',
-            quizHeader:      'div.quizHeader',
-            quizScore:       'h3.quizScore',
-            quizLevel:       'h3.quizLevel'
+            quizName:        '.quizName',
+            quizArea:        '.quizArea',
+            quizResults:     '.quizResults',
+            quizResultsCopy: '.quizResultsCopy',
+            quizHeader:      '.quizHeader',
+            quizScore:       '.quizScore',
+            quizLevel:       '.quizLevel'
         }
 
         // Set via slickQuiz-config.js

@@ -9,7 +9,7 @@ A jQuery plugin for creating pretty, dynamic quizzes.
 
 Demo And Usage
 ----------------------------
-See index.html for demo and suggested HTML structure.
+See index.html for demo and suggested HTML structure (the element class names are the important part).
 
 See js/slickQuiz-config.js to set up your quiz copy and questions.
 
@@ -30,6 +30,8 @@ Then assign it as the quizJSON variable instead of loading js/slickQuiz-config.j
 
 Base HTML Structure
 ----------------------------
+The class names are what are important here:
+
 <body id="slickQuiz">
     <h1 class="quizName"></h1>
     <div class="quizArea">
