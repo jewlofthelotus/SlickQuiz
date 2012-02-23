@@ -36,7 +36,7 @@ $(function () {
 
 Base HTML Structure
 ----------------------------
-The class names are what are important here:
+The slickQuiz ID and class names are what are important here:
 
 <body id="slickQuiz">
     <h1 class="quizName"></h1>

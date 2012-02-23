@@ -8,20 +8,22 @@
         plugin.config = {}
         plugin.config = $.extend({}, options);
 
+        var selector = $(element).attr('id');
+
         var triggers = {
-            starter:        '.startQuiz',
-            checker:        '.checkAnswer',
-            next:           '.nextQuestion'
+            starter:         '#' + selector + ' .startQuiz',
+            checker:         '#' + selector + ' .checkAnswer',
+            next:            '#' + selector + ' .nextQuestion'
         }
 
         var targets = {
-            quizName:        '.quizName',
-            quizArea:        '.quizArea',
-            quizResults:     '.quizResults',
-            quizResultsCopy: '.quizResultsCopy',
-            quizHeader:      '.quizHeader',
-            quizScore:       '.quizScore',
-            quizLevel:       '.quizLevel'
+            quizName:        '#' + selector + ' .quizName',
+            quizArea:        '#' + selector + ' .quizArea',
+            quizResults:     '#' + selector + ' .quizResults',
+            quizResultsCopy: '#' + selector + ' .quizResultsCopy',
+            quizHeader:      '#' + selector + ' .quizHeader',
+            quizScore:       '#' + selector + ' .quizScore',
+            quizLevel:       '#' + selector + ' .quizLevel'
         }
 
         // Set via json option or quizJSON variable (see slickQuiz-config.js)
@@ -113,7 +115,7 @@
             // Starts the quiz (hides start button and displays first question)
             startQuiz: function(startButton) {
                 $(startButton).fadeOut(300, function(){
-                    firstQuestion = $('.questions li').first();
+                    firstQuestion = $('#' + selector + ' .questions li').first();
                     if (firstQuestion.length) {
                         firstQuestion.fadeIn(500);
                     }
@@ -176,7 +178,7 @@
 
             // Hides all questions, displays the final score and some conclusive information
             completeQuiz: function() {
-                score = $('.correctResponse').length;
+                score = $('#' + selector + ' .correctResponse').length;
                 level = levels[plugin.method.calculateLevel(score)];
 
                 $(targets.quizScore + ' span').html(score + ' / ' + questionCount);
