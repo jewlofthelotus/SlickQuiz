@@ -27,6 +27,12 @@ Want to manage your quizzes in a content management system?
 Simply translate your CMS quiz data into a JSON object formatted like "quizJSON" in js/slickQuiz-config.js.
 Then assign it as the quizJSON variable instead of loading js/slickQuiz-config.js.
 
+Alternatively, you can pass the JSON right into the plugin using the "json" option (useful if you are placing multiple quizzes on a page):
+
+$(function () {
+    $('#slickQuiz').slickQuiz({json: {YOUR_JSON_HERE}});
+});
+
 
 Base HTML Structure
 ----------------------------

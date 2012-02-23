@@ -24,8 +24,8 @@
             quizLevel:       '.quizLevel'
         }
 
-        // Set via slickQuiz-config.js
-        var quizValues = (typeof quizJSON != 'undefined' ? quizJSON : null);
+        // Set via json option or quizJSON variable (see slickQuiz-config.js)
+        var quizValues = (plugin.config.json ? plugin.config.json : typeof quizJSON != 'undefined' ? quizJSON : null);
 
         var questions = quizValues.questions;
 
@@ -239,7 +239,7 @@
 
             // Bind "start" button
             $(triggers.starter).bind('click', function(e) {
-				e.preventDefault();
+                e.preventDefault();
                 plugin.method.startQuiz(this);
             });
 
@@ -248,13 +248,13 @@
 
             // Bind "submit answer" button
             $(triggers.checker).live('click', function(e) {
-				e.preventDefault();
+                e.preventDefault();
                 plugin.method.checkAnswer(this);
             });
 
             // Bind "next question" button
             $(triggers.next).live('click', function(e) {
-				e.preventDefault();
+                e.preventDefault();
                 plugin.method.nextQuestion(this);
             });
         }
