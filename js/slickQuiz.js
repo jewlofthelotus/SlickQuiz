@@ -5,7 +5,11 @@
              element = element;
 
         var plugin = this;
-        plugin.config = {}
+        plugin.config = {
+            checkAnswerText:  'Check My Answer!',
+            nextQuestionText: 'Next &raquo;'
+        }
+
         plugin.config = $.extend({}, options);
 
         var selector = $(element).attr('id');
@@ -96,8 +100,8 @@
                     questionHTML.append(responseHTML);
 
                     // Appends check answer / next question buttons
-                    questionHTML.append('<a href="" class="button checkAnswer">Check My Answer!</a>');
-                    questionHTML.append('<a href="" class="button nextQuestion">Next &raquo;</a>');
+                    questionHTML.append('<a href="" class="button checkAnswer">' + plugin.config.checkAnswerText + '</a>');
+                    questionHTML.append('<a href="" class="button nextQuestion">' + plugin.config.nextQuestionText + '</a>');
 
                     // Append question & answers to quiz
                     quiz.append(questionHTML);
