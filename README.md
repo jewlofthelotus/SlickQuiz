@@ -2,13 +2,11 @@
 * * *
 
 ## Overview
-* * *
 
 A jQuery plugin for creating pretty, dynamic quizzes.
 
 
 ## Demo And Usage
-* * *
 
 See index.html for demo and suggested HTML structure (the element class names are the important part).
 
@@ -32,7 +30,6 @@ To initialize your quiz:
 
 
 ## Advanced Usage
-* * *
 
 Want to manage your quizzes in a content management system?
 
@@ -47,7 +44,6 @@ Alternatively, you can pass the JSON right into the plugin using the "json" opti
 
 
 ## Base HTML Structure
-* * *
 
 The slickQuiz ID and class names are what are important here:
 
@@ -67,7 +63,6 @@ The slickQuiz ID and class names are what are important here:
 
 
 ## Base Config Options
-* * *
 
 See js/slickQuiz-config.js
 
@@ -97,5 +92,4 @@ See js/slickQuiz-config.js
     }
 
 
-* * *
 Created by [Julie Bellinson](http://jewlofthelotus.com) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
