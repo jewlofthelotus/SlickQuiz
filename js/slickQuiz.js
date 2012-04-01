@@ -5,15 +5,14 @@
              element = element;
 
         var plugin = this;
-        plugin.config = {
+
+        plugin.config = $.extend( {
             checkAnswerText:  'Check My Answer!',
             nextQuestionText: 'Next &raquo;'
-        }
-
-        plugin.config = $.extend({}, options);
+        }, options);
 
         var selector = $(element).attr('id');
-
+ 
         var triggers = {
             starter:         '#' + selector + ' .startQuiz',
             checker:         '#' + selector + ' .checkAnswer',
