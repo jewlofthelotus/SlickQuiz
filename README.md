@@ -27,6 +27,8 @@ To initialize your quiz:
 
 **`nextQuestionText`** (String) - the text to use on the next question button
 
+**`backButtonText`** (String) - the text to use on the back button, if left null / blank (default) - no back button will be displayed
+
 
 
 ## Advanced Usage
