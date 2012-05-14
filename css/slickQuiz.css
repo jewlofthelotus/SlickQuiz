@@ -5,6 +5,7 @@
 
 .startQuiz,
 .nextQuestion,
+.backToQuestion,
 .questions li.question,
 .questions li.question .responses,
 .questions li.question .responses .correct,

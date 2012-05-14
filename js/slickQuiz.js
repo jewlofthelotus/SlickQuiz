@@ -8,15 +8,17 @@
 
         plugin.config = $.extend( {
             checkAnswerText:  'Check My Answer!',
-            nextQuestionText: 'Next &raquo;'
+            nextQuestionText: 'Next &raquo;',
+            backButtonText: ''
         }, options);
 
         var selector = $(element).attr('id');
- 
+
         var triggers = {
             starter:         '#' + selector + ' .startQuiz',
             checker:         '#' + selector + ' .checkAnswer',
-            next:            '#' + selector + ' .nextQuestion'
+            next:            '#' + selector + ' .nextQuestion',
+            back:            '#' + selector + ' .backToQuestion'
         }
 
         var targets = {
@@ -98,9 +100,12 @@
                     // Append responses to question
                     questionHTML.append(responseHTML);
 
-                    // Appends check answer / next question buttons
-                    questionHTML.append('<a href="" class="button checkAnswer">' + plugin.config.checkAnswerText + '</a>');
+                    // Appends check answer / back / next question buttons
+                    if (plugin.config.backButtonText && plugin.config.backButtonText != '') {
+                        questionHTML.append('<a href="" class="button backToQuestion">' + plugin.config.backButtonText + '</a>');
+                    }
                     questionHTML.append('<a href="" class="button nextQuestion">' + plugin.config.nextQuestionText + '</a>');
+                    questionHTML.append('<a href="" class="button checkAnswer">' + plugin.config.checkAnswerText + '</a>');
 
                     // Append question & answers to quiz
                     quiz.append(questionHTML);
@@ -163,7 +168,8 @@
                 }
 
                 $(checkButton).hide();
-                $(checkButton).next('.nextQuestion').fadeIn(300);
+                questionLI.find('.nextQuestion').fadeIn(300);
+                questionLI.find('.backToQuestion').fadeIn(300);
             },
 
             // Moves to the next question OR completes the quiz if on last question
@@ -172,10 +178,54 @@
 
                 if (nextQuestion.length) {
                     $(nextButton).parent().fadeOut(300, function(){
-                        nextQuestion.fadeIn(500);
+                        nextQuestion.find('.backToQuestion').show().end().fadeIn(500);
                     });
                 } else {
                     plugin.method.completeQuiz();
+                }
+            },
+
+            // Go back to the last question
+            backToQuestion: function(backButton) {
+                questionLI = $(backButton).parent();
+                answers    = questionLI.find('.answers');
+
+                // Back to previous question
+                if (answers.css('display') === 'block' ) {
+                    prevQuestion = questionLI.prev('.question');
+
+                    questionLI.fadeOut(300, function() {
+                        prevQuestion.removeClass('correctResponse');
+                        prevQuestion.find('.responses, .responses li').hide()
+                        prevQuestion.find('.answers').show();
+                        prevQuestion.find('.checkAnswer').show();
+                        prevQuestion.find('.nextQuestion').hide();
+
+                        if (prevQuestion.attr('id') != 'question0') {
+                            prevQuestion.find('.backToQuestion').show();
+                        } else {
+                            prevQuestion.find('.backToQuestion').hide();
+                        }
+
+                        prevQuestion.fadeIn(500);
+                    });
+
+                // Back to question from responses
+                } else {
+                    questionLI.find('.responses').fadeOut(300, function(){
+                        questionLI.removeClass('correctResponse');
+                        questionLI.find('.responses li').hide();
+                        answers.fadeIn(500);
+                        questionLI.find('.checkAnswer').fadeIn(500);
+                        questionLI.find('.nextQuestion').hide();
+
+                        // if question is first, don't show back button on question
+                        if (questionLI.attr('id') != 'question0') {
+                            questionLI.find('.backToQuestion').show();
+                        } else {
+                            questionLI.find('.backToQuestion').hide();
+                        }
+                    });
                 }
             },
 
@@ -255,6 +305,12 @@
             $(triggers.checker).live('click', function(e) {
                 e.preventDefault();
                 plugin.method.checkAnswer(this);
+            });
+
+            // Bind "back" button
+            $(triggers.back).live('click', function(e) {
+                e.preventDefault();
+                plugin.method.backToQuestion(this);
             });
 
             // Bind "next question" button
