@@ -9,7 +9,8 @@
         plugin.config = $.extend( {
             checkAnswerText:  'Check My Answer!',
             nextQuestionText: 'Next &raquo;',
-            backButtonText: ''
+            backButtonText: '',
+            randomSort: false
         }, options);
 
         var selector = $(element).attr('id');
@@ -34,7 +35,9 @@
         // Set via json option or quizJSON variable (see slickQuiz-config.js)
         var quizValues = (plugin.config.json ? plugin.config.json : typeof quizJSON != 'undefined' ? quizJSON : null);
 
-        var questions = quizValues.questions;
+        var questions = plugin.config.randomSort ?
+                        quizValues.questions.sort(function() { return (Math.round(Math.random())-0.5); }) :
+                        quizValues.questions;
 
         var levels = {
             1: quizValues.info.level1, // 80-100%
@@ -80,8 +83,13 @@
 
                     // Now let's append the answers with checkboxes or radios depending on truth count
                     answerHTML = $('<ul class="answers"></ul>');
-                    for (i in question.a) {
-                        answer = question.a[i];
+
+                    answers = plugin.config.randomSort ?
+                        question.a.sort(function() { return (Math.round(Math.random())-0.5); }) :
+                        question.a;
+
+                    for (i in answers) {
+                        answer = answers[i];
 
                         // If question has >1 true answers, use checkboxes; otherwise, radios
                         input = '<input type="' + (truths > 1 ? 'checkbox' : 'radio') + '" name="' + inputName + '" /> ';

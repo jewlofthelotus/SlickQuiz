@@ -29,6 +29,8 @@ To initialize your quiz:
 
 **`backButtonText`** (String) - the text to use on the back button, if left null / blank (default) - no back button will be displayed
 
+**`randomSort`** (Boolean) - whether or not to randomly sort questions and their answers, defaults to `false`
+
 
 
 ## Advanced Usage
