@@ -90,11 +90,29 @@
 
                     for (i in answers) {
                         answer = answers[i];
+                        optionId = inputName + i.toString();
 
                         // If question has >1 true answers, use checkboxes; otherwise, radios
-                        input = '<input type="' + (truths > 1 ? 'checkbox' : 'radio') + '" name="' + inputName + '" /> ';
+                        var input = '<input id="' + optionId + '" name="' + inputName 
+                            + '" type="' + (truths > 1 ? 'checkbox' : 'radio') + '"></input>';
+    
 
-                        answerHTML.append('<li>' + input + '<span>' + answer.option + '</span></li>')
+                        var inlineBlock = '';
+                        if ($.browser.msie && parseInt($.browser.version, 10) < 8)
+                        {
+                            // IE versions before IE 8 don't support inline-block:
+                            inlineBlock = 'display: inline; zoom:1;';
+                        }
+                        else
+                        {
+                            inlineBlock = 'display: inline-block;';
+                        }
+                        var optionLabel = '<label style="min-width: 100px;' + inlineBlock + '" for="' + optionId + '"><span>' + answer.option + '</span></label>';
+
+                        var answerContent = $('<li></li>')
+                            .append(input)
+                            .append(optionLabel);
+                        answerHTML.append(answerContent)
                     };
 
                     // Append answers to question
@@ -157,7 +175,7 @@
                 // Collect the answers submitted
                 selectedAnswers = []
                 answerInputs.each( function() {
-                    inputValue = $(this).next('span').html();
+                    inputValue = $(this).parent().find("label span").html();
                     selectedAnswers.push(inputValue);
                 });
 
