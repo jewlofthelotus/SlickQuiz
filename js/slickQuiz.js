@@ -93,21 +93,10 @@
                         optionId = inputName + i.toString();
 
                         // If question has >1 true answers, use checkboxes; otherwise, radios
-                        var input = '<input id="' + optionId + '" name="' + inputName 
+                        var input = '<input id="' + optionId + '" name="' + inputName
                             + '" type="' + (truths > 1 ? 'checkbox' : 'radio') + '"></input>';
-    
 
-                        var inlineBlock = '';
-                        if ($.browser.msie && parseInt($.browser.version, 10) < 8)
-                        {
-                            // IE versions before IE 8 don't support inline-block:
-                            inlineBlock = 'display: inline; zoom:1;';
-                        }
-                        else
-                        {
-                            inlineBlock = 'display: inline-block;';
-                        }
-                        var optionLabel = '<label style="min-width: 100px;' + inlineBlock + '" for="' + optionId + '"><span>' + answer.option + '</span></label>';
+                        var optionLabel = '<label for="' + optionId + '">' + answer.option + '</label>';
 
                         var answerContent = $('<li></li>')
                             .append(input)
@@ -142,6 +131,11 @@
                 // Add the quiz content to the page
                 $(targets.quizArea).append(quiz);
 
+                // Add secret searchable copy, PLEASE feel free to remove this if you'd like
+                $(targets.quizArea).append('<div style="' +
+                    'border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; ' +
+                    'padding: 0; position: absolute; width: 1px;">Powered By SlickQuiz</div>');
+
                 // Toggle the start button
                 $(triggers.starter).fadeIn(500);
             },
@@ -175,7 +169,7 @@
                 // Collect the answers submitted
                 selectedAnswers = []
                 answerInputs.each( function() {
-                    inputValue = $(this).parent().find("label span").html();
+                    inputValue = $(this).next('label').html();
                     selectedAnswers.push(inputValue);
                 });
 
