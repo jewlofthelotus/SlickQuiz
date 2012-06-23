@@ -93,9 +93,9 @@
                         optionId = inputName + i.toString();
 
                         // If question has >1 true answers, use checkboxes; otherwise, radios
-                        var input = '<input id="' + optionId + '" name="' + inputName 
+                        var input = '<input id="' + optionId + '" name="' + inputName
                             + '" type="' + (truths > 1 ? 'checkbox' : 'radio') + '"></input>';
-    
+
                         var optionLabel = '<label for="' + optionId + '">' + answer.option + '</label>';
 
                         var answerContent = $('<li></li>')
@@ -131,6 +131,11 @@
                 // Add the quiz content to the page
                 $(targets.quizArea).append(quiz);
 
+                // Add secret searchable copy, PLEASE feel free to remove this if you'd like
+                $(targets.quizArea).append('<div style="' +
+                    'border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; ' +
+                    'padding: 0; position: absolute; width: 1px;">Powered By SlickQuiz</div>');
+
                 // Toggle the start button
                 $(triggers.starter).fadeIn(500);
             },
@@ -164,7 +169,7 @@
                 // Collect the answers submitted
                 selectedAnswers = []
                 answerInputs.each( function() {
-                    inputValue = $(this).next("label").html();
+                    inputValue = $(this).next('label').html();
                     selectedAnswers.push(inputValue);
                 });
 
