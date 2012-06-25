@@ -22,3 +22,11 @@ ul.answers li,
 ul.responses li {
     list-style-type: none;
 }
+
+.questions li.question label
+{
+    display: inline-block;
+    *display: inline;
+    zoom:1;
+    min-width: 100px;
+}
