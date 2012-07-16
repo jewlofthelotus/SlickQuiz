@@ -152,7 +152,7 @@
 
             // Validates the response selection(s), displays explanations & next question button
             checkAnswer: function(checkButton) {
-                questionLI   = $(checkButton).parent();
+                questionLI   = $($(checkButton).parents('li.question')[0]);
                 answerInputs = questionLI.find('input:checked');
                 answers      = questions[parseInt(questionLI.attr('id').replace(/(question)/, ''))].a;
 
@@ -194,10 +194,11 @@
 
             // Moves to the next question OR completes the quiz if on last question
             nextQuestion: function(nextButton) {
-                nextQuestion = $(nextButton).parent().next('.question');
+                currentQuestion = $($(nextButton).parents('li.question')[0]);
+                nextQuestion    = currentQuestion.next('.question');
 
                 if (nextQuestion.length) {
-                    $(nextButton).parent().fadeOut(300, function(){
+                    currentQuestion.fadeOut(300, function(){
                         nextQuestion.find('.backToQuestion').show().end().fadeIn(500);
                     });
                 } else {
@@ -207,7 +208,7 @@
 
             // Go back to the last question
             backToQuestion: function(backButton) {
-                questionLI = $(backButton).parent();
+                questionLI = $($(backButton).parents('li.question')[0]);
                 answers    = questionLI.find('.answers');
 
                 // Back to previous question
