@@ -82,7 +82,7 @@
                         };
 
                         // prepare a name for the answer inputs based on the question
-                        inputName  = question.q.replace(/ /g,'');
+                        inputName  = 'question' + (count - 1);
 
                         // Now let's append the answers with checkboxes or radios depending on truth count
                         answerHTML = $('<ul class="answers"></ul>');
@@ -94,11 +94,11 @@
                         for (i in answers) {
                             if (answers.hasOwnProperty(i)) {
                                 answer = answers[i];
-                                optionId = inputName + i.toString();
+                                optionId = inputName + '_' + i.toString();
 
                                 // If question has >1 true answers, use checkboxes; otherwise, radios
                                 var input = '<input id="' + optionId + '" name="' + inputName
-                                    + '" type="' + (truths > 1 ? 'checkbox' : 'radio') + '"></input>';
+                                    + '" type="' + (truths > 1 ? 'checkbox' : 'radio') + '" />';
 
                                 var optionLabel = '<label for="' + optionId + '">' + answer.option + '</label>';
 
