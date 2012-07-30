@@ -30,6 +30,8 @@ To initialize your quiz:
 
 **`randomSort`** (Boolean) - whether or not to randomly sort questions and their answers, defaults to false
 
+**`disableNext`** (Boolean) - prevents submitting a question with zero answers, defaults to false
+
 
 ## Advanced Usage
 
