@@ -10,7 +10,8 @@
             checkAnswerText:  'Check My Answer!',
             nextQuestionText: 'Next &raquo;',
             backButtonText: '',
-            randomSort: false
+            randomSort: false,
+            disableNext: false
         }, options);
 
         var selector = $(element).attr('id');
@@ -180,6 +181,11 @@
                     inputValue = $(this).next('label').html();
                     selectedAnswers.push(inputValue);
                 });
+
+                if (plugin.config.disableNext && selectedAnswers.length == 0) {
+                    alert('You must select at least one answer.');
+                    return false;
+                }
 
                 // Verify all true answers (and no false ones) were submitted
                 correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers);
