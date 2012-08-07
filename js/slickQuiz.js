@@ -11,6 +11,8 @@
             nextQuestionText: 'Next &raquo;',
             backButtonText: '',
             randomSort: false,
+            randomSortQuestions: false,
+            randomSortAnswers: false,
             disableNext: false
         }, options);
 
@@ -36,7 +38,7 @@
         // Set via json option or quizJSON variable (see slickQuiz-config.js)
         var quizValues = (plugin.config.json ? plugin.config.json : typeof quizJSON != 'undefined' ? quizJSON : null);
 
-        var questions = plugin.config.randomSort ?
+        var questions = plugin.config.randomSort || plugin.config.randomSortQuestions ?
                         quizValues.questions.sort(function() { return (Math.round(Math.random())-0.5); }) :
                         quizValues.questions;
 
@@ -88,7 +90,7 @@
                         // Now let's append the answers with checkboxes or radios depending on truth count
                         answerHTML = $('<ul class="answers"></ul>');
 
-                        answers = plugin.config.randomSort ?
+                        answers = plugin.config.randomSort || plugin.config.randomSortAnswers ?
                             question.a.sort(function() { return (Math.round(Math.random())-0.5); }) :
                             question.a;
 

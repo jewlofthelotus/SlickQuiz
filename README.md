@@ -28,7 +28,11 @@ To initialize your quiz:
 
 **`backButtonText`** (String) - the text to use on the back button, if left null / blank (default) - no back button will be displayed
 
-**`randomSort`** (Boolean) - whether or not to randomly sort questions and their answers, defaults to false
+**`randomSortQuestions`** (Boolean) - whether or not to randomly sort questions ONLY, defaults to false
+
+**`randomSortAnswers`** (Boolean) - whether or not to randomly sort answers ONLY, defaults to false
+
+**`randomSort`** (Boolean) - whether or not to randomly sort questions AND their answers (overrides `randomSortQuestions` and `randomSortAnswers`), defaults to false. *Note: this will be deprecated in a future release*
 
 **`disableNext`** (Boolean) - prevents submitting a question with zero answers, defaults to false
 
