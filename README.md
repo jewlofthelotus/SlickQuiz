@@ -32,7 +32,7 @@ To initialize your quiz:
 
 **`randomSortAnswers`** (Boolean) - whether or not to randomly sort answers ONLY, defaults to false
 
-**`randomSort`** (Boolean) - whether or not to randomly sort questions AND their answers (overrides `randomSortQuestions` and `randomSortAnswers`), defaults to false. _Note: this will be deprecated in a future release_
+**`randomSort`** (Boolean) - whether or not to randomly sort questions AND their answers (overrides `randomSortQuestions` and `randomSortAnswers`), defaults to false. _Note: this will be deprecated in a future release_.
 
 **`disableNext`** (Boolean) - prevents submitting a question with zero answers, defaults to false
 
