@@ -61,23 +61,23 @@
                 $(targets.quizResultsCopy).append(quizValues.info.results);
 
                 // Setup questions
-                quiz  = $('<ol class="questions"></ol>');
-                count = 1;
+                var quiz  = $('<ol class="questions"></ol>'),
+                    count = 1;
 
                 // Loop through questions object
                 for (i in questions) {
                     if (questions.hasOwnProperty(i)) {
-                        question = questions[i];
+                        var question = questions[i];
 
-                        questionHTML = $('<li class="question" id="question' + (count - 1) + '"></li>');
+                        var questionHTML = $('<li class="question" id="question' + (count - 1) + '"></li>');
                         questionHTML.append('<div class="questionCount">Question <span class="current">' + count + '</span> of <span class="total">' + questionCount + '</span></div>');
                         questionHTML.append('<h3>' + count + '. ' + question.q + '</h3>');
 
                         // Count the number of true values
-                        truths = 0;
+                        var truths = 0;
                         for (i in question.a) {
                             if (question.a.hasOwnProperty(i)) {
-                                answer = question.a[i];
+                                var answer = question.a[i];
                                 if (answer.correct) {
                                     truths++;
                                 }
@@ -85,19 +85,19 @@
                         };
 
                         // prepare a name for the answer inputs based on the question
-                        inputName  = 'question' + (count - 1);
+                        var inputName  = 'question' + (count - 1);
 
                         // Now let's append the answers with checkboxes or radios depending on truth count
-                        answerHTML = $('<ul class="answers"></ul>');
+                        var answerHTML = $('<ul class="answers"></ul>');
 
-                        answers = plugin.config.randomSort || plugin.config.randomSortAnswers ?
+                        var answers = plugin.config.randomSort || plugin.config.randomSortAnswers ?
                             question.a.sort(function() { return (Math.round(Math.random())-0.5); }) :
                             question.a;
 
                         for (i in answers) {
                             if (answers.hasOwnProperty(i)) {
-                                answer = answers[i];
-                                optionId = inputName + '_' + i.toString();
+                                var answer   = answers[i],
+                                    optionId = inputName + '_' + i.toString();
 
                                 // If question has >1 true answers, use checkboxes; otherwise, radios
                                 var input = '<input id="' + optionId + '" name="' + inputName
@@ -116,7 +116,7 @@
                         questionHTML.append(answerHTML);
 
                         // Now let's append the correct / incorrect response messages
-                        responseHTML = $('<ul class="responses"></ul>');
+                        var responseHTML = $('<ul class="responses"></ul>');
                         responseHTML.append('<li class="correct">' + question.correct + '</li>');
                         responseHTML.append('<li class="incorrect">' + question.incorrect + '</li>');
 
@@ -152,7 +152,7 @@
             // Starts the quiz (hides start button and displays first question)
             startQuiz: function(startButton) {
                 $(startButton).fadeOut(300, function(){
-                    firstQuestion = $('#' + selector + ' .questions li').first();
+                    var firstQuestion = $('#' + selector + ' .questions li').first();
                     if (firstQuestion.length) {
                         firstQuestion.fadeIn(500);
                     }
@@ -161,15 +161,15 @@
 
             // Validates the response selection(s), displays explanations & next question button
             checkAnswer: function(checkButton) {
-                questionLI   = $($(checkButton).parents('li.question')[0]);
-                answerInputs = questionLI.find('input:checked');
-                answers      = questions[parseInt(questionLI.attr('id').replace(/(question)/, ''))].a;
+                var questionLI   = $($(checkButton).parents('li.question')[0]),
+                    answerInputs = questionLI.find('input:checked'),
+                    answers      = questions[parseInt(questionLI.attr('id').replace(/(question)/, ''))].a;
 
                 // Collect the true answers needed for a correct response
-                trueAnswers = [];
+                var trueAnswers = [];
                 for (i in answers) {
                     if (answers.hasOwnProperty(i)) {
-                        answer = answers[i];
+                        var answer = answers[i];
 
                         if (answer.correct) {
                             trueAnswers.push(answer.option);
@@ -178,9 +178,9 @@
                 }
 
                 // Collect the answers submitted
-                selectedAnswers = []
+                var selectedAnswers = []
                 answerInputs.each( function() {
-                    inputValue = $(this).next('label').html();
+                    var inputValue = $(this).next('label').html();
                     selectedAnswers.push(inputValue);
                 });
 
@@ -190,7 +190,7 @@
                 }
 
                 // Verify all true answers (and no false ones) were submitted
-                correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers);
+                var correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers);
 
                 // Toggle responses based on submission
                 questionLI.find('.answers').hide();
@@ -210,8 +210,8 @@
 
             // Moves to the next question OR completes the quiz if on last question
             nextQuestion: function(nextButton) {
-                currentQuestion = $($(nextButton).parents('li.question')[0]);
-                nextQuestion    = currentQuestion.next('.question');
+                var currentQuestion = $($(nextButton).parents('li.question')[0]),
+                    nextQuestion    = currentQuestion.next('.question');
 
                 if (nextQuestion.length) {
                     currentQuestion.fadeOut(300, function(){
@@ -224,12 +224,12 @@
 
             // Go back to the last question
             backToQuestion: function(backButton) {
-                questionLI = $($(backButton).parents('li.question')[0]);
-                answers    = questionLI.find('.answers');
+                var questionLI = $($(backButton).parents('li.question')[0]),
+                    answers    = questionLI.find('.answers');
 
                 // Back to previous question
                 if (answers.css('display') === 'block' ) {
-                    prevQuestion = questionLI.prev('.question');
+                    var prevQuestion = questionLI.prev('.question');
 
                     questionLI.fadeOut(300, function() {
                         prevQuestion.removeClass('correctResponse');
@@ -268,8 +268,8 @@
 
             // Hides all questions, displays the final score and some conclusive information
             completeQuiz: function() {
-                score = $('#' + selector + ' .correctResponse').length;
-                level = levels[plugin.method.calculateLevel(score)];
+                var score = $('#' + selector + ' .correctResponse').length,
+                    level = levels[plugin.method.calculateLevel(score)];
 
                 $(targets.quizScore + ' span').html(score + ' / ' + questionCount);
                 $(targets.quizLevel + ' span').html(level);
@@ -285,8 +285,8 @@
                     return false;
                 }
 
-                trueAnswers = trueAnswers.sort();
-                selectedAnswers = selectedAnswers.sort();
+                var trueAnswers     = trueAnswers.sort(),
+                    selectedAnswers = selectedAnswers.sort();
 
                 for (var i = 0, l = trueAnswers.length; i < l; i++) {
                     if (trueAnswers[i] !== selectedAnswers[i]) {
@@ -299,7 +299,8 @@
 
             // Calculates knowledge level based on number of correct answers
             calculateLevel: function(correctAnswers) {
-                percent = correctAnswers / questionCount;
+                var percent = correctAnswers / questionCount,
+                    level   = 0;
 
                 if (plugin.method.inRange(0, 0.20, percent)) {
                     level = 5;
