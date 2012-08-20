@@ -180,7 +180,13 @@
                 // Collect the answers submitted
                 var selectedAnswers = []
                 answerInputs.each( function() {
-                    var inputValue = $(this).next('label').html();
+                    // If we're in jQuery Mobile (1.0.1 - 1.2.0-alpha) land, grab the value from the nested span
+                    if ($('.ui-mobile').length > 0) {
+                        var inputValue = $(this).next('label').find('span.ui-btn-text').html();
+                    } else {
+                        var inputValue = $(this).next('label').html();
+                    }
+
                     selectedAnswers.push(inputValue);
                 });
 
