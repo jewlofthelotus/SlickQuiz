@@ -180,7 +180,7 @@
                 // Collect the answers submitted
                 var selectedAnswers = []
                 answerInputs.each( function() {
-                    // If we're in jQuery Mobile (1.0.1 - 1.2.0-alpha) land, grab the value from the nested span
+                    // If we're in jQuery Mobile, grab value from nested span
                     if ($('.ui-mobile').length > 0) {
                         var inputValue = $(this).next('label').find('span.ui-btn-text').html();
                     } else {
@@ -274,11 +274,13 @@
 
             // Hides all questions, displays the final score and some conclusive information
             completeQuiz: function() {
-                var score = $('#' + selector + ' .correctResponse').length,
-                    level = levels[plugin.method.calculateLevel(score)];
+                var score     = $('#' + selector + ' .correctResponse').length,
+                    levelRank = plugin.method.calculateLevel(score),
+                    levelText = levels[levelRank];
 
                 $(targets.quizScore + ' span').html(score + ' / ' + questionCount);
-                $(targets.quizLevel + ' span').html(level);
+                $(targets.quizLevel + ' span').html(levelText);
+                $(targets.quizLevel).addClass('level' + levelRank);
 
                 $(targets.quizArea).fadeOut(300, function() {
                     $(targets.quizResults).fadeIn(500);
