@@ -6,15 +6,38 @@
 
         var plugin = this;
 
-        plugin.config = $.extend( {
+        var defaults = {
             checkAnswerText:  'Check My Answer!',
             nextQuestionText: 'Next &raquo;',
             backButtonText: '',
             randomSort: false,
             randomSortQuestions: false,
             randomSortAnswers: false,
-            disableNext: false
-        }, options);
+            preventUnanswered: false,
+            completionResponseMessaging: false,
+            disableResponseMessaging: false
+        };
+
+        // Reassign user-submitted deprecated options
+        var depMsg = '';
+
+        if (typeof options.disableNext != 'undefined') {
+            if (typeof options.preventUnanswered == 'undefined') {
+                options.preventUnanswered = options.disableNext;
+            }
+            depMsg += 'The \'disableNext\' option has been deprecated, please use \'preventUnanswered\' in it\'s place.\n\n';
+        }
+
+        if (depMsg != '') {
+            if (typeof console != 'undefined') {
+                console.warn(depMsg);
+            } else {
+                alert(depMsg);
+            }
+        }
+        // End of deprecation reassignment
+
+        plugin.config = $.extend(defaults, options);
 
         var selector = $(element).attr('id');
 
@@ -115,20 +138,30 @@
                         // Append answers to question
                         questionHTML.append(answerHTML);
 
-                        // Now let's append the correct / incorrect response messages
-                        var responseHTML = $('<ul class="responses"></ul>');
-                        responseHTML.append('<li class="correct">' + question.correct + '</li>');
-                        responseHTML.append('<li class="incorrect">' + question.incorrect + '</li>');
+                        // If response messaging is NOT disabled, add it
+                        if (!plugin.config.disableResponseMessaging) {
+                            // Now let's append the correct / incorrect response messages
+                            var responseHTML = $('<ul class="responses"></ul>');
+                            responseHTML.append('<li class="correct">' + question.correct + '</li>');
+                            responseHTML.append('<li class="incorrect">' + question.incorrect + '</li>');
 
-                        // Append responses to question
-                        questionHTML.append(responseHTML);
+                            // Append responses to question
+                            questionHTML.append(responseHTML);
+                        }
 
                         // Appends check answer / back / next question buttons
                         if (plugin.config.backButtonText && plugin.config.backButtonText != '') {
                             questionHTML.append('<a href="" class="button backToQuestion">' + plugin.config.backButtonText + '</a>');
                         }
-                        questionHTML.append('<a href="" class="button nextQuestion">' + plugin.config.nextQuestionText + '</a>');
-                        questionHTML.append('<a href="" class="button checkAnswer">' + plugin.config.checkAnswerText + '</a>');
+
+                        // If response messaging is disabled or hidden until the quiz is completed,
+                        // make the nextQuestion button the checkAnswer button, as well
+                        if (plugin.config.disableResponseMessaging || plugin.config.completionResponseMessaging) {
+                            questionHTML.append('<a href="" class="button nextQuestion checkAnswer">' + plugin.config.nextQuestionText + '</a>');
+                        } else {
+                            questionHTML.append('<a href="" class="button nextQuestion">' + plugin.config.nextQuestionText + '</a>');
+                            questionHTML.append('<a href="" class="button checkAnswer">' + plugin.config.checkAnswerText + '</a>');
+                        }
 
                         // Append question & answers to quiz
                         quiz.append(questionHTML);
@@ -139,11 +172,6 @@
 
                 // Add the quiz content to the page
                 $(targets.quizArea).append(quiz);
-
-                // Add secret searchable copy, PLEASE feel free to remove this if you'd like
-                $(targets.quizArea).append('<div style="' +
-                    'border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; ' +
-                    'padding: 0; position: absolute; width: 1px;">Powered By SlickQuiz</div>');
 
                 // Toggle the start button
                 $(triggers.starter).fadeIn(500);
@@ -190,7 +218,7 @@
                     selectedAnswers.push(inputValue);
                 });
 
-                if (plugin.config.disableNext && selectedAnswers.length == 0) {
+                if (plugin.config.preventUnanswered && selectedAnswers.length == 0) {
                     alert('You must select at least one answer.');
                     return false;
                 }
@@ -198,19 +226,29 @@
                 // Verify all true answers (and no false ones) were submitted
                 var correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers);
 
-                // Toggle responses based on submission
-                questionLI.find('.answers').hide();
-                questionLI.find('.responses').show();
-
                 if (correctResponse) {
-                    questionLI.find('.correct').fadeIn(300);
                     questionLI.addClass('correctResponse');
-                } else {
-                    questionLI.find('.incorrect').fadeIn(300);
                 }
 
-                $(checkButton).hide();
-                questionLI.find('.nextQuestion').fadeIn(300);
+                // If response messaging hasn't been disabled, toggle the proper response
+                if (!plugin.config.disableResponseMessaging) {
+                    // If response messaging hasn't been set to display upon quiz completion, show it now
+                    if (!plugin.config.completionResponseMessaging) {
+                        questionLI.find('.answers').hide();
+                        questionLI.find('.responses').show();
+
+                        $(checkButton).hide();
+                        questionLI.find('.nextQuestion').fadeIn(300);
+                    }
+
+                    // Toggle responses based on submission
+                    if (correctResponse) {
+                        questionLI.find('.correct').fadeIn(300);
+                    } else {
+                        questionLI.find('.incorrect').fadeIn(300);
+                    }
+                }
+
                 questionLI.find('.backToQuestion').fadeIn(300);
             },
 
@@ -283,7 +321,15 @@
                 $(targets.quizLevel).addClass('level' + levelRank);
 
                 $(targets.quizArea).fadeOut(300, function() {
-                    $(targets.quizResults).fadeIn(500);
+                    // If response messaging is set to show upon quiz completion, show it
+                    if (plugin.config.completionResponseMessaging) {
+                        $('.questions input').prop('disabled', true);
+                        $('.questions .button, .questions .questionCount').hide();
+                        $('.questions .question, .questions .responses').show();
+                        $(targets.quizResults).append($('.questions')).fadeIn(500);
+                    } else {
+                        $(targets.quizResults).fadeIn(500);
+                    }
                 });
             },
 

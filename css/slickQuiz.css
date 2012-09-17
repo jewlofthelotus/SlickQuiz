@@ -14,6 +14,12 @@
     display: none;
 }
 
+/* If response messages are disabled or only shown on quiz completion,
+   nextQuestion button IS checkAnswer button - so it must be displayed */
+.nextQuestion.checkAnswer {
+    display: block;
+}
+
 ol.questions,
 ul.answers,
 ul.responses,
