@@ -322,7 +322,7 @@
 
                 $(targets.quizArea).fadeOut(300, function() {
                     // If response messaging is set to show upon quiz completion, show it
-                    if (plugin.config.completionResponseMessaging) {
+                    if (plugin.config.completionResponseMessaging && !plugin.config.disableResponseMessaging) {
                         $('.questions input').prop('disabled', true);
                         $('.questions .button, .questions .questionCount').hide();
                         $('.questions .question, .questions .responses').show();
