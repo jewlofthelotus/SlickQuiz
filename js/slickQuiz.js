@@ -21,7 +21,7 @@
         // Reassign user-submitted deprecated options
         var depMsg = '';
 
-        if (typeof options.disableNext != 'undefined') {
+        if (options && typeof options.disableNext != 'undefined') {
             if (typeof options.preventUnanswered == 'undefined') {
                 options.preventUnanswered = options.disableNext;
             }
