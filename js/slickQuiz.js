@@ -239,6 +239,7 @@
 
                         $(checkButton).hide();
                         questionLI.find('.nextQuestion').fadeIn(300);
+                        questionLI.find('.backToQuestion').fadeIn(300);
                     }
 
                     // Toggle responses based on submission
@@ -248,14 +249,19 @@
                         questionLI.find('.incorrect').fadeIn(300);
                     }
                 }
-
-                questionLI.find('.backToQuestion').fadeIn(300);
             },
 
             // Moves to the next question OR completes the quiz if on last question
             nextQuestion: function(nextButton) {
                 var currentQuestion = $($(nextButton).parents('li.question')[0]),
-                    nextQuestion    = currentQuestion.next('.question');
+                    nextQuestion    = currentQuestion.next('.question'),
+                    answerInputs    = currentQuestion.find('input:checked');
+
+                // If response messaging has been disabled or moved to completion,
+                // make sure we have an answer if we require it, let checkAnswer handle the alert messaging
+                if (plugin.config.preventUnanswered && answerInputs.length == 0) {
+                    return false;
+                }
 
                 if (nextQuestion.length) {
                     currentQuestion.fadeOut(300, function(){
@@ -280,7 +286,12 @@
                         prevQuestion.find('.responses, .responses li').hide()
                         prevQuestion.find('.answers').show();
                         prevQuestion.find('.checkAnswer').show();
-                        prevQuestion.find('.nextQuestion').hide();
+
+                        // If response messaging hasn't been disabled or moved to completion, hide the next question button
+                        // If it has been, we need nextQuestion visible so the user can move forward (there is no separate checkAnswer button)
+                        if (!plugin.config.disableResponseMessaging && !plugin.config.completionResponseMessaging) {
+                            prevQuestion.find('.nextQuestion').hide();
+                        }
 
                         if (prevQuestion.attr('id') != 'question0') {
                             prevQuestion.find('.backToQuestion').show();
