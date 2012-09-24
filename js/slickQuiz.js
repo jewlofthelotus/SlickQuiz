@@ -323,10 +323,10 @@
                 $(targets.quizArea).fadeOut(300, function() {
                     // If response messaging is set to show upon quiz completion, show it
                     if (plugin.config.completionResponseMessaging && !plugin.config.disableResponseMessaging) {
-                        $('.questions input').prop('disabled', true);
-                        $('.questions .button, .questions .questionCount').hide();
-                        $('.questions .question, .questions .responses').show();
-                        $(targets.quizResults).append($('.questions')).fadeIn(500);
+                        $('#' + selector + ' .questions input').prop('disabled', true);
+                        $('#' + selector + ' .questions .button, #' + selector + ' .questions .questionCount').hide();
+                        $('#' + selector + ' .questions .question, #' + selector + ' .questions .responses').show();
+                        $(targets.quizResults).append($('#' + selector + ' .questions')).fadeIn(500);
                     } else {
                         $(targets.quizResults).fadeIn(500);
                     }
