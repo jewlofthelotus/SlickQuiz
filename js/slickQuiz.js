@@ -1,5 +1,15 @@
+/*!
+ * SlickQuiz jQuery Plugin
+ * http://github.com/QuickenLoans/SlickQuiz
+ *
+ * @updated December 18, 2010
+ *
+ * @author Julie Bellinson - http://www.jewlofthelotus.com
+ * @copyright (c) 2012 Quicken Loans - http://www.quickenloans.com
+ * @license MIT
+ */
+
 (function($){
-    // Setup Sexy Quiz
     $.slickQuiz = function(element, options) {
         var $element = $(element),
              element = element;
@@ -396,13 +406,10 @@
             plugin.method.setupQuiz();
 
             // Bind "start" button
-            $(triggers.starter).bind('click', function(e) {
+            $(triggers.starter).live('click', function(e) {
                 e.preventDefault();
                 plugin.method.startQuiz(this);
             });
-
-            // Using 'live' instead of 'bind' since these triggers are generated
-            // on the fly in setupQuiz and thus won't be available on page load
 
             // Bind "submit answer" button
             $(triggers.checker).live('click', function(e) {
