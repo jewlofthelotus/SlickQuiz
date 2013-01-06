@@ -341,6 +341,9 @@
                 $(targets.quizLevel + ' span').html(levelText);
                 $(targets.quizLevel).addClass('level' + levelRank);
 
+                $('#finalResult .finalScore').val(score + ' / ' + questionCount);
+                $('#finalResult .finalRanking').val(levelText);
+
                 $(targets.quizArea).fadeOut(300, function() {
                     // If response messaging is set to show upon quiz completion, show it
                     if (plugin.config.completionResponseMessaging && !plugin.config.disableResponseMessaging) {
