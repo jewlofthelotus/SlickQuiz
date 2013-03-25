@@ -5,7 +5,7 @@
  * @updated March 25, 2013
  *
  * @author Julie Bellinson - http://www.jewlofthelotus.com
- * @copyright (c) 2012 Quicken Loans - http://www.quickenloans.com
+ * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
  * @license MIT
  */
 
@@ -115,7 +115,7 @@
                                     truths++;
                                 }
                             }
-                        };
+                        }
 
                         // prepare a name for the answer inputs based on the question
                         var inputName  = 'question' + (count - 1);
@@ -143,7 +143,7 @@
                                     .append(optionLabel);
                                 answerHTML.append(answerContent);
                             }
-                        };
+                        }
 
                         // Append answers to question
                         questionHTML.append(answerHTML);
@@ -160,7 +160,7 @@
                         }
 
                         // Appends check answer / back / next question buttons
-                        if (plugin.config.backButtonText && plugin.config.backButtonText != '') {
+                        if (plugin.config.backButtonText && plugin.config.backButtonText !== '') {
                             questionHTML.append('<a href="#" class="button backToQuestion">' + plugin.config.backButtonText + '</a>');
                         }
 
@@ -177,8 +177,8 @@
                         quiz.append(questionHTML);
 
                         count++;
-                    };
-                };
+                    }
+                }
 
                 // Add the quiz content to the page
                 $(targets.quizArea).append(quiz);
@@ -216,7 +216,7 @@
                 }
 
                 // Collect the answers submitted
-                var selectedAnswers = []
+                var selectedAnswers = [];
                 answerInputs.each( function() {
                     // If we're in jQuery Mobile, grab value from nested span
                     if ($('.ui-mobile').length > 0) {
@@ -228,7 +228,7 @@
                     selectedAnswers.push(inputValue);
                 });
 
-                if (plugin.config.preventUnanswered && selectedAnswers.length == 0) {
+                if (plugin.config.preventUnanswered && selectedAnswers.length === 0) {
                     alert('You must select at least one answer.');
                     return false;
                 }
@@ -269,7 +269,7 @@
 
                 // If response messaging has been disabled or moved to completion,
                 // make sure we have an answer if we require it, let checkAnswer handle the alert messaging
-                if (plugin.config.preventUnanswered && answerInputs.length == 0) {
+                if (plugin.config.preventUnanswered && answerInputs.length === 0) {
                     return false;
                 }
 
@@ -293,7 +293,7 @@
 
                     questionLI.fadeOut(300, function() {
                         prevQuestion.removeClass('correctResponse');
-                        prevQuestion.find('.responses, .responses li').hide()
+                        prevQuestion.find('.responses, .responses li').hide();
                         prevQuestion.find('.answers').show();
                         prevQuestion.find('.checkAnswer').show();
 
@@ -399,7 +399,7 @@
                 }
                 return false;
             }
-        }
+        };
 
         plugin.init = function() {
             // Setup quiz
@@ -428,17 +428,17 @@
                 e.preventDefault();
                 plugin.method.nextQuestion(this);
             });
-        }
+        };
 
         plugin.init();
-    }
+    };
 
     $.fn.slickQuiz = function(options) {
         return this.each(function() {
-            if (undefined == $(this).data('slickQuiz')) {
+            if (undefined === $(this).data('slickQuiz')) {
                 var plugin = new $.slickQuiz(this, options);
                 $(this).data('slickQuiz', plugin);
             }
         });
-    }
+    };
 })(jQuery);
