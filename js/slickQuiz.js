@@ -2,7 +2,7 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/QuickenLoans/SlickQuiz
  *
- * @updated December 18, 2010
+ * @updated March 25, 2013
  *
  * @author Julie Bellinson - http://www.jewlofthelotus.com
  * @copyright (c) 2012 Quicken Loans - http://www.quickenloans.com
@@ -38,7 +38,7 @@
             depMsg += 'The \'disableNext\' option has been deprecated, please use \'preventUnanswered\' in it\'s place.\n\n';
         }
 
-        if (depMsg != '') {
+        if (depMsg !== '') {
             if (typeof console != 'undefined') {
                 console.warn(depMsg);
             } else {
@@ -56,7 +56,7 @@
             checker:         '#' + selector + ' .checkAnswer',
             next:            '#' + selector + ' .nextQuestion',
             back:            '#' + selector + ' .backToQuestion'
-        }
+        };
 
         var targets = {
             quizName:        '#' + selector + ' .quizName',
@@ -66,7 +66,7 @@
             quizHeader:      '#' + selector + ' .quizHeader',
             quizScore:       '#' + selector + ' .quizScore',
             quizLevel:       '#' + selector + ' .quizLevel'
-        }
+        };
 
         // Set via json option or quizJSON variable (see slickQuiz-config.js)
         var quizValues = (plugin.config.json ? plugin.config.json : typeof quizJSON != 'undefined' ? quizJSON : null);
@@ -81,7 +81,7 @@
             3: quizValues.info.level3, // 40-59%
             4: quizValues.info.level4, // 20-39%
             5: quizValues.info.level5  // 0-19%
-        }
+        };
 
         // Count the number of questions
         var questionCount = questions.length;
@@ -161,16 +161,16 @@
 
                         // Appends check answer / back / next question buttons
                         if (plugin.config.backButtonText && plugin.config.backButtonText != '') {
-                            questionHTML.append('<a href="" class="button backToQuestion">' + plugin.config.backButtonText + '</a>');
+                            questionHTML.append('<a href="#" class="button backToQuestion">' + plugin.config.backButtonText + '</a>');
                         }
 
                         // If response messaging is disabled or hidden until the quiz is completed,
                         // make the nextQuestion button the checkAnswer button, as well
                         if (plugin.config.disableResponseMessaging || plugin.config.completionResponseMessaging) {
-                            questionHTML.append('<a href="" class="button nextQuestion checkAnswer">' + plugin.config.nextQuestionText + '</a>');
+                            questionHTML.append('<a href="#" class="button nextQuestion checkAnswer">' + plugin.config.nextQuestionText + '</a>');
                         } else {
-                            questionHTML.append('<a href="" class="button nextQuestion">' + plugin.config.nextQuestionText + '</a>');
-                            questionHTML.append('<a href="" class="button checkAnswer">' + plugin.config.checkAnswerText + '</a>');
+                            questionHTML.append('<a href="#" class="button nextQuestion">' + plugin.config.nextQuestionText + '</a>');
+                            questionHTML.append('<a href="#" class="button checkAnswer">' + plugin.config.checkAnswerText + '</a>');
                         }
 
                         // Append question & answers to quiz
