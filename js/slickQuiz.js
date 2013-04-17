@@ -406,25 +406,25 @@
             plugin.method.setupQuiz();
 
             // Bind "start" button
-            $(triggers.starter).live('click', function(e) {
+            $(triggers.starter).on('click', function(e) {
                 e.preventDefault();
                 plugin.method.startQuiz(this);
             });
 
             // Bind "submit answer" button
-            $(triggers.checker).live('click', function(e) {
+            $(triggers.checker).on('click', function(e) {
                 e.preventDefault();
                 plugin.method.checkAnswer(this);
             });
 
             // Bind "back" button
-            $(triggers.back).live('click', function(e) {
+            $(triggers.back).on('click', function(e) {
                 e.preventDefault();
                 plugin.method.backToQuestion(this);
             });
 
             // Bind "next question" button
-            $(triggers.next).live('click', function(e) {
+            $(triggers.next).on('click', function(e) {
                 e.preventDefault();
                 plugin.method.nextQuestion(this);
             });
