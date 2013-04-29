@@ -364,7 +364,8 @@
                     selectedAnswers = selectedAnswers.sort();
 
                 for (var i = 0, l = trueAnswers.length; i < l; i++) {
-                    if (trueAnswers[i] !== selectedAnswers[i]) {
+                    var encodedAnswer = $('<div />').html(trueAnswers[i]).text();
+                    if (encodedAnswer !== selectedAnswers[i]) {
                         return false;
                     }
                 }
