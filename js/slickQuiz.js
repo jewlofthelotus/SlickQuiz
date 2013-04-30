@@ -2,7 +2,7 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/QuickenLoans/SlickQuiz
  *
- * @updated March 25, 2013
+ * @updated April 29, 2013
  *
  * @author Julie Bellinson - http://www.jewlofthelotus.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -374,7 +374,7 @@
 
             // Calculates knowledge level based on number of correct answers
             calculateLevel: function(correctAnswers) {
-                var percent = correctAnswers / questionCount,
+                var percent = (correctAnswers / questionCount).toFixed(2),
                     level   = 0;
 
                 if (plugin.method.inRange(0, 0.20, percent)) {
