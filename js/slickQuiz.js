@@ -210,7 +210,7 @@
                         var answer = answers[i];
 
                         if (answer.correct) {
-                            trueAnswers.push(answer.option);
+                            trueAnswers.push($('<div />').html(answer.option).text())
                         }
                     }
                 }
@@ -220,9 +220,9 @@
                 answerInputs.each( function() {
                     // If we're in jQuery Mobile, grab value from nested span
                     if ($('.ui-mobile').length > 0) {
-                        var inputValue = $(this).next('label').find('span.ui-btn-text').html();
+                        var inputValue = $(this).next('label').find('span.ui-btn-text').text();
                     } else {
-                        var inputValue = $(this).next('label').html();
+                        var inputValue = $(this).next('label').text();
                     }
 
                     selectedAnswers.push(inputValue);
@@ -364,8 +364,7 @@
                     selectedAnswers = selectedAnswers.sort();
 
                 for (var i = 0, l = trueAnswers.length; i < l; i++) {
-                    var decodedAnswer = $('<div />').html(trueAnswers[i]).text();
-                    if (decodedAnswer !== selectedAnswers[i]) {
+                    if (trueAnswers[i] !== selectedAnswers[i]) {
                         return false;
                     }
                 }
