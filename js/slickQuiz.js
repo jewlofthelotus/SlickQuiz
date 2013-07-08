@@ -4,29 +4,43 @@
  *
  * @updated April 29, 2013
  *
- * @author Julie Bellinson - http://www.jewlofthelotus.com
+ * @author Julie Cameron - http://www.jewlofthelotus.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
  * @license MIT
  */
 
 (function($){
     $.slickQuiz = function(element, options) {
-        var $element = $(element),
-             element = element;
+        var plugin   = this,
+            $element = $(element),
+            _element = '#' + $element.attr('id'),
 
-        var plugin = this;
+            defaults = {
+                checkAnswerText:  'Check My Answer!',
+                nextQuestionText: 'Next &raquo;',
+                backButtonText: '',
+                randomSort: false,
+                randomSortQuestions: false,
+                randomSortAnswers: false,
+                preventUnanswered: false,
+                completionResponseMessaging: false,
+                disableResponseMessaging: false,
+                tryAgainText: 'Try Again'
+            },
 
-        var defaults = {
-            checkAnswerText:  'Check My Answer!',
-            nextQuestionText: 'Next &raquo;',
-            backButtonText: '',
-            randomSort: false,
-            randomSortQuestions: false,
-            randomSortAnswers: false,
-            preventUnanswered: false,
-            completionResponseMessaging: false,
-            disableResponseMessaging: false
-        };
+            $starter = $(_element + ' .startQuiz'),
+
+            targets = {
+                quizName:        _element + ' .quizName',
+                quizArea:        _element + ' .quizArea',
+                quizResults:     _element + ' .quizResults',
+                quizResultsCopy: _element + ' .quizResultsCopy',
+                quizHeader:      _element + ' .quizHeader',
+                quizScore:       _element + ' .quizScore',
+                quizLevel:       _element + ' .quizLevel'
+            }
+        ;
+
 
         // Reassign user-submitted deprecated options
         var depMsg = '';
@@ -47,44 +61,20 @@
         }
         // End of deprecation reassignment
 
+
         plugin.config = $.extend(defaults, options);
-
-        var selector = $(element).attr('id');
-
-        var triggers = {
-            starter:         '#' + selector + ' .startQuiz',
-            checker:         '#' + selector + ' .checkAnswer',
-            next:            '#' + selector + ' .nextQuestion',
-            back:            '#' + selector + ' .backToQuestion'
-        };
-
-        var targets = {
-            quizName:        '#' + selector + ' .quizName',
-            quizArea:        '#' + selector + ' .quizArea',
-            quizResults:     '#' + selector + ' .quizResults',
-            quizResultsCopy: '#' + selector + ' .quizResultsCopy',
-            quizHeader:      '#' + selector + ' .quizHeader',
-            quizScore:       '#' + selector + ' .quizScore',
-            quizLevel:       '#' + selector + ' .quizLevel'
-        };
 
         // Set via json option or quizJSON variable (see slickQuiz-config.js)
         var quizValues = (plugin.config.json ? plugin.config.json : typeof quizJSON != 'undefined' ? quizJSON : null);
 
+        // Get questions, possibly sorted randomly
         var questions = plugin.config.randomSort || plugin.config.randomSortQuestions ?
                         quizValues.questions.sort(function() { return (Math.round(Math.random())-0.5); }) :
                         quizValues.questions;
 
-        var levels = {
-            1: quizValues.info.level1, // 80-100%
-            2: quizValues.info.level2, // 60-79%
-            3: quizValues.info.level3, // 40-59%
-            4: quizValues.info.level4, // 20-39%
-            5: quizValues.info.level5  // 0-19%
-        };
-
         // Count the number of questions
         var questionCount = questions.length;
+
 
         plugin.method = {
             // Sets up the questions and answers based on above array
@@ -92,6 +82,11 @@
                 $(targets.quizName).hide().html(quizValues.info.name).fadeIn(1000);
                 $(targets.quizHeader).hide().prepend(quizValues.info.main).fadeIn(1000);
                 $(targets.quizResultsCopy).append(quizValues.info.results);
+
+                // add retry button to results view, if enabled
+                if (plugin.config.tryAgainText && plugin.config.tryAgainText !== '') {
+                    $(targets.quizResultsCopy).before('<a class="button tryAgain" href="#">' + plugin.config.tryAgainText + '</a>');
+                }
 
                 // Setup questions
                 var quiz  = $('<ol class="questions"></ol>'),
@@ -184,16 +179,42 @@
                 $(targets.quizArea).append(quiz);
 
                 // Toggle the start button
-                $(triggers.starter).fadeIn(500);
+                $starter.fadeIn(500);
             },
 
             // Starts the quiz (hides start button and displays first question)
             startQuiz: function(startButton) {
                 $(startButton).fadeOut(300, function(){
-                    var firstQuestion = $('#' + selector + ' .questions li').first();
+                    var firstQuestion = $(_element + ' .questions li').first();
                     if (firstQuestion.length) {
                         firstQuestion.fadeIn(500);
                     }
+                });
+            },
+
+            // Resets (restarts) the quiz (hides results, resets inputs, and displays first question)
+            resetQuiz: function(startButton) {
+                $(targets.quizLevel).attr('class', 'quizLevel');
+
+                $(targets.quizResults).fadeOut(300, function() {
+                    $(_element + ' input[type="checkbox"]').prop('checked', false);
+                    $(_element + ' input[type="radio"]').prop('checked', false);
+
+                    $(_element + ' .correctResponse').removeClass('correctResponse');
+
+                    $(_element + ' .question').hide();
+                    $(_element + ' .responses').hide();
+                    $(_element + ' .correct').hide();
+                    $(_element + ' .incorrect').hide();
+                    $(_element + ' .nextQuestion').hide();
+                    $(_element + ' .backToQuestion').hide();
+                    // $(_element + ' .nextQuestion[not=".checkAnswer"]').hide();
+
+                    $(_element + ' .answers').show();
+                    $(_element + ' .checkAnswer').show();
+                    $(targets.quizArea).show();
+
+                    plugin.method.startQuiz($(targets.quizResults));
                 });
             },
 
@@ -210,7 +231,7 @@
                         var answer = answers[i];
 
                         if (answer.correct) {
-                            trueAnswers.push($('<div />').html(answer.option).text())
+                            trueAnswers.push($('<div />').html(answer.option).text());
                         }
                     }
                 }
@@ -218,11 +239,13 @@
                 // Collect the answers submitted
                 var selectedAnswers = [];
                 answerInputs.each( function() {
+                    var inputValue = '';
+
                     // If we're in jQuery Mobile, grab value from nested span
                     if ($('.ui-mobile').length > 0) {
-                        var inputValue = $(this).next('label').find('span.ui-btn-text').text();
+                        inputValue = $(this).next('label').find('span.ui-btn-text').text();
                     } else {
-                        var inputValue = $(this).next('label').text();
+                        inputValue = $(this).next('label').text();
                     }
 
                     selectedAnswers.push(inputValue);
@@ -333,7 +356,14 @@
 
             // Hides all questions, displays the final score and some conclusive information
             completeQuiz: function() {
-                var score     = $('#' + selector + ' .correctResponse').length,
+                var levels    = {
+                                    1: quizValues.info.level1, // 80-100%
+                                    2: quizValues.info.level2, // 60-79%
+                                    3: quizValues.info.level3, // 40-59%
+                                    4: quizValues.info.level4, // 20-39%
+                                    5: quizValues.info.level5  // 0-19%
+                                },
+                    score     = $(_element + ' .correctResponse').length,
                     levelRank = plugin.method.calculateLevel(score),
                     levelText = levels[levelRank];
 
@@ -344,10 +374,10 @@
                 $(targets.quizArea).fadeOut(300, function() {
                     // If response messaging is set to show upon quiz completion, show it
                     if (plugin.config.completionResponseMessaging && !plugin.config.disableResponseMessaging) {
-                        $('#' + selector + ' .questions input').prop('disabled', true);
-                        $('#' + selector + ' .questions .button, #' + selector + ' .questions .questionCount').hide();
-                        $('#' + selector + ' .questions .question, #' + selector + ' .questions .responses').show();
-                        $(targets.quizResults).append($('#' + selector + ' .questions')).fadeIn(500);
+                        $(_element + ' .questions input').prop('disabled', true);
+                        $(_element + ' .questions .button, ' + _element + ' .questions .questionCount').hide();
+                        $(_element + ' .questions .question, ' + _element + ' .questions .responses').show();
+                        $(targets.quizResults).append($(_element + ' .questions')).fadeIn(500);
                     } else {
                         $(targets.quizResults).fadeIn(500);
                     }
@@ -356,20 +386,8 @@
 
             // Compares selected responses with true answers, returns true if they match exactly
             compareAnswers: function(trueAnswers, selectedAnswers) {
-                if (trueAnswers.length != selectedAnswers.length) {
-                    return false;
-                }
-
-                var trueAnswers     = trueAnswers.sort(),
-                    selectedAnswers = selectedAnswers.sort();
-
-                for (var i = 0, l = trueAnswers.length; i < l; i++) {
-                    if (trueAnswers[i] !== selectedAnswers[i]) {
-                        return false;
-                    }
-                }
-
-                return true;
+                // crafty array comparison (http://stackoverflow.com/a/7726509)
+                return ($(trueAnswers).not(selectedAnswers).length === 0 && $(selectedAnswers).not(trueAnswers).length === 0);
             },
 
             // Calculates knowledge level based on number of correct answers
@@ -394,10 +412,7 @@
 
             // Determines if percentage of correct values is within a level range
             inRange: function(start, end, value) {
-                if (value >= start && value <= end) {
-                    return true;
-                }
-                return false;
+                return (value >= start && value <= end);
             }
         };
 
@@ -406,25 +421,31 @@
             plugin.method.setupQuiz();
 
             // Bind "start" button
-            $(triggers.starter).on('click', function(e) {
+            $starter.on('click', function(e) {
                 e.preventDefault();
                 plugin.method.startQuiz(this);
             });
 
-            // Bind "submit answer" button
-            $(triggers.checker).on('click', function(e) {
+            // Bind "try again" button
+            $(_element + ' .tryAgain').on('click', function(e) {
+                e.preventDefault();
+                plugin.method.resetQuiz(this);
+            });
+
+            // Bind "check answer" buttons
+            $(_element + ' .checkAnswer').on('click', function(e) {
                 e.preventDefault();
                 plugin.method.checkAnswer(this);
             });
 
-            // Bind "back" button
-            $(triggers.back).on('click', function(e) {
+            // Bind "back" buttons
+            $(_element + ' .backToQuestion').on('click', function(e) {
                 e.preventDefault();
                 plugin.method.backToQuestion(this);
             });
 
-            // Bind "next question" button
-            $(triggers.next).on('click', function(e) {
+            // Bind "next" buttons
+            $(_element + ' .nextQuestion').on('click', function(e) {
                 e.preventDefault();
                 plugin.method.nextQuestion(this);
             });

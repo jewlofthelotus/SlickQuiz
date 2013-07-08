@@ -34,7 +34,7 @@ var quizJSON = {
                 {"option": "1291",   "correct": false} // no comma here
             ],
             "correct": "<p><span>Holy bananas!</span> I didn't actually expect you to know that! Correct!</p>",
-            "incorrect": "<p><span>Fail.</span> Sorry. You lose. It actually rains approximately 32 times a year in Michigan.</p>" // no comma here
+            "incorrect": "<p><span>Fail.</span> Sorry. You lose. It actually rains approximately 32 inches a year in Michigan.</p>" // no comma here
         },
         { // Question 3
             "q": "In which of these places can you purchase a car?",
