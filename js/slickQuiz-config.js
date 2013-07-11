@@ -35,6 +35,37 @@ var quizJSON = {
             ],
             "correct": "<p><span>Holy bananas!</span> I didn't actually expect you to know that! Correct!</p>",
             "incorrect": "<p><span>Fail.</span> Sorry. You lose. It actually rains approximately 32 inches a year in Michigan.</p>" // no comma here
-        }
+        },
+        { // Question 3
+            "q": "In which of these places can you purchase a car?",
+            "a": [
+                {"option": "The Zoo",        "correct": false},
+                {"option": "Ebay",           "correct": true},
+                {"option": "Grocery Store",  "correct": false},
+                {"option": "Used Car Lot",   "correct": true} // no comma here
+            ],
+            "correct": "<p><span>Nice!</span> You can indeed buy a car on Ebay or in a used car lot.</p>",
+            "incorrect": "<p><span>No.</span> You can't buy a car at the zoo or in a grocery store, try Ebay or a used car lot instead.</p>" // no comma here
+        },
+        { // Question 4
+            "q": "Is Earth bigger than a basketball?",
+            "a": [
+                {"option": "Yes",    "correct": true},
+                {"option": "No",     "correct": false} // no comma here
+            ],
+            "correct": "<p><span>Good Job!</span> You must be very observant!</p>",
+            "incorrect": "<p><span>ERRRR!</span> What planet Earth are <em>you</em> living on?!?</p>" // no comma here
+        },
+        { // Question 5
+            "q": "Where are you right now? Select ALL that apply.",
+            "a": [
+                {"option": "Planet Earth",   "correct": true},
+                {"option": "Pluto",          "correct": false},
+                {"option": "At a computer",  "correct": true},
+                {"option": "The Milky Way",  "correct": true} // no comma here
+            ],
+            "correct": "<p><span>Brilliant!</span> You're seriously a genius, (wo)man.</p>",
+            "incorrect": "<p><span>Not Quite.</span> You're actually on Planet Earth, in The Milky Way, At a computer. But nice try.</p>" // no comma here
+        } // no comma here
     ]
 };
