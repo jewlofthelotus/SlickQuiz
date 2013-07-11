@@ -72,6 +72,10 @@ ol li { list-style-type: decimal; margin-left: 20px; }
     margin-top: 40px;
 }
 
+.tryAgain {
+    margin: 20px 0;
+}
+
 /* clearfix */
 .quizArea, .quizResults {
     zoom: 1;
@@ -130,5 +134,6 @@ ul.responses li.correct p span {
     font-style: italic;
 }
 .quizResultsCopy {
+    clear: both;
     margin-top: 20px;
 }

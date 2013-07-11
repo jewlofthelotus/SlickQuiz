@@ -1,8 +1,3 @@
-# SlickQuiz jQuery Plugin v1.0
-* * *
-
-## Overview
-
 A jQuery plugin for creating pretty, dynamic quizzes.
 
 
@@ -29,11 +24,13 @@ To initialize your quiz:
 
 **`backButtonText`** (String) - the text to use on the back button, if left null / blank (default) - no back button will be displayed
 
+**`tryAgainText`** (String) - the text to use on the try again button, if left null / blank (default) - no try again button will be displayed
+
 **`randomSortQuestions`** (Boolean) - whether or not to randomly sort questions ONLY, defaults to false
 
 **`randomSortAnswers`** (Boolean) - whether or not to randomly sort answers ONLY, defaults to false
 
-**`randomSort`** (Boolean) - whether or not to randomly sort questions AND their answers (overrides `randomSortQuestions` and `randomSortAnswers`), defaults to false. NOTE: this will be deprecated in a future release.
+**`randomSort`** (Boolean) - whether or not to randomly sort questions AND their answers (overrides <code>randomSortQuestions</code> and <code>randomSortAnswers</code>), defaults to false. NOTE: this will be deprecated in a future release.
 
 **`preventUnanswered`** (Boolean) - prevents submitting a question with zero answers, defaults to false
 
@@ -43,7 +40,7 @@ To initialize your quiz:
 
 #### Deprecated Options
 
-**`disableNext`** (Boolean) - prevents submitting a question with zero answers, defaults to false. You should now use `preventUnanswered` instead.
+**`disableNext`** (Boolean) - prevents submitting a question with zero answers, defaults to false. You should now use <code>preventUnanswered</code> instead.
 
 
 ## Advanced Usage
@@ -109,4 +106,4 @@ See js/slickQuiz-config.js
     }
 
 
-Created by [Julie Bellinson](http://jewlofthelotus.com) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
+Created by [Julie Cameron](http://jewlofthelotus.com) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
