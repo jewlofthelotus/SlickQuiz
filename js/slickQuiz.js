@@ -28,36 +28,53 @@
                 tryAgainText: 'Try Again'
             },
 
-            correctClass        = 'correctResponse',
+            // Class Name Strings (Used for building quiz and for selectors)
+            questionCountClass     = 'questionCount',
+            questionGroupClass     = 'questions',
+            questionClass          = 'question',
+            answersClass           = 'answers',
+            responsesClass         = 'responses',
+            correctClass           = 'correctResponse',
+            correctResponseClass   = 'correct',
+            incorrectResponseClass = 'incorrect',
+            checkAnswerClass       = 'checkAnswer',
+            nextQuestionClass      = 'nextQuestion',
+            backToQuestionClass    = 'backToQuestion',
+            tryAgainClass          = 'tryAgain',
 
-            _quizStarter        = _element + ' .startQuiz',
-            _quizName           = _element + ' .quizName',
-            _quizArea           = _element + ' .quizArea',
-            _quizResults        = _element + ' .quizResults',
-            _quizResultsCopy    = _element + ' .quizResultsCopy',
-            _quizHeader         = _element + ' .quizHeader',
-            _quizScore          = _element + ' .quizScore',
-            _quizLevel          = _element + ' .quizLevel',
+            // Sub-Quiz / Sub-Question Class Selectors
+            _questionCount         = '.' + questionCountClass,
+            _questions             = '.' + questionGroupClass,
+            _question              = '.' + questionClass,
+            _answers               = '.' + answersClass,
+            _responses             = '.' + responsesClass,
+            _correct               = '.' + correctClass,
+            _correctResponse       = '.' + correctResponseClass,
+            _incorrectResponse     = '.' + incorrectResponseClass,
+            _checkAnswerBtn        = '.' + checkAnswerClass,
+            _nextQuestionBtn       = '.' + nextQuestionClass,
+            _prevQuestionBtn       = '.' + backToQuestionClass,
+            _tryAgainBtn           = '.' + tryAgainClass,
 
-            // Sub-Quiz / Sub-Question Selectors
-            _question           = '.question',
-            _answers            = '.answers',
-            _responses          = '.responses',
-            _correct            = '.correctResponse',
-            _correctResponse    = '.correct',
-            _incorrectResponse  = '.incorrect',
-            _checkAnswerBtn     = '.checkAnswer',
-            _nextQuestionBtn    = '.nextQuestion',
-            _prevQuestionBtn    = '.backToQuestion',
+            // Top Level Quiz Element Class Selectors
+            _quizStarter           = _element + ' .startQuiz',
+            _quizName              = _element + ' .quizName',
+            _quizArea              = _element + ' .quizArea',
+            _quizResults           = _element + ' .quizResults',
+            _quizResultsCopy       = _element + ' .quizResultsCopy',
+            _quizHeader            = _element + ' .quizHeader',
+            _quizScore             = _element + ' .quizScore',
+            _quizLevel             = _element + ' .quizLevel',
 
-            $quizStarter        = $(_quizStarter),
-            $quizName           = $(_quizName),
-            $quizArea           = $(_quizArea),
-            $quizResults        = $(_quizResults),
-            $quizResultsCopy    = $(_quizResultsCopy),
-            $quizHeader         = $(_quizHeader),
-            $quizScore          = $(_quizScore),
-            $quizLevel          = $(_quizLevel)
+            // Top Level Quiz Element Objects
+            $quizStarter           = $(_quizStarter),
+            $quizName              = $(_quizName),
+            $quizArea              = $(_quizArea),
+            $quizResults           = $(_quizResults),
+            $quizResultsCopy       = $(_quizResultsCopy),
+            $quizHeader            = $(_quizHeader),
+            $quizScore             = $(_quizScore),
+            $quizLevel             = $(_quizLevel)
         ;
 
 
@@ -104,11 +121,11 @@
 
                 // add retry button to results view, if enabled
                 if (plugin.config.tryAgainText && plugin.config.tryAgainText !== '') {
-                    $quizResultsCopy.before('<a class="button tryAgain" href="#">' + plugin.config.tryAgainText + '</a>');
+                    $quizResultsCopy.before('<a class="button ' + tryAgainClass + '" href="#">' + plugin.config.tryAgainText + '</a>');
                 }
 
                 // Setup questions
-                var quiz  = $('<ol class="questions"></ol>'),
+                var quiz  = $('<ol class="' + questionGroupClass + '"></ol>'),
                     count = 1;
 
                 // Loop through questions object
@@ -116,8 +133,8 @@
                     if (questions.hasOwnProperty(i)) {
                         var question = questions[i];
 
-                        var questionHTML = $('<li class="question" id="question' + (count - 1) + '"></li>');
-                        questionHTML.append('<div class="questionCount">Question <span class="current">' + count + '</span> of <span class="total">' + questionCount + '</span></div>');
+                        var questionHTML = $('<li class="' + questionClass +'" id="question' + (count - 1) + '"></li>');
+                        questionHTML.append('<div class="' + questionCountClass + '">Question <span class="current">' + count + '</span> of <span class="total">' + questionCount + '</span></div>');
                         questionHTML.append('<h3>' + count + '. ' + question.q + '</h3>');
 
                         // Count the number of true values
@@ -135,7 +152,7 @@
                         var inputName  = 'question' + (count - 1);
 
                         // Now let's append the answers with checkboxes or radios depending on truth count
-                        var answerHTML = $('<ul class="answers"></ul>');
+                        var answerHTML = $('<ul class="' + answersClass + '"></ul>');
 
                         var answers = plugin.config.randomSort || plugin.config.randomSortAnswers ?
                             question.a.sort(function() { return (Math.round(Math.random())-0.5); }) :
@@ -165,9 +182,9 @@
                         // If response messaging is NOT disabled, add it
                         if (!plugin.config.disableResponseMessaging) {
                             // Now let's append the correct / incorrect response messages
-                            var responseHTML = $('<ul class="responses"></ul>');
-                            responseHTML.append('<li class="correct">' + question.correct + '</li>');
-                            responseHTML.append('<li class="incorrect">' + question.incorrect + '</li>');
+                            var responseHTML = $('<ul class="' + responsesClass + '"></ul>');
+                            responseHTML.append('<li class="' + correctResponseClass + '">' + question.correct + '</li>');
+                            responseHTML.append('<li class="' + incorrectResponseClass + '">' + question.incorrect + '</li>');
 
                             // Append responses to question
                             questionHTML.append(responseHTML);
@@ -175,16 +192,16 @@
 
                         // Appends check answer / back / next question buttons
                         if (plugin.config.backButtonText && plugin.config.backButtonText !== '') {
-                            questionHTML.append('<a href="#" class="button backToQuestion">' + plugin.config.backButtonText + '</a>');
+                            questionHTML.append('<a href="#" class="button ' + backToQuestionClass + '">' + plugin.config.backButtonText + '</a>');
                         }
 
                         // If response messaging is disabled or hidden until the quiz is completed,
                         // make the nextQuestion button the checkAnswer button, as well
                         if (plugin.config.disableResponseMessaging || plugin.config.completionResponseMessaging) {
-                            questionHTML.append('<a href="#" class="button nextQuestion checkAnswer">' + plugin.config.nextQuestionText + '</a>');
+                            questionHTML.append('<a href="#" class="button ' + nextQuestionClass + ' ' + checkAnswerClass + '">' + plugin.config.nextQuestionText + '</a>');
                         } else {
-                            questionHTML.append('<a href="#" class="button nextQuestion">' + plugin.config.nextQuestionText + '</a>');
-                            questionHTML.append('<a href="#" class="button checkAnswer">' + plugin.config.checkAnswerText + '</a>');
+                            questionHTML.append('<a href="#" class="button ' + nextQuestionClass + '">' + plugin.config.nextQuestionText + '</a>');
+                            questionHTML.append('<a href="#" class="button ' + checkAnswerClass + '">' + plugin.config.checkAnswerText + '</a>');
                         }
 
                         // Append question & answers to quiz
@@ -204,7 +221,7 @@
             // Starts the quiz (hides start button and displays first question)
             startQuiz: function(startButton) {
                 $(startButton).fadeOut(300, function(){
-                    var firstQuestion = $(_element + ' .questions li').first();
+                    var firstQuestion = $(_element + ' ' + _questions + ' li').first();
                     if (firstQuestion.length) {
                         firstQuestion.fadeIn(500);
                     }
@@ -213,13 +230,12 @@
 
             // Resets (restarts) the quiz (hides results, resets inputs, and displays first question)
             resetQuiz: function(startButton) {
-                $quizLevel.attr('class', 'quizLevel');
-
                 $quizResults.fadeOut(300, function() {
                     $(_element + ' input[type="checkbox"], ' +
                       _element + ' input[type="radio"]'
                     ).prop('checked', false);
 
+                    $quizLevel.attr('class', 'quizLevel');
                     $(_element + ' ' + _correct).removeClass(correctClass);
 
                     $(_element + ' ' + _question          + ',' +
@@ -308,8 +324,8 @@
 
             // Moves to the next question OR completes the quiz if on last question
             nextQuestion: function(nextButton) {
-                var currentQuestion = $($(nextButton).parents('li.question')[0]),
-                    nextQuestion    = currentQuestion.next('.question'),
+                var currentQuestion = $($(nextButton).parents(_question)[0]),
+                    nextQuestion    = currentQuestion.next(_question),
                     answerInputs    = currentQuestion.find('input:checked');
 
                 // If response messaging has been disabled or moved to completion,
@@ -385,9 +401,9 @@
                                     quizValues.info.level4, // 20-39%
                                     quizValues.info.level5  // 0-19%
                                 ],
-                    score     = $(_element + ' ' + _correctResponse).length,
+                    score     = $(_element + ' ' + _correct).length,
                     levelRank = plugin.method.calculateLevel(score),
-                    levelText = levelRank ? levels[levelRank] : '';
+                    levelText = $.isNumeric(levelRank) ? levels[levelRank] : '';
 
                 $(_quizScore + ' span').html(score + ' / ' + questionCount);
                 $(_quizLevel + ' span').html(levelText);
@@ -396,10 +412,10 @@
                 $quizArea.fadeOut(300, function() {
                     // If response messaging is set to show upon quiz completion, show it
                     if (plugin.config.completionResponseMessaging && !plugin.config.disableResponseMessaging) {
-                        $(_element + ' .questions input').prop('disabled', true);
-                        $(_element + ' .questions .button, ' + _element + ' .questions .questionCount').hide();
-                        $(_element + ' .questions .question, ' + _element + ' .questions .responses').show();
-                        $quizResults.append($(_element + ' .questions')).fadeIn(500);
+                        $(_element + ' input').prop('disabled', true);
+                        $(_element + ' .button, ' + _element + ' ' + _questionCount).hide();
+                        $(_element + ' ' + _question + ', ' + _element + ' ' + _responses).show();
+                        $quizResults.append($(_element + ' ' + _questions)).fadeIn(500);
                     } else {
                         $quizResults.fadeIn(500);
                     }
@@ -449,25 +465,25 @@
             });
 
             // Bind "try again" button
-            $(_element + ' .tryAgain').on('click', function(e) {
+            $(_element + ' ' + _tryAgainBtn).on('click', function(e) {
                 e.preventDefault();
                 plugin.method.resetQuiz(this);
             });
 
             // Bind "check answer" buttons
-            $(_element + ' .checkAnswer').on('click', function(e) {
+            $(_element + ' ' + _checkAnswerBtn).on('click', function(e) {
                 e.preventDefault();
                 plugin.method.checkAnswer(this);
             });
 
             // Bind "back" buttons
-            $(_element + ' .backToQuestion').on('click', function(e) {
+            $(_element + ' ' + _prevQuestionBtn).on('click', function(e) {
                 e.preventDefault();
                 plugin.method.backToQuestion(this);
             });
 
             // Bind "next" buttons
-            $(_element + ' .nextQuestion').on('click', function(e) {
+            $(_element + ' ' + _nextQuestionBtn).on('click', function(e) {
                 e.preventDefault();
                 plugin.method.nextQuestion(this);
             });
