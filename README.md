@@ -1,8 +1,3 @@
-# SlickQuiz jQuery Plugin v1.0
-* * *
-
-## Overview
-
 A jQuery plugin for creating pretty, dynamic quizzes.
 
 
@@ -35,7 +30,7 @@ To initialize your quiz:
 
 **`randomSortAnswers`** (Boolean) - whether or not to randomly sort answers ONLY, defaults to false
 
-**`randomSort`** (Boolean) - whether or not to randomly sort questions AND their answers (overrides `randomSortQuestions` and `randomSortAnswers`), defaults to false. NOTE: this will be deprecated in a future release.
+**`randomSort`** (Boolean) - whether or not to randomly sort questions AND their answers (overrides <code>randomSortQuestions</code> and <code>randomSortAnswers</code>), defaults to false. NOTE: this will be deprecated in a future release.
 
 **`preventUnanswered`** (Boolean) - prevents submitting a question with zero answers, defaults to false
 
@@ -45,7 +40,7 @@ To initialize your quiz:
 
 #### Deprecated Options
 
-**`disableNext`** (Boolean) - prevents submitting a question with zero answers, defaults to false. You should now use `preventUnanswered` instead.
+**`disableNext`** (Boolean) - prevents submitting a question with zero answers, defaults to false. You should now use <code>preventUnanswered</code> instead.
 
 
 ## Advanced Usage

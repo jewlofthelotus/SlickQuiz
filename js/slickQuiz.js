@@ -2,7 +2,7 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/QuickenLoans/SlickQuiz
  *
- * @updated April 29, 2013
+ * @updated July 11, 2013
  *
  * @author Julie Cameron - http://www.jewlofthelotus.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -19,13 +19,13 @@
                 checkAnswerText:  'Check My Answer!',
                 nextQuestionText: 'Next &raquo;',
                 backButtonText: '',
+                tryAgainText: '',
                 randomSort: false,
                 randomSortQuestions: false,
                 randomSortAnswers: false,
                 preventUnanswered: false,
                 completionResponseMessaging: false,
-                disableResponseMessaging: false,
-                tryAgainText: 'Try Again'
+                disableResponseMessaging: false
             },
 
             // Class Name Strings (Used for building quiz and for selectors)
@@ -231,9 +231,7 @@
             // Resets (restarts) the quiz (hides results, resets inputs, and displays first question)
             resetQuiz: function(startButton) {
                 $quizResults.fadeOut(300, function() {
-                    $(_element + ' input[type="checkbox"], ' +
-                      _element + ' input[type="radio"]'
-                    ).prop('checked', false);
+                    $(_element + ' input').prop('checked', false).prop('disabled', false);
 
                     $quizLevel.attr('class', 'quizLevel');
                     $(_element + ' ' + _correct).removeClass(correctClass);
@@ -245,13 +243,13 @@
                       _element + ' ' + _nextQuestionBtn   + ',' +
                       _element + ' ' + _prevQuestionBtn
                     ).hide();
-                    // $(_element + ' .nextQuestion[not=".checkAnswer"]').hide();
 
-                    $(_element + ' ' + _answers + ',' +
+                    $(_element + ' ' + _questionCount + ',' +
+                      _element + ' ' + _answers + ',' +
                       _element + ' ' + _checkAnswerBtn
                     ).show();
 
-                    $quizArea.show();
+                    $quizArea.append($(_element + ' ' + _questions)).show();
 
                     plugin.method.startQuiz($quizResults);
                 });
@@ -413,7 +411,7 @@
                     // If response messaging is set to show upon quiz completion, show it
                     if (plugin.config.completionResponseMessaging && !plugin.config.disableResponseMessaging) {
                         $(_element + ' input').prop('disabled', true);
-                        $(_element + ' .button, ' + _element + ' ' + _questionCount).hide();
+                        $(_element + ' .button:not(' + _tryAgainBtn + '), ' + _element + ' ' + _questionCount).hide();
                         $(_element + ' ' + _question + ', ' + _element + ' ' + _responses).show();
                         $quizResults.append($(_element + ' ' + _questions)).fadeIn(500);
                     } else {
