@@ -21,6 +21,7 @@
                 backButtonText: '',
                 tryAgainText: '',
                 skipStartButton: false,
+                numberOfQuestions: null,
                 randomSort: false,
                 randomSortQuestions: false,
                 randomSortAnswers: false,
@@ -112,6 +113,11 @@
         // Count the number of questions
         var questionCount = questions.length;
 
+        // Select X number of questions to load if options is set
+        if (plugin.config.numberOfQuestions && questionCount >= plugin.config.numberOfQuestions) {
+            questions = questions.slice(0, plugin.config.numberOfQuestions);
+            questionCount = questions.length;
+        }
 
         plugin.method = {
             // Sets up the questions and answers based on above array
