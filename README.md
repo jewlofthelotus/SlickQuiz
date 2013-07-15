@@ -26,6 +26,8 @@ To initialize your quiz:
 
 **`tryAgainText`** (String) - the text to use on the try again button, if left null / blank (default) - no try again button will be displayed
 
+**`skipStartButton`** (Boolean) - whether or not to skip the quiz "start" button, defaults to false
+
 **`randomSortQuestions`** (Boolean) - whether or not to randomly sort questions ONLY, defaults to false
 
 **`randomSortAnswers`** (Boolean) - whether or not to randomly sort answers ONLY, defaults to false
