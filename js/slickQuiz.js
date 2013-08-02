@@ -2,7 +2,7 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/QuickenLoans/SlickQuiz
  *
- * @updated July 15, 2013
+ * @updated August 2, 2013
  *
  * @author Julie Cameron - http://www.jewlofthelotus.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -299,15 +299,7 @@
                 // Collect the answers submitted
                 var selectedAnswers = [];
                 answerInputs.each( function() {
-                    var inputValue = '';
-
-                    // If we're in jQuery Mobile, grab value from nested span
-                    if ($('.ui-mobile').length > 0) {
-                        inputValue = $(this).next('label').find('span.ui-btn-text').text();
-                    } else {
-                        inputValue = $(this).next('label').text();
-                    }
-
+                    var inputValue = $(this).next('label').text();
                     selectedAnswers.push(inputValue);
                 });
 
