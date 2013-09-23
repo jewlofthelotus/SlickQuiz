@@ -103,11 +103,13 @@ See js/slickQuiz-config.js
                     {"option": "a correct answer",          "correct": true},
                     {"option": "another correct answer",    "correct": true}
                 ],
+                "select_any": false, // optional, see below
                 "correct": "The Correct Response Message",
                 "incorrect": "The Incorrect Response Message"
             }
         ]
     }
 
+Note: `select_any` is used if there is more than one true answer and when submitting any single true answer is considered correct.  (Select ANY that apply vs. Select ALL that apply)
 
-Created by [Julie Cameron](http://jewlofthelotus.com) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
+Created by [Julie Cameron](http://juliecameron.com) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
