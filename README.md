@@ -1,3 +1,7 @@
+# This project is no longer actively maintained.
+
+# Please see [jewlofthelotus/SlickQuiz](https://github.com/jewlofthelotus/SlickQuiz) for updates.
+
 A jQuery plugin for creating pretty, dynamic quizzes.
 
 
