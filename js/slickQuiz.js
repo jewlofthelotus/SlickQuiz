@@ -2,7 +2,7 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/QuickenLoans/SlickQuiz
  *
- * @updated September 23, 2013
+ * @updated October 15, 2013
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -480,7 +480,10 @@
             // Bind "start" button
             $quizStarter.on('click', function(e) {
                 e.preventDefault();
-                plugin.method.startQuiz();
+
+                if (!this.disabled && !$(this).hasClass('disabled')) {
+                    plugin.method.startQuiz();
+                }
             });
 
             // Bind "try again" button
