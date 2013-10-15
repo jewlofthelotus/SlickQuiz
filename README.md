@@ -112,4 +112,4 @@ See js/slickQuiz-config.js
 
 Note: `select_any` is used if there is more than one true answer and when submitting any single true answer is considered correct.  (Select ANY that apply vs. Select ALL that apply)
 
-Created by [Julie Cameron](http://juliecameron.com) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
+Created by [Julie Cameron](http://juliecameron.com) while previously employed at [Quicken Loans](http://quickenloans.com), Detroit, MI
