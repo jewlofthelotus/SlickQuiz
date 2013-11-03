@@ -1,8 +1,9 @@
 /*!
  * SlickQuiz jQuery Plugin
- * http://github.com/QuickenLoans/SlickQuiz
+ * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated October 15, 2013
+ * @updated November 2, 2013
+ * @version 1.5.1
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -26,8 +27,8 @@
                 randomSortQuestions: false,
                 randomSortAnswers: false,
                 preventUnanswered: false,
-                completionResponseMessaging: false,
-                disableResponseMessaging: false
+                perQuestionResponseMessaging: true,
+                completionResponseMessaging: false
             },
 
             // Class Name Strings (Used for building quiz and for selectors)
@@ -88,6 +89,14 @@
                 options.preventUnanswered = options.disableNext;
             }
             depMsg += 'The \'disableNext\' option has been deprecated, please use \'preventUnanswered\' in it\'s place.\n\n';
+        }
+
+        if (options && typeof options.disableResponseMessaging != 'undefined') {
+            if (typeof options.preventUnanswered == 'undefined') {
+                options.perQuestionResponseMessaging = options.disableResponseMessaging;
+            }
+            depMsg += 'The \'disableResponseMessaging\' option has been deprecated, please use' +
+                      ' \'perQuestionResponseMessaging\' and \'completionResponseMessaging\' in it\'s place.\n\n';
         }
 
         if (depMsg !== '') {
@@ -190,7 +199,7 @@
                         questionHTML.append(answerHTML);
 
                         // If response messaging is NOT disabled, add it
-                        if (!plugin.config.disableResponseMessaging) {
+                        if (plugin.config.perQuestionResponseMessaging || plugin.config.completionResponseMessaging) {
                             // Now let's append the correct / incorrect response messages
                             var responseHTML = $('<ul class="' + responsesClass + '"></ul>');
                             responseHTML.append('<li class="' + correctResponseClass + '">' + question.correct + '</li>');
@@ -205,9 +214,8 @@
                             questionHTML.append('<a href="#" class="button ' + backToQuestionClass + '">' + plugin.config.backButtonText + '</a>');
                         }
 
-                        // If response messaging is disabled or hidden until the quiz is completed,
-                        // make the nextQuestion button the checkAnswer button, as well
-                        if (plugin.config.disableResponseMessaging || plugin.config.completionResponseMessaging) {
+                        // If we're not showing responses per question, show next question button and make it check the answer too
+                        if (!plugin.config.perQuestionResponseMessaging) {
                             questionHTML.append('<a href="#" class="button ' + nextQuestionClass + ' ' + checkAnswerClass + '">' + plugin.config.nextQuestionText + '</a>');
                         } else {
                             questionHTML.append('<a href="#" class="button ' + nextQuestionClass + '">' + plugin.config.nextQuestionText + '</a>');
@@ -320,20 +328,16 @@
                     questionLI.addClass(correctClass);
                 }
 
-                // If response messaging hasn't been disabled, toggle the proper response
-                if (!plugin.config.disableResponseMessaging) {
-                    // If response messaging hasn't been set to display upon quiz completion, show it now
-                    if (!plugin.config.completionResponseMessaging) {
-                        questionLI.find(_answers).hide();
-                        questionLI.find(_responses).show();
+                // Toggle appropriate response (either for display now and / or on completion)
+                questionLI.find(correctResponse ? _correctResponse : _incorrectResponse).show();
 
-                        $(checkButton).hide();
-                        questionLI.find(_nextQuestionBtn).fadeIn(300);
-                        questionLI.find(_prevQuestionBtn).fadeIn(300);
-                    }
-
-                    // Toggle responses based on submission
-                    questionLI.find(correctResponse ? _correctResponse : _incorrectResponse).fadeIn(300);
+                // If perQuestionResponseMessaging is enabled, toggle response and navigation now
+                if (plugin.config.perQuestionResponseMessaging) {
+                    $(checkButton).hide();
+                    questionLI.find(_answers).hide();
+                    questionLI.find(_responses).show();
+                    questionLI.find(_nextQuestionBtn).fadeIn(300);
+                    questionLI.find(_prevQuestionBtn).fadeIn(300);                    
                 }
             },
 
@@ -372,12 +376,6 @@
                         prevQuestion.find(_responses + ', ' + _responses + ' li').hide();
                         prevQuestion.find(_answers).show();
                         prevQuestion.find(_checkAnswerBtn).show();
-
-                        // If response messaging hasn't been disabled or moved to completion, hide the next question button
-                        // If it has been, we need nextQuestion visible so the user can move forward (there is no separate checkAnswer button)
-                        if (!plugin.config.disableResponseMessaging && !plugin.config.completionResponseMessaging) {
-                            prevQuestion.find(_nextQuestionBtn).hide();
-                        }
 
                         if (prevQuestion.attr('id') != 'question0') {
                             prevQuestion.find(_prevQuestionBtn).show();
@@ -425,8 +423,8 @@
                 $(_quizLevel).addClass('level' + levelRank);
 
                 $quizArea.fadeOut(300, function() {
-                    // If response messaging is set to show upon quiz completion, show it
-                    if (plugin.config.completionResponseMessaging && !plugin.config.disableResponseMessaging) {
+                    // If response messaging is set to show upon quiz completion, show it now
+                    if (plugin.config.completionResponseMessaging) {
                         $(_element + ' input').prop('disabled', true);
                         $(_element + ' .button:not(' + _tryAgainBtn + '), ' + _element + ' ' + _questionCount).hide();
                         $(_element + ' ' + _question + ', ' + _element + ' ' + _responses).show();

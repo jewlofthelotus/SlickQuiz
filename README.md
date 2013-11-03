@@ -10,7 +10,10 @@ See js/slickQuiz-config.js to set up your quiz copy and questions.
 To initialize your quiz:
 
     $(function () {
-        $('#slickQuiz').slickQuiz();
+        var options = {
+            // see below
+        };
+        $('#slickQuiz').slickQuiz(options);
     });
 
 
@@ -18,33 +21,36 @@ To initialize your quiz:
 
 **`json`** (JSON Object) - your quiz JSON, pass this instead of setting quizJSON outside of the plugin (see js/slickQuiz-config.js)
 
-**`checkAnswerText`** (String) - the text to use on the check answer button
+**`checkAnswerText`** (String) *Default: 'Check My Answer!';* - the text to use on the check answer button
 
-**`nextQuestionText`** (String) - the text to use on the next question button
+**`nextQuestionText`** (String) *Default: 'Next &raquo;';* - the text to use on the next question button
 
-**`backButtonText`** (String) - the text to use on the back button, if left null / blank (default) - no back button will be displayed
+**`backButtonText`** (String) *Default: '';* - the text to use on the back button; if left null / blank (default) - no back button will be displayed
 
-**`tryAgainText`** (String) - the text to use on the try again button, if left null / blank (default) - no try again button will be displayed
+**`tryAgainText`** (String) *Default: '';* - the text to use on the try again button; if left null / blank - no try again button will be displayed
 
-**`skipStartButton`** (Boolean) - whether or not to skip the quiz "start" button, defaults to false
+**`skipStartButton`** (Boolean) *Default: false;* - whether or not to skip the quiz "start" button
 
-**`numberOfQuestions`** (Integer) - the number of questions to load from the question set in the JSON object, defaults to null (all questions); Note: If you set this to an integer, you'll probably also want to set <code>randomSortQuestions</code> or <code>randomSort</code> to **true** to ensure that you get a mixed set of questions each page load.
+**`numberOfQuestions`** (Integer) *Default: null;* - the number of questions to load from the question set in the JSON object, defaults to null (all questions); Note: If you set this to an integer, you'll probably also want to set <code>randomSortQuestions</code> or <code>randomSort</code> to **true** to ensure that you get a mixed set of questions each page load.
 
-**`randomSortQuestions`** (Boolean) - whether or not to randomly sort questions ONLY, defaults to false
+**`randomSortQuestions`** (Boolean) *Default: false;* - whether or not to randomly sort questions ONLY
 
-**`randomSortAnswers`** (Boolean) - whether or not to randomly sort answers ONLY, defaults to false
+**`randomSortAnswers`** (Boolean) *Default: false;* - whether or not to randomly sort answers ONLY
 
-**`randomSort`** (Boolean) - whether or not to randomly sort questions AND their answers (overrides <code>randomSortQuestions</code> and <code>randomSortAnswers</code>), defaults to false. NOTE: this will be deprecated in a future release.
+**`randomSort`** (Boolean) *Default: false;* - whether or not to randomly sort questions AND their answers (overrides <code>randomSortQuestions</code> and <code>randomSortAnswers</code>). NOTE: this will be deprecated in a future release.
 
-**`preventUnanswered`** (Boolean) - prevents submitting a question with zero answers, defaults to false
+**`preventUnanswered`** (Boolean) *Default: false;* - prevents submitting a question with zero answers
 
-**`completionResponseMessaging`** (Boolean) - Hides all correct / incorrect response messages until the quiz is completed (nextQuestion button replaces checkAnswer button), defaults to false
+**`perQuestionResponseMessaging`** (Boolean) *Default: true;* - Displays correct / incorrect response messages after each question is submitted.
 
-**`disableResponseMessaging`** (Boolean) - Hides all correct / incorrect response messages (nextQuestion button replaces checkAnswer button), defaults to false
+**`completionResponseMessaging`** (Boolean) *Default: false;* - Displays all questions and selected answers with correct or incorrect response messages when the quiz is completed. 
+
 
 #### Deprecated Options
 
-**`disableNext`** (Boolean) - prevents submitting a question with zero answers, defaults to false. You should now use <code>preventUnanswered</code> instead.
+**`disableNext`** - Prevents submitting a question with zero answers. You should now use <code>preventUnanswered</code> instead.
+
+**`disableResponseMessaging`** - Hides all correct / incorrect response messages. You should now use <code>perQuestionResponseMessaging</code> and <code>completionResponseMessaging</code> instead.
 
 
 ## Advanced Usage
