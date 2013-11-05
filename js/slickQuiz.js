@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated November 2, 2013
- * @version 1.5.1
+ * @updated November 4, 2013
+ * @version 1.5.11
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -427,7 +427,7 @@
                     if (plugin.config.completionResponseMessaging) {
                         $(_element + ' input').prop('disabled', true);
                         $(_element + ' .button:not(' + _tryAgainBtn + '), ' + _element + ' ' + _questionCount).hide();
-                        $(_element + ' ' + _question + ', ' + _element + ' ' + _responses).show();
+                        $(_element + ' ' + _question + ', ' + _element + ' ' + _answers + ', ' + _element + ' ' + _responses).show();
                         $quizResults.append($(_element + ' ' + _questions)).fadeIn(500);
                     } else {
                         $quizResults.fadeIn(500);
