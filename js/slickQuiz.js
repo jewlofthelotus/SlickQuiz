@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated November 4, 2013
- * @version 1.5.11
+ * @updated November 9, 2013
+ * @version 1.5.12
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -137,7 +137,7 @@
 
                 // add retry button to results view, if enabled
                 if (plugin.config.tryAgainText && plugin.config.tryAgainText !== '') {
-                    $quizResultsCopy.before('<a class="button ' + tryAgainClass + '" href="#">' + plugin.config.tryAgainText + '</a>');
+                    $quizResultsCopy.append('<p><a class="button ' + tryAgainClass + '" href="#">' + plugin.config.tryAgainText + '</a></p>');
                 }
 
                 // Setup questions
@@ -337,7 +337,7 @@
                     questionLI.find(_answers).hide();
                     questionLI.find(_responses).show();
                     questionLI.find(_nextQuestionBtn).fadeIn(300);
-                    questionLI.find(_prevQuestionBtn).fadeIn(300);                    
+                    questionLI.find(_prevQuestionBtn).fadeIn(300);
                 }
             },
 
