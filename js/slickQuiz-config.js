@@ -29,11 +29,12 @@ var quizJSON = {
         },
         { // Question 2 - Multiple Choice, Multiple True Answers, Select Any
             "q": "Which of the following best represents your preferred breakfast?",
+            "id": "my_question0",
             "a": [
-                {"option": "Bacon and eggs",               "correct": false},
-                {"option": "Fruit, oatmeal, and yogurt",   "correct": true},
-                {"option": "Leftover pizza",               "correct": false},
-                {"option": "Eggs, fruit, toast, and milk", "correct": true} // no comma here
+                {"option": "Bacon and eggs",               "value": "1", "correct": false},
+                {"option": "Fruit, oatmeal, and yogurt",   "value": "2", "correct": true},
+                {"option": "Leftover pizza",               "value": "3", "correct": false},
+                {"option": "Eggs, fruit, toast, and milk", "value": "4", "correct": true} // no comma here
             ],
             "select_any": true,
             "correct": "<p><span>Nice!</span> Your cholestoral level is probably doing alright.</p>",
@@ -42,34 +43,40 @@ var quizJSON = {
         },
         { // Question 3 - Multiple Choice, Multiple True Answers, Select All
             "q": "Where are you right now? Select ALL that apply.",
+            "id": "my_question1",
             "a": [
-                {"option": "Planet Earth",           "correct": true},
-                {"option": "Pluto",                  "correct": false},
-                {"option": "At a computing device",  "correct": true},
-                {"option": "The Milky Way",          "correct": true} // no comma here
+                {"option": "Planet Earth",           "value": "1", "correct": true},
+                {"option": "Pluto",                  "value": "2", "correct": false},
+                {"option": "At a computing device",  "value": "3", "correct": true},
+                {"option": "The Milky Way",          "value": "4", "correct": true} // no comma here
             ],
             "correct": "<p><span>Brilliant!</span> You're seriously a genius, (wo)man.</p>",
-            "incorrect": "<p><span>Not Quite.</span> You're actually on Planet Earth, in The Milky Way, At a computer. But nice try.</p>" // no comma here
+            "incorrect": "<p><span>Not Quite.</span> You're actually on Planet Earth, in The Milky Way, At a computer. But nice try.</p>", // no comma here
+            "dependences": {"my_question0":"1"}// List all question dependensis each mast have answer in key
         },
         { // Question 4
             "q": "How many inches of rain does Michigan get on average per year?",
+            "id": "my_question2",
             "a": [
                 {"option": "149",    "correct": false},
                 {"option": "32",     "correct": true},
                 {"option": "3",      "correct": false},
-                {"option": "1291",   "correct": false} // no comma here
+                {"option": "1291",   "value":"1", "correct": false} // no comma here
             ],
             "correct": "<p><span>Holy bananas!</span> I didn't actually expect you to know that! Correct!</p>",
-            "incorrect": "<p><span>Fail.</span> Sorry. You lose. It actually rains approximately 32 inches a year in Michigan.</p>" // no comma here
+            "incorrect": "<p><span>Fail.</span> Sorry. You lose. It actually rains approximately 32 inches a year in Michigan.</p>", // no comma here
+            //"dependences": {"my_question1":["1", "2"]}// List all question dependensis each mast have answer in key
         },
         { // Question 5
             "q": "Is Earth bigger than a basketball?",
+            "id": "my_question3",
             "a": [
                 {"option": "Yes",    "correct": true},
                 {"option": "No",     "correct": false} // no comma here
             ],
             "correct": "<p><span>Good Job!</span> You must be very observant!</p>",
-            "incorrect": "<p><span>ERRRR!</span> What planet Earth are <em>you</em> living on?!?</p>" // no comma here
+            "incorrect": "<p><span>ERRRR!</span> What planet Earth are <em>you</em> living on?!?</p>", // no comma here
+            "dependences": {"my_question2":"1"}// List all question dependensis each mast have answer in key
         } // no comma here
     ]
 };

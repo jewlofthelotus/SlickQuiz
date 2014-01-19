@@ -114,6 +114,51 @@ See js/slickQuiz-config.js
         ]
     }
 
+## Setup dependeces beetwen questions
+What does it mean? It mean that you can set the dependence from question n to question n-1, if question n-1 does not have the answer that set in dependence n the question n will be skiped.
+
+    var quizJSON = {
+        "info": {
+            "name":    "The Quiz Header",
+            "main":    "The Quiz Description Text",
+            "results": "The Quiz Results Copy",
+            "level1":  "The highest ranking",
+            "level2":  "The almost highest ranking",
+            "level3":  "The middle ranking",
+            "level4":  "The almost lowest ranking",
+            "level5":  "The lowest ranking"
+        },
+        "questions": [
+            {
+                "q": "The Question?",
+                "id": "my_question",
+                "a": [
+                    {"option": "an incorrect answer",       "value":"2", "correct": false},
+                    {"option": "a correct answer",          "value":"1", "correct": true},
+                    {"option": "another correct answer",    "value":"3", "correct": true}
+                ],
+                "select_any": false, // optional, see below
+                "correct": "The Correct Response Message",
+                "incorrect": "The Incorrect Response Message"
+            },
+            {
+                "q": "The Question?",
+                "id": "my_question1",
+                "a": [
+                    {"option": "an incorrect answer",       "correct": false},
+                    {"option": "a correct answer",          "correct": true},
+                    {"option": "another correct answer",    "correct": true}
+                ],
+                "select_any": false, // optional, see below
+                "correct": "The Correct Response Message",
+                "incorrect": "The Incorrect Response Message"
+                "dependences": {"my_question":"1"}// List all question dependensis each mast have answer in key
+            }
+        ]
+    }
+
+See my_question1 have dependence {"my_question":"1"} to question my_question to answer 1
+
 Note: `select_any` is used if there is more than one true answer and when submitting any single true answer is considered correct.  (Select ANY that apply vs. Select ALL that apply)
 
 Created by [Julie Cameron](http://juliecameron.com) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI

@@ -141,8 +141,10 @@
                     if (questions.hasOwnProperty(i)) {
                         var question = questions[i];
 
+                        //if questions is not setted in question config, then set standar counter
                         var question_id = question.id ? question.id : 'question' + (count - 1);
 
+                        //aggregate all question in new object with key-id
                         _all_questions[question_id] = question;
 
                         var questionHTML = $('<li class="' + questionClass +'" id="' + question_id + '"></li>');
@@ -177,7 +179,7 @@
                             if (answers.hasOwnProperty(i)) {
                                 answer   = answers[i],
                                 optionId = inputName + '_' + i.toString();
-                                ansValue = answer.value ? answer.value : answer.option;
+                                ansValue = answer.value ? answer.value : answer.option;//if value is not setted in config, then set text as value
 
                                 // If question has >1 true answers and is not a select any, use checkboxes; otherwise, radios
                                 var input = '<input id="' + optionId + '" name="' + inputName +
@@ -310,7 +312,7 @@
                 // Collect the answers submitted
                 var selectedAnswers = [];
                 answerInputs.each( function() {
-                    var inputValue = $(this).next('label').text();
+                    var inputValue = $(this).val();
                     selectedAnswers.push(inputValue);
                 });
 
@@ -352,8 +354,14 @@
                 	next_question_id	= next_question.attr('id'),
 	            	next_dependeces_arr	= _all_questions[next_question_id] != undefined ? _all_questions[next_question_id].dependences : null;
 
-                if(cur_question_id in next_dependeces_arr) {
-                    console.log(cur_question_id, next_dependeces_arr);                    
+                if(cur_question_id == "") {
+                    return curQuestion;
+                } else if (next_dependeces_arr != undefined 
+                           && cur_question_id in next_dependeces_arr //if current question have dependences and dependences is not satisfied, then skip
+                           && !plugin.method.compareAnswers(_all_questions[cur_question_id].selectedAnswers, next_dependeces_arr[cur_question_id] instanceof Array ? next_dependeces_arr[cur_question_id] : [next_dependeces_arr[cur_question_id]] )) {
+
+                    next_question = plugin.method._getNextQuestion(next_question)
+
                 }
 
                 return next_question;
