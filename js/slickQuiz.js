@@ -11,9 +11,10 @@
 
 (function($){
     $.slickQuiz = function(element, options) {
-        var plugin   = this,
-            $element = $(element),
-            _element = '#' + $element.attr('id'),
+        var plugin   	   = this,
+            $element 	   = $(element),
+            _element 	   = '#' + $element.attr('id'),
+        	_all_questions = {},
 
             defaults = {
                 checkAnswerText:  'Check My Answer!',
@@ -140,7 +141,11 @@
                     if (questions.hasOwnProperty(i)) {
                         var question = questions[i];
 
-                        var questionHTML = $('<li class="' + questionClass +'" id="question' + (count - 1) + '"></li>');
+                        var question_id = question.id ? question.id : 'question' + (count - 1);
+
+                        _all_questions[question_id] = question;
+
+                        var questionHTML = $('<li class="' + questionClass +'" id="' + question_id + '"></li>');
                         questionHTML.append('<div class="' + questionCountClass + '">Question <span class="current">' + count + '</span> of <span class="total">' + questionCount + '</span></div>');
                         questionHTML.append('<h3>' + count + '. ' + question.q + '</h3>');
 
@@ -166,16 +171,17 @@
                         // prepare a name for the answer inputs based on the question
                         var selectAny  = question.select_any ? question.select_any : false,
                             inputName  = 'question' + (count - 1),
-                            inputType  = (truths > 1 && !selectAny ? 'checkbox' : 'radio');
+                        	inputType  = (truths > 1 && !selectAny ? 'checkbox' : 'radio');
 
                         for (i in answers) {
                             if (answers.hasOwnProperty(i)) {
                                 answer   = answers[i],
                                 optionId = inputName + '_' + i.toString();
+                                ansValue = answer.value ? answer.value : answer.option;
 
                                 // If question has >1 true answers and is not a select any, use checkboxes; otherwise, radios
                                 var input = '<input id="' + optionId + '" name="' + inputName +
-                                            '" type="' + inputType + '" />';
+                                    '" type="' + inputType + '" value="' + ansValue + '" />';
 
                                 var optionLabel = '<label for="' + optionId + '">' + answer.option + '</label>';
 
@@ -280,11 +286,11 @@
 
             // Validates the response selection(s), displays explanations & next question button
             checkAnswer: function(checkButton) {
-                var questionLI    = $($(checkButton).parents(_question)[0]),
-                    answerInputs  = questionLI.find('input:checked'),
-                    questionIndex = parseInt(questionLI.attr('id').replace(/(question)/, ''), 10),
-                    answers       = questions[questionIndex].a,
-                    selectAny     = questions[questionIndex].select_any ? questions[questionIndex].select_any : false;
+                var questionLI    = $($(checkButton).parents(_question)[0])
+                	answerInputs  = questionLI.find('input:checked'),
+	                questionIndex = questionLI.attr('id'),
+                    answers       = _all_questions[questionIndex].a,
+                    selectAny     = _all_questions[questionIndex].select_any ? _all_questions[questionIndex].select_any : false;
 
                 // Collect the true answers needed for a correct response
                 var trueAnswers = [];
@@ -315,6 +321,7 @@
 
                 // Verify all/any true answers (and no false ones) were submitted
                 var correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers, selectAny);
+                _all_questions[questionIndex].selectedAnswers = selectedAnswers;
 
                 if (correctResponse) {
                     questionLI.addClass(correctClass);
@@ -337,10 +344,25 @@
                 }
             },
 
+            // Method incapsulate the logic of getting next question
+            _getNextQuestion: function(curQuestion) {
+
+                var cur_question_id		= curQuestion.attr('id')
+              		next_question 		= curQuestion.next(_question),
+                	next_question_id	= next_question.attr('id'),
+	            	next_dependeces_arr	= _all_questions[next_question_id] != undefined ? _all_questions[next_question_id].dependences : null;
+
+                if(cur_question_id in next_dependeces_arr) {
+                    console.log(cur_question_id, next_dependeces_arr);                    
+                }
+
+                return next_question;
+            },
+
             // Moves to the next question OR completes the quiz if on last question
             nextQuestion: function(nextButton) {
                 var currentQuestion = $($(nextButton).parents(_question)[0]),
-                    nextQuestion    = currentQuestion.next(_question),
+                	nextQuestion    = plugin.method._getNextQuestion(currentQuestion),
                     answerInputs    = currentQuestion.find('input:checked');
 
                 // If response messaging has been disabled or moved to completion,
