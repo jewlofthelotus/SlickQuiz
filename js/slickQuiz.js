@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated November 9, 2013
- * @version 1.5.12
+ * @updated February 2, 2014
+ * @version 1.5.13
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -23,7 +23,6 @@
                 tryAgainText: '',
                 skipStartButton: false,
                 numberOfQuestions: null,
-                randomSort: false,
                 randomSortQuestions: false,
                 randomSortAnswers: false,
                 preventUnanswered: false,
@@ -99,6 +98,17 @@
                       ' \'perQuestionResponseMessaging\' and \'completionResponseMessaging\' in it\'s place.\n\n';
         }
 
+        if (options && typeof options.randomSort != 'undefined') {
+            if (typeof options.randomSortQuestions == 'undefined') {
+                options.randomSortQuestions = options.randomSort;
+            }
+            if (typeof options.randomSortAnswers == 'undefined') {
+                options.randomSortAnswers = options.randomSort;
+            }
+            depMsg += 'The \'randomSort\' option has been deprecated, please use' +
+                      ' \'randomSortQuestions\' and \'randomSortAnswers\' in it\'s place.\n\n';
+        }
+
         if (depMsg !== '') {
             if (typeof console != 'undefined') {
                 console.warn(depMsg);
@@ -115,7 +125,7 @@
         var quizValues = (plugin.config.json ? plugin.config.json : typeof quizJSON != 'undefined' ? quizJSON : null);
 
         // Get questions, possibly sorted randomly
-        var questions = plugin.config.randomSort || plugin.config.randomSortQuestions ?
+        var questions = plugin.config.randomSortQuestions ?
                         quizValues.questions.sort(function() { return (Math.round(Math.random())-0.5); }) :
                         quizValues.questions;
 
@@ -168,7 +178,7 @@
                         var answerHTML = $('<ul class="' + answersClass + '"></ul>');
 
                         // Get the answers
-                        var answers = plugin.config.randomSort || plugin.config.randomSortAnswers ?
+                        var answers = plugin.config.randomSortAnswers ?
                             question.a.sort(function() { return (Math.round(Math.random())-0.5); }) :
                             question.a;
 
