@@ -31,7 +31,7 @@ To initialize your quiz:
 
 **`skipStartButton`** (Boolean) *Default: false;* - whether or not to skip the quiz "start" button
 
-**`numberOfQuestions`** (Integer) *Default: null;* - the number of questions to load from the question set in the JSON object, defaults to null (all questions); Note: If you set this to an integer, you'll probably also want to set <code>randomSortQuestions</code> or <code>randomSort</code> to **true** to ensure that you get a mixed set of questions each page load.
+**`numberOfQuestions`** (Integer) *Default: null;* - the number of questions to load from the question set in the JSON object, defaults to null (all questions); Note: If you set this to an integer, you'll probably also want to set <code>randomSortQuestions</code> to **true** to ensure that you get a mixed set of questions each page load.
 
 **`randomSortQuestions`** (Boolean) *Default: false;* - whether or not to randomly sort questions ONLY
 
