@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated February 2, 2014
- * @version 1.5.13
+ * @updated February 16, 2014
+ * @version 1.5.14
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -142,7 +142,7 @@
             // Sets up the questions and answers based on above array
             setupQuiz: function() {
                 $quizName.hide().html(quizValues.info.name).fadeIn(1000);
-                $quizHeader.hide().prepend(quizValues.info.main).fadeIn(1000);
+                $quizHeader.hide().prepend($('<div class="quizDescription">' + quizValues.info.main + '</div>')).fadeIn(1000);
                 $quizResultsCopy.append(quizValues.info.results);
 
                 // add retry button to results view, if enabled
