@@ -37,6 +37,9 @@
 	                	nextQuestion: function () {},
 	                	backToQuestion: function () {},
 	                	completeQuiz: function () {}
+	                },
+	                events: { // for interesting events within the quiz flow
+	                	completeQuiz: function (options) {} // reserved: options.questionCount, options.score
 	                }
                 }
             },
@@ -542,6 +545,15 @@
                 });
                 
                 internal.method.turnKeyAndGo (key, options && options.callback ? options.callback : function () {});
+                
+                if (plugin.config.callbacks &&
+                		plugin.config.callbacks.events &&
+                		plugin.config.callbacks.events.completeQuiz) {
+                	plugin.config.callbacks.events.completeQuiz.apply (null, [{
+                		questionCount: questionCount,
+                		score: score
+                	}]);
+                }
             },
 
             // Compares selected responses with true answers, returns true if they match exactly
