@@ -153,7 +153,7 @@
         var internal = {method: {
                 // get the required number of deferred objects wrapped in an totalDeferreds object
                 getTotalDeferreds: function(quantity) { // assuming good arguments
-                        var totalDeferreds = {total: quantity, counter: quantity};
+                        var i, totalDeferreds = {total: quantity, counter: quantity};
                         // e.g. totalDeferreds = { // quantity = 3
                         //	total:		3, // this will hold its value
                         //	counter:	3, // this will be used to count down
@@ -164,22 +164,45 @@
                         for (i = 0; i < quantity; i++) totalDeferreds[i] = $.Deferred();
                         return totalDeferreds;
                 },
+                
+                getKey: function () { // returns []
+                	return []; // yup the key is an empty array
+                },
 
                 // a totalDeferreds object contains many deferred objects; wait for all deferred objects to resolve and then take action
                 actTotalDeferreds: function(totalDeferreds, callback) { // assuming good arguments
-                        var stack = [];
+                        var i, stack = [];
                         for (i = 0; i < totalDeferreds.total; i++) stack.push(totalDeferreds[i].promise()); //easy to process all the deferred promises as an array
                         $.when.apply(null, stack).then(function () {
                                 callback();
                         });
                 },
+                
+                turnKeyAndGo: function (key, go) { // key = [], go = function ()
+                	// when all the notches of the key are accepted (resolved) then the key turns and the engine (callback/go) goes
+                	$.when.apply (null, key). then (function () {
+                		go ();
+                	});
+                },
 
                 // build and return a callback function that will resolve one of the deferreds in totalDeferreds
-                resolve1Deferred: function(totalDeferreds) {
+                resolve1Deferred: function(totalDeferreds, dummy) {
+                		dummy = null; // dummy is solely for developer to keep track/count of animations/deferreds within a method
                         var counter = --totalDeferreds.counter;
                         return function() {
                                 totalDeferreds[counter].resolve();
                         };
+                },
+                
+                getKeyNotch: function (key, notch) { // notch >= 1, key = []
+                	// key has several notches, numbered as 1, 2, 3, ... (no zero notch)
+                	// we put a jQ deferred on each notch
+                	if (!key[notch-1]) {
+                		key[notch-1] = $.Deferred ();
+                	} 
+                	return function () {
+                		key[notch-1].resolve ();
+                	};
                 }
         }};
 
@@ -188,11 +211,14 @@
             setupQuiz: function(options) { // use 'options' object to pass args
             	var tD, totalDeferreds, gC, getCallback;
             	// use jQ deferred objects as callbacks for animations
+            	var key;
                 tD = totalDeferreds = internal.method.getTotalDeferreds(3), // BE SURE that # of deferreds matches # of animation callbacks required in this method!
                 gC = getCallback = internal.method.resolve1Deferred; // this is your Get Callback function, it takes totalDeferreds as input and gives you an animation callback function
+                key = internal.method.getKey ();
+                gC = internal.method.getKeyNotch;
                 
-                $quizName.hide().html(quizValues.info.name).fadeIn(1000, gC(tD,1));
-                $quizHeader.hide().prepend($('<div class="quizDescription">' + quizValues.info.main + '</div>')).fadeIn(1000, gC(tD,2));
+                $quizName.hide().html(quizValues.info.name).fadeIn(1000, gC(key,1));
+                $quizHeader.hide().prepend($('<div class="quizDescription">' + quizValues.info.main + '</div>')).fadeIn(1000, gC(key,2));
                 $quizResultsCopy.append(quizValues.info.results);
 
                 // add retry button to results view, if enabled
@@ -296,15 +322,17 @@
                 if (plugin.config.skipStartButton || $quizStarter.length == 0) {
                     $quizStarter.hide();
                     plugin.method.startQuiz.apply (this, [{callback: plugin.config.callbacks.animations.startQuiz}]); // TODO: determine why 'this' is being passed as arg to startQuiz method
-                    gC(tD,3).apply (null, []); // because else clause has an animation, we need to complete the deferred
+                    gC(key,3).apply (null, []); // because else clause has an animation, we need to complete the deferred
                 } else {
-                    $quizStarter.fadeIn(500, gC(tD,3));
+                    $quizStarter.fadeIn(500, gC(key,3));
                 }
-                
+                /*
                 // handle the deferred objects for animation callbacks
                 internal.method.actTotalDeferreds(tD, function () { // ensure that each deferred has been resolved in the code above!
                     if (options && options.callback) options.callback (); // assume callback is a function
                 });
+                */
+                if (options && options.callback) internal.method.turnKeyAndGo(key, options.callback);
             },
 
             // Starts the quiz (hides start button and displays first question)
