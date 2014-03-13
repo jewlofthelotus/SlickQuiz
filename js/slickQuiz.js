@@ -28,19 +28,18 @@
                 preventUnanswered: false,
                 perQuestionResponseMessaging: true,
                 completionResponseMessaging: false,
-                callbacks: {
-	                animations: { // only for the methods that have jQuery animations offering callback
-	                	setupQuiz: function () {}, // i.e. execute a function when animations in this method are complete
-	                	startQuiz: function () {},
-	                	resetQuiz: function () {}, // plugin.config.callbacks.animations.resetQuiz()
-	                	checkAnswer: function () {},
-	                	nextQuestion: function () {},
-	                	backToQuestion: function () {},
-	                	completeQuiz: function () {}
-	                },
-	                events: { // for interesting events within the quiz flow
-	                	completeQuiz: function (options) {} // reserved: options.questionCount, options.score
-	                }
+                animationCallbacks: { // only for the methods that have jQuery animations offering callback
+                	setupQuiz: function () {},
+                	startQuiz: function () {},
+                	resetQuiz: function () {},
+                	checkAnswer: function () {},
+                	nextQuestion: function () {},
+                	backToQuestion: function () {},
+                	completeQuiz: function () {}
+                },
+                events: {
+                	onStartQuiz: function (options) {},
+                	onCompleteQuiz: function (options) {}  // reserved: options.questionCount, options.score
                 }
             },
 
@@ -293,7 +292,7 @@
                 // Toggle the start button OR start the quiz if start button is disabled
                 if (plugin.config.skipStartButton || $quizStarter.length == 0) {
                     $quizStarter.hide();
-                    plugin.method.startQuiz.apply (this, [{callback: plugin.config.callbacks.animations.startQuiz}]); // TODO: determine why 'this' is being passed as arg to startQuiz method
+                    plugin.method.startQuiz.apply (this, [{callback: plugin.config.animationCallbacks.startQuiz}]); // TODO: determine why 'this' is being passed as arg to startQuiz method
                     kN(key,3).apply (null, []);
                 } else {
                     $quizStarter.fadeIn(500, kN(key,3)); // 3d notch on key must be on both sides of if/else, otherwise key won't turn
@@ -327,6 +326,11 @@
                 }
                 
                 internal.method.turnKeyAndGo (key, options && options.callback ? options.callback : function () {});
+                
+                if (plugin.config.events &&
+                		plugin.config.events.onStartQuiz) {
+                	plugin.config.events.onStartQuiz.apply (null, []);
+                }
             },
 
             // Resets (restarts) the quiz (hides results, resets inputs, and displays first question)
@@ -359,7 +363,7 @@
                     
                     kN(key,1).apply (null, []);
 
-                    plugin.method.startQuiz({callback: plugin.config.callbacks.animations.startQuiz},$quizResults); // TODO: determine why $quizResults is being passed
+                    plugin.method.startQuiz({callback: plugin.config.animationCallbacks.startQuiz},$quizResults); // TODO: determine why $quizResults is being passed
                 });
                 
                 internal.method.turnKeyAndGo (key, options && options.callback ? options.callback : function () {});
@@ -453,7 +457,7 @@
                     });
                 } else {
                 	kN(key,1).apply (null, []); // 1st notch on key must be on both sides of if/else, otherwise key won't turn
-                    plugin.method.completeQuiz({callback: plugin.config.callbacks.animations.completeQuiz});
+                    plugin.method.completeQuiz({callback: plugin.config.animationCallbacks.completeQuiz});
                 }
                 
                 internal.method.turnKeyAndGo (key, options && options.callback ? options.callback : function () {});
@@ -546,10 +550,9 @@
                 
                 internal.method.turnKeyAndGo (key, options && options.callback ? options.callback : function () {});
                 
-                if (plugin.config.callbacks &&
-                		plugin.config.callbacks.events &&
-                		plugin.config.callbacks.events.completeQuiz) {
-                	plugin.config.callbacks.events.completeQuiz.apply (null, [{
+                if (plugin.config.events &&
+                		plugin.config.events.onCompleteQuiz) {
+                	plugin.config.events.onCompleteQuiz.apply (null, [{
                 		questionCount: questionCount,
                 		score: score
                 	}]);
@@ -594,39 +597,39 @@
 
         plugin.init = function() {
             // Setup quiz
-            plugin.method.setupQuiz.apply (null, [{callback: plugin.config.callbacks.animations.setupQuiz}]);
+            plugin.method.setupQuiz.apply (null, [{callback: plugin.config.animationCallbacks.setupQuiz}]);
 
             // Bind "start" button
             $quizStarter.on('click', function(e) {
                 e.preventDefault();
 
                 if (!this.disabled && !$(this).hasClass('disabled')) {
-                    plugin.method.startQuiz.apply (null, [{callback: plugin.config.callbacks.animations.startQuiz}]);
+                    plugin.method.startQuiz.apply (null, [{callback: plugin.config.animationCallbacks.startQuiz}]);
                 }
             });
 
             // Bind "try again" button
             $(_element + ' ' + _tryAgainBtn).on('click', function(e) {
                 e.preventDefault();
-                plugin.method.resetQuiz(this, {callback: plugin.config.callbacks.animations.resetQuiz});
+                plugin.method.resetQuiz(this, {callback: plugin.config.animationCallbacks.resetQuiz});
             });
 
             // Bind "check answer" buttons
             $(_element + ' ' + _checkAnswerBtn).on('click', function(e) {
                 e.preventDefault();
-                plugin.method.checkAnswer(this, {callback: plugin.config.callbacks.animations.checkAnswer});
+                plugin.method.checkAnswer(this, {callback: plugin.config.animationCallbacks.checkAnswer});
             });
 
             // Bind "back" buttons
             $(_element + ' ' + _prevQuestionBtn).on('click', function(e) {
                 e.preventDefault();
-                plugin.method.backToQuestion(this, {callback: plugin.config.callbacks.animations.backToQuestion});
+                plugin.method.backToQuestion(this, {callback: plugin.config.animationCallbacks.backToQuestion});
             });
 
             // Bind "next" buttons
             $(_element + ' ' + _nextQuestionBtn).on('click', function(e) {
                 e.preventDefault();
-                plugin.method.nextQuestion(this, {callback: plugin.config.callbacks.animations.nextQuestion});
+                plugin.method.nextQuestion(this, {callback: plugin.config.animationCallbacks.nextQuestion});
             });
         };
 
