@@ -316,8 +316,8 @@
                     }
                 }
 
-                // NOTE: Collecting .text() for comparison aims to ensure that HTML entities
-                // and HTML elements that may be modified by the browser match up
+                // NOTE: Collecting answer index for comparison aims to ensure that HTML entities
+                // and HTML elements that may be modified by the browser / other scrips match up
 
                 // Collect the answers submitted
                 var selectedAnswers = [];
