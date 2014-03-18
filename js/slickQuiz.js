@@ -426,6 +426,7 @@
                     questionLI.find(_responses).show();
                     questionLI.find(_nextQuestionBtn).fadeIn(300, kN(key,1));
                     questionLI.find(_prevQuestionBtn).fadeIn(300, kN(key,2));
+                    if (!questionLI.find(_prevQuestionBtn).length) kN(key,2).apply (null, []); // 2nd notch on key must be passed even if there's no "back" button
                 } else {
                 	kN(key,1).apply (null, []); // 1st notch on key must be on both sides of if/else, otherwise key won't turn
                 	kN(key,2).apply (null, []); // 2nd notch on key must be on both sides of if/else, otherwise key won't turn
@@ -454,6 +455,7 @@
                 if (nextQuestion.length) {
                     currentQuestion.fadeOut(300, function(){
                         nextQuestion.find(_prevQuestionBtn).show().end().fadeIn(500, kN(key,1));
+                        if (!nextQuestion.find(_prevQuestionBtn).show().end().length) kN(key,1).apply (null, []); // 1st notch on key must be passed even if there's no "back" button
                     });
                 } else {
                 	kN(key,1).apply (null, []); // 1st notch on key must be on both sides of if/else, otherwise key won't turn
