@@ -43,6 +43,24 @@ To initialize your quiz:
 
 **`completionResponseMessaging`** (Boolean) *Default: false;* - Displays all questions and selected answers with correct or incorrect response messages when the quiz is completed.
 
+**`events.onStartQuiz`** (function) *Default: empty;* - a function to be executed once the quiz has started.
+
+**`events.onCompleteQuiz`** (function) *Default: empty;* - a function to be executed the quiz has completed; the function will be passed two arguments in an object: options.questionCount, options.score
+
+**`animationCallbacks.setupQuiz`** (function) *Default: empty;* - a function to be executed once all jQuery animations have completed in the setupQuiz method
+
+**`animationCallbacks.startQuiz`** (function) *Default: empty;* - a function to be executed once all jQuery animations have completed in the startQuiz method; note that events.onStartQuiz() would execute before this callback method due to durations of jQuery animations
+
+**`animationCallbacks.resetQuiz`** (function) *Default: empty;* - a function to be executed once all jQuery animations have completed in the resetQuiz method
+
+**`animationCallbacks.checkAnswer`** (function) *Default: empty;* - a function to be executed once all jQuery animations have completed in the checkAnswer method
+
+**`animationCallbacks.nextQuestion`** (function) *Default: empty;* - a function to be executed once all jQuery animations have completed in the nextQuestion method
+
+**`animationCallbacks.backToQuestion`** (function) *Default: empty;* - a function to be executed once all jQuery animations have completed in the backToQuestion method
+
+**`animationCallbacks.completeQuiz`** (function) *Default: empty;* - a function to be executed once all jQuery animations have completed in the completeQuiz method; note that events.onCompleteQuiz() would execute before this callback method due to durations of jQuery animations
+
 
 #### Deprecated Options
 
