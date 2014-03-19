@@ -27,7 +27,8 @@
                 randomSortAnswers: false,
                 preventUnanswered: false,
                 perQuestionResponseMessaging: true,
-                completionResponseMessaging: false
+                completionResponseMessaging: false,
+                displayQuestionNumbers: true
             },
 
             // Class Name Strings (Used for building quiz and for selectors)
@@ -161,7 +162,12 @@
 
                         var questionHTML = $('<li class="' + questionClass +'" id="question' + (count - 1) + '"></li>');
                         questionHTML.append('<div class="' + questionCountClass + '">Question <span class="current">' + count + '</span> of <span class="total">' + questionCount + '</span></div>');
-                        questionHTML.append('<h3>' + count + '. ' + question.q + '</h3>');
+                        
+                        var questionNumber = '';
+                        if (plugin.config.displayQuestionNumbers) {
+                            questionNumber += count + '. ';
+                        }
+                        questionHTML.append('<h3>' + questionNumber + question.q + '</h3>');
 
                         // Count the number of true values
                         var truths = 0;
