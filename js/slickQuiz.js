@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated March 16, 2014
- * @version 1.5.141
+ * @updated March 23, 2014
+ * @version 1.5.142
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -28,7 +28,8 @@
                 preventUnanswered: false,
                 perQuestionResponseMessaging: true,
                 completionResponseMessaging: false,
-                displayQuestionNumbers: true
+                displayQuestionCount: true,
+                displayQuestionNumber: true
             },
 
             // Class Name Strings (Used for building quiz and for selectors)
@@ -161,10 +162,13 @@
                         var question = questions[i];
 
                         var questionHTML = $('<li class="' + questionClass +'" id="question' + (count - 1) + '"></li>');
-                        questionHTML.append('<div class="' + questionCountClass + '">Question <span class="current">' + count + '</span> of <span class="total">' + questionCount + '</span></div>');
-                        
+
+                        if (plugin.config.displayQuestionCount) {
+                            questionHTML.append('<div class="' + questionCountClass + '">Question <span class="current">' + count + '</span> of <span class="total">' + questionCount + '</span></div>');
+                        }
+
                         var questionNumber = '';
-                        if (plugin.config.displayQuestionNumbers) {
+                        if (plugin.config.displayQuestionNumber) {
                             questionNumber += count + '. ';
                         }
                         questionHTML.append('<h3>' + questionNumber + question.q + '</h3>');

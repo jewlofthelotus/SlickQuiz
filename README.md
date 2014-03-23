@@ -43,6 +43,10 @@ To initialize your quiz:
 
 **`completionResponseMessaging`** (Boolean) *Default: false;* - Displays all questions and selected answers with correct or incorrect response messages when the quiz is completed.
 
+**`displayQuestionCount`** (Boolean) *Default: true;* - whether or not to display the number of questions and which question the user is on, for example "Question 3 of 10"
+
+**`displayQuestionNumber`** (Boolean) *Default: true;* - whether or not to display the number of the question along side the question itself, for example, the "1." in "1. What is the first letter of the alphabet?"
+
 
 #### Deprecated Options
 
