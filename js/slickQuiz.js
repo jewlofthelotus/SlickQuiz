@@ -21,6 +21,10 @@
                 nextQuestionText: 'Next &raquo;',
                 backButtonText: '',
                 tryAgainText: '',
+                questionCountText: 'Question %current of %total',
+                preventUnansweredText: 'You must select at least one answer.',
+                questionTemplateText:  '%count. %text',
+                scoreTemplateText: '%score / %total',
                 skipStartButton: false,
                 numberOfQuestions: null,
                 randomSortQuestions: false,
@@ -29,7 +33,7 @@
                 perQuestionResponseMessaging: true,
                 completionResponseMessaging: false,
                 displayQuestionCount: true,
-                displayQuestionNumber: true,
+                displayQuestionNumber: true,  // Deprecate?
                 animationCallbacks: { // only for the methods that have jQuery animations offering callback
                 	setupQuiz: function () {},
                 	startQuiz: function () {},
@@ -211,14 +215,19 @@
                         var questionHTML = $('<li class="' + questionClass +'" id="question' + (count - 1) + '"></li>');
 
                         if (plugin.config.displayQuestionCount) {
-                            questionHTML.append('<div class="' + questionCountClass + '">Question <span class="current">' + count + '</span> of <span class="total">' + questionCount + '</span></div>');
+                            questionHTML.append('<div class="' + questionCountClass + '">' +
+                                plugin.config.questionCountText
+                                    .replace('%current', '<span class="current">' + count + '</span>')
+                                    .replace('%total', '<span class="total">' +
+                                        questionCount + '</span>') + '</div>');
                         }
 
-                        var questionNumber = '';
+                        var questionNumber = '';  // Not required.
                         if (plugin.config.displayQuestionNumber) {
                             questionNumber += count + '. ';
                         }
-                        questionHTML.append('<h3>' + questionNumber + question.q + '</h3>');
+                        questionHTML.append('<h3>' + plugin.config.questionTemplateText
+                            .replace('%count', count).replace('%text', question.q) + '</h3>');
 
                         // Count the number of true values
                         var truths = 0;
@@ -415,7 +424,7 @@
                 });
 
                 if (plugin.config.preventUnanswered && selectedAnswers.length === 0) {
-                    alert('You must select at least one answer.');
+                    alert(plugin.config.preventUnansweredText);
                     return false;
                 }
 
@@ -544,7 +553,8 @@
                     levelRank = plugin.method.calculateLevel(score),
                     levelText = $.isNumeric(levelRank) ? levels[levelRank] : '';
 
-                $(_quizScore + ' span').html(score + ' / ' + questionCount);
+                $(_quizScore + ' span').html(plugin.config.scoreTemplateText
+                    .replace('%score', score).replace('%total', questionCount));
                 $(_quizLevel + ' span').html(levelText);
                 $(_quizLevel).addClass('level' + levelRank);
 
