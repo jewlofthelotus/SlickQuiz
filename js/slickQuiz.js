@@ -222,12 +222,14 @@
                                         questionCount + '</span>') + '</div>');
                         }
 
-                        var questionNumber = '';  // Not required.
+                        var formatQuestion = '';
                         if (plugin.config.displayQuestionNumber) {
-                            questionNumber += count + '. ';
+                            formatQuestion = plugin.config.questionTemplateText
+                                .replace('%count', count).replace('%text', question.q);
+                        } else {
+                            formatQuestion = question.q;
                         }
-                        questionHTML.append('<h3>' + plugin.config.questionTemplateText
-                            .replace('%count', count).replace('%text', question.q) + '</h3>');
+                        questionHTML.append('<h3>' + formatQuestion + '</h3>');
 
                         // Count the number of true values
                         var truths = 0;
