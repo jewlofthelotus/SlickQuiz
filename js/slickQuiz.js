@@ -25,6 +25,7 @@
                 preventUnansweredText: 'You must select at least one answer.',
                 questionTemplateText:  '%count. %text',
                 scoreTemplateText: '%score / %total',
+                nameTemplateText:  '<span>Quiz: </span>%name',
                 skipStartButton: false,
                 numberOfQuestions: null,
                 randomSortQuestions: false,
@@ -194,7 +195,8 @@
                 keyNotch = internal.method.getKeyNotch; // a function that returns a jQ animation callback function
                 kN = keyNotch; // you specify the notch, you get a callback function for your animation
 
-                $quizName.hide().html(quizValues.info.name).fadeIn(1000, kN(key,1));
+                $quizName.hide().html(plugin.config.nameTemplateText
+                    .replace('%name', quizValues.info.name) ).fadeIn(1000, kN(key,1));
                 $quizHeader.hide().prepend($('<div class="quizDescription">' + quizValues.info.main + '</div>')).fadeIn(1000, kN(key,2));
                 $quizResultsCopy.append(quizValues.info.results);
 
@@ -655,6 +657,17 @@
                 e.preventDefault();
                 plugin.method.nextQuestion(this, {callback: plugin.config.animationCallbacks.nextQuestion});
             });
+
+            // Accessibility (WAI-ARIA).
+            var _qnid = $element.attr('id') + '-name';
+            $quizName.attr('id', _qnid);
+            $element.attr({
+              'aria-labelledby': _qnid,
+              'aria-live': 'polite',
+              'aria-relevant': 'additions',
+              'role': 'form'
+            });
+            $(_quizStarter + ', [href = "#"]').attr('role', 'button');
         };
 
         plugin.init();

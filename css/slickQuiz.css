@@ -28,3 +28,9 @@ ul.answers li,
 ul.responses li {
     list-style-type: none;
 }
+
+/* Accessibility */
+.quizName span {
+    position: absolute;
+    top: -999px;
+}
