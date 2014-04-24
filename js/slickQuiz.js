@@ -21,6 +21,11 @@
                 nextQuestionText: 'Next &raquo;',
                 backButtonText: '',
                 tryAgainText: '',
+                questionCountText: 'Question %current of %total',
+                preventUnansweredText: 'You must select at least one answer.',
+                questionTemplateText:  '%count. %text',
+                scoreTemplateText: '%score / %total',
+                nameTemplateText:  '<span>Quiz: </span>%name',
                 skipStartButton: false,
                 numberOfQuestions: null,
                 randomSortQuestions: false,
@@ -29,7 +34,7 @@
                 perQuestionResponseMessaging: true,
                 completionResponseMessaging: false,
                 displayQuestionCount: true,
-                displayQuestionNumber: true,
+                displayQuestionNumber: true,  // Deprecate?
                 animationCallbacks: { // only for the methods that have jQuery animations offering callback
                 	setupQuiz: function () {},
                 	startQuiz: function () {},
@@ -190,7 +195,8 @@
                 keyNotch = internal.method.getKeyNotch; // a function that returns a jQ animation callback function
                 kN = keyNotch; // you specify the notch, you get a callback function for your animation
 
-                $quizName.hide().html(quizValues.info.name).fadeIn(1000, kN(key,1));
+                $quizName.hide().html(plugin.config.nameTemplateText
+                    .replace('%name', quizValues.info.name) ).fadeIn(1000, kN(key,1));
                 $quizHeader.hide().prepend($('<div class="quizDescription">' + quizValues.info.main + '</div>')).fadeIn(1000, kN(key,2));
                 $quizResultsCopy.append(quizValues.info.results);
 
@@ -211,14 +217,21 @@
                         var questionHTML = $('<li class="' + questionClass +'" id="question' + (count - 1) + '"></li>');
 
                         if (plugin.config.displayQuestionCount) {
-                            questionHTML.append('<div class="' + questionCountClass + '">Question <span class="current">' + count + '</span> of <span class="total">' + questionCount + '</span></div>');
+                            questionHTML.append('<div class="' + questionCountClass + '">' +
+                                plugin.config.questionCountText
+                                    .replace('%current', '<span class="current">' + count + '</span>')
+                                    .replace('%total', '<span class="total">' +
+                                        questionCount + '</span>') + '</div>');
                         }
 
-                        var questionNumber = '';
+                        var formatQuestion = '';
                         if (plugin.config.displayQuestionNumber) {
-                            questionNumber += count + '. ';
+                            formatQuestion = plugin.config.questionTemplateText
+                                .replace('%count', count).replace('%text', question.q);
+                        } else {
+                            formatQuestion = question.q;
                         }
-                        questionHTML.append('<h3>' + questionNumber + question.q + '</h3>');
+                        questionHTML.append('<h3>' + formatQuestion + '</h3>');
 
                         // Count the number of true values
                         var truths = 0;
@@ -415,7 +428,7 @@
                 });
 
                 if (plugin.config.preventUnanswered && selectedAnswers.length === 0) {
-                    alert('You must select at least one answer.');
+                    alert(plugin.config.preventUnansweredText);
                     return false;
                 }
 
@@ -544,7 +557,8 @@
                     levelRank = plugin.method.calculateLevel(score),
                     levelText = $.isNumeric(levelRank) ? levels[levelRank] : '';
 
-                $(_quizScore + ' span').html(score + ' / ' + questionCount);
+                $(_quizScore + ' span').html(plugin.config.scoreTemplateText
+                    .replace('%score', score).replace('%total', questionCount));
                 $(_quizLevel + ' span').html(levelText);
                 $(_quizLevel).addClass('level' + levelRank);
 
@@ -643,6 +657,17 @@
                 e.preventDefault();
                 plugin.method.nextQuestion(this, {callback: plugin.config.animationCallbacks.nextQuestion});
             });
+
+            // Accessibility (WAI-ARIA).
+            var _qnid = $element.attr('id') + '-name';
+            $quizName.attr('id', _qnid);
+            $element.attr({
+              'aria-labelledby': _qnid,
+              'aria-live': 'polite',
+              'aria-relevant': 'additions',
+              'role': 'form'
+            });
+            $(_quizStarter + ', [href = "#"]').attr('role', 'button');
         };
 
         plugin.init();
