@@ -33,7 +33,7 @@
                 preventUnanswered: false,
                 perQuestionResponseMessaging: true,
                 completionResponseMessaging: false,
-                displayQuestionCount: true,
+                displayQuestionCount: true,   // Deprecate?
                 displayQuestionNumber: true,  // Deprecate?
                 animationCallbacks: { // only for the methods that have jQuery animations offering callback
                 	setupQuiz: function () {},
