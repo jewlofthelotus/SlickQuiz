@@ -61,6 +61,7 @@
             incorrectResponseClass = 'incorrect',
             checkAnswerClass       = 'checkAnswer',
             nextQuestionClass      = 'nextQuestion',
+            lastQuestionClass      = 'lastQuestion',
             backToQuestionClass    = 'backToQuestion',
             tryAgainClass          = 'tryAgain',
 
@@ -256,6 +257,10 @@
                         var selectAny  = question.select_any ? question.select_any : false,
                             inputName  = 'question' + (count - 1),
                             inputType  = (truths > 1 && !selectAny ? 'checkbox' : 'radio');
+
+                        if( count == quizValues.questions.length ) {
+                            nextQuestionClass = nextQuestionClass + ' ' + lastQuestionClass;
+                        }
 
                         for (i in answers) {
                             if (answers.hasOwnProperty(i)) {
