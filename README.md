@@ -63,6 +63,15 @@ To initialize your quiz:
 **`displayQuestionNumber`** (Boolean) *Default: true;* - whether or not to display the number of the question along side the question itself, for example, the "1." in "1. What is the first letter of the alphabet?" Note: this may eventually be deprecated in favor of <code>questionTemplateText</code>
 
 
+#### Question Options
+
+*See "Base Config Options" below for examples*
+
+**`select_any`** (Boolean) *Optional*  - Use if there is more than one true answer and when submitting any single true answer should be considered correct.  (Select ANY that apply vs. Select ALL that apply)
+
+**`force_checkbox`** (Boolean) *Optional* - Set this to `true` if you want to render checkboxes instead of radios even if the question only has one true answer.
+
+
 #### Event Options
 
 **`events.onStartQuiz`** (function) *Default: empty;* - a function to be executed once the quiz has started.
@@ -152,16 +161,13 @@ See `js/slickQuiz-config.js`
                     {"option": "a correct answer",          "correct": true},
                     {"option": "another correct answer",    "correct": true}
                 ],
-                "select_any": false, // optional, see below
-                "force_checkbox": false, // optional, see below
                 "correct": "The Correct Response Message",
-                "incorrect": "The Incorrect Response Message"
+                "incorrect": "The Incorrect Response Message",
+                "select_any": false, // optional, see "Question Options" above
+                "force_checkbox": false // optional, see "Question Options" above
             }
         ]
     }
 
-Note: `select_any` is used if there is more than one true answer and when submitting any single true answer is considered correct.  (Select ANY that apply vs. Select ALL that apply)
-
-Note: `force_checkbox` Set this true if you want to render checkboxes instead of radios even if only one answer is true.
 
 Created by [Julie Cameron](http://juliecameron.com) while previously employed at [Quicken Loans](http://quickenloans.com), Detroit, MI
