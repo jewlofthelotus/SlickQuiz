@@ -153,6 +153,7 @@ See `js/slickQuiz-config.js`
                     {"option": "another correct answer",    "correct": true}
                 ],
                 "select_any": false, // optional, see below
+                "force_checkbox": false, // optional, see below
                 "correct": "The Correct Response Message",
                 "incorrect": "The Incorrect Response Message"
             }
@@ -160,5 +161,7 @@ See `js/slickQuiz-config.js`
     }
 
 Note: `select_any` is used if there is more than one true answer and when submitting any single true answer is considered correct.  (Select ANY that apply vs. Select ALL that apply)
+
+Note: `force_checkbox` Set this true if you want to render checkboxes instead of radios even if only one answer is true.
 
 Created by [Julie Cameron](http://juliecameron.com) while previously employed at [Quicken Loans](http://quickenloans.com), Detroit, MI
