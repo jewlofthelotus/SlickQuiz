@@ -73,6 +73,7 @@ ol li { list-style-type: decimal; margin-left: 20px; }
 }
 
 .tryAgain {
+    float: none;
     margin: 20px 0;
 }
 
@@ -120,9 +121,10 @@ ul.responses li p span {
     font-weight: bold;
     font-size: 18px;
 }
-ul.responses li.correct p span {
+ul.answers li.correct, ul.responses li.correct p span {
     color: #6C9F2E;
-}ul.responses li.incorrect p span {
+}
+ul.responses li.incorrect p span {
     color: #B5121B;
 }
 
