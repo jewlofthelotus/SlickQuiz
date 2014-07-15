@@ -254,9 +254,11 @@
                             question.a;
 
                         // prepare a name for the answer inputs based on the question
-                        var selectAny  = question.select_any ? question.select_any : false,
-                            inputName  = 'question' + (count - 1),
-                            inputType  = (truths > 1 && !selectAny ? 'checkbox' : 'radio');
+                        var selectAny     = question.select_any ? question.select_any : false,
+                            forceCheckbox = question.force_checkbox ? question.force_checkbox : false,
+                            checkbox      = (truths > 1 && !selectAny) || forceCheckbox,
+                            inputName     = 'question' + (count - 1),
+                            inputType     = checkbox ? 'checkbox' : 'radio';
 
                         if( count == quizValues.questions.length ) {
                             nextQuestionClass = nextQuestionClass + ' ' + lastQuestionClass;
