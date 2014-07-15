@@ -3,7 +3,7 @@
  * http://github.com/jewlofthelotus/SlickQuiz
  *
  * @updated July 14, 2014
- * @version 1.5.162
+ * @version 1.5.163
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -57,6 +57,7 @@
             answersClass           = 'answers',
             responsesClass         = 'responses',
             correctClass           = 'correctResponse',
+            incorrectClass         = 'incorrectResponse',
             correctResponseClass   = 'correct',
             incorrectResponseClass = 'incorrect',
             checkAnswerClass       = 'checkAnswer',
@@ -70,7 +71,9 @@
             _questions             = '.' + questionGroupClass,
             _question              = '.' + questionClass,
             _answers               = '.' + answersClass,
+            _answer                = '.' + answersClass + ' li',
             _responses             = '.' + responsesClass,
+            _response              = '.' + responsesClass + ' li',
             _correct               = '.' + correctClass,
             _correctResponse       = '.' + correctResponseClass,
             _incorrectResponse     = '.' + incorrectResponseClass,
@@ -161,31 +164,30 @@
 
         // some special private/internal methods
         var internal = {method: {
+            // get a key whose notches are "resolved jQ deferred" objects; one per notch on the key
+            // think of the key as a house key with notches on it
+            getKey: function (notches) { // returns [], notches >= 1
+            	var key = [];
+            	for (i=0; i<notches; i++) key[i] = $.Deferred ();
+            	return key;
+            },
 
-                // get a key whose notches are "resolved jQ deferred" objects; one per notch on the key
-                // think of the key as a house key with notches on it
-                getKey: function (notches) { // returns [], notches >= 1
-                	var key = [];
-                	for (i=0; i<notches; i++) key[i] = $.Deferred ();
-                	return key;
-                },
+            // put the key in the door, if all the notches pass then you can turn the key and "go"
+            turnKeyAndGo: function (key, go) { // key = [], go = function ()
+            	// when all the notches of the key are accepted (resolved) then the key turns and the engine (callback/go) starts
+            	$.when.apply (null, key). then (function () {
+            		go ();
+            	});
+            },
 
-                // put the key in the door, if all the notches pass then you can turn the key and "go"
-                turnKeyAndGo: function (key, go) { // key = [], go = function ()
-                	// when all the notches of the key are accepted (resolved) then the key turns and the engine (callback/go) starts
-                	$.when.apply (null, key). then (function () {
-                		go ();
-                	});
-                },
-
-                // get one jQ
-                getKeyNotch: function (key, notch) { // notch >= 1, key = []
-                	// key has several notches, numbered as 1, 2, 3, ... (no zero notch)
-                	// we resolve and return the "jQ deferred" object at specified notch
-                	return function () {
-                		key[notch-1].resolve (); // it is ASSUMED that you initiated the key with enough notches
-                	};
-                }
+            // get one jQ
+            getKeyNotch: function (key, notch) { // notch >= 1, key = []
+            	// key has several notches, numbered as 1, 2, 3, ... (no zero notch)
+            	// we resolve and return the "jQ deferred" object at specified notch
+            	return function () {
+            		key[notch-1].resolve (); // it is ASSUMED that you initiated the key with enough notches
+            	};
+            }
         }};
 
         plugin.method = {
@@ -374,12 +376,12 @@
                     $(_element + ' input').prop('checked', false).prop('disabled', false);
 
                     $quizLevel.attr('class', 'quizLevel');
-                    $(_element + ' ' + _correct).removeClass(correctClass);
+                    $(_element + ' ' + _question).removeClass(correctClass).removeClass(incorrectClass);
+                    $(_element + ' ' + _answer).removeClass(correctResponseClass).removeClass(incorrectResponseClass);
 
                     $(_element + ' ' + _question          + ',' +
                       _element + ' ' + _responses         + ',' +
-                      _element + ' ' + _correctResponse   + ',' +
-                      _element + ' ' + _incorrectResponse + ',' +
+                      _element + ' ' + _response          + ',' +
                       _element + ' ' + _nextQuestionBtn   + ',' +
                       _element + ' ' + _prevQuestionBtn
                     ).hide();
@@ -407,29 +409,37 @@
             	kN = keyNotch; // you specify the notch, you get a callback function for your animation
 
                 var questionLI    = $($(checkButton).parents(_question)[0]),
-                    answerInputs  = questionLI.find('input:checked'),
+                    answerLIs     = questionLI.find(_answers + ' li'),
+                    answerSelects = answerLIs.find('input:checked'),
                     questionIndex = parseInt(questionLI.attr('id').replace(/(question)/, ''), 10),
                     answers       = questions[questionIndex].a,
                     selectAny     = questions[questionIndex].select_any ? questions[questionIndex].select_any : false;
+
+                answerLIs.addClass(incorrectResponseClass);
 
                 // Collect the true answers needed for a correct response
                 var trueAnswers = [];
                 for (i in answers) {
                     if (answers.hasOwnProperty(i)) {
-                        var answer = answers[i];
+                        var answer = answers[i],
+                            index  = parseInt(i, 10);
 
                         if (answer.correct) {
-                            trueAnswers.push(parseInt(i, 10));
+                            trueAnswers.push(index);
+                            answerLIs.eq(index).removeClass(incorrectResponseClass).addClass(correctResponseClass);
                         }
                     }
                 }
+
+                // TODO: Now that we're marking answer LIs as correct / incorrect, we might be able
+                // to do all our answer checking at the same time
 
                 // NOTE: Collecting answer index for comparison aims to ensure that HTML entities
                 // and HTML elements that may be modified by the browser / other scrips match up
 
                 // Collect the answers submitted
                 var selectedAnswers = [];
-                answerInputs.each( function() {
+                answerSelects.each( function() {
                     var id = $(this).attr('id');
                     selectedAnswers.push(parseInt(id.replace(/(question\d{1,}_)/, ''), 10));
                 });
@@ -444,6 +454,8 @@
 
                 if (correctResponse) {
                     questionLI.addClass(correctClass);
+                } else {
+                    questionLI.addClass(incorrectClass);
                 }
 
                 // Toggle appropriate response (either for display now and / or on completion)
@@ -510,7 +522,7 @@
                     var prevQuestion = questionLI.prev(_question);
 
                     questionLI.fadeOut(300, function() {
-                        prevQuestion.removeClass(correctClass);
+                        prevQuestion.removeClass(correctClass).removeClass(incorrectClass);
                         prevQuestion.find(_responses + ', ' + _responses + ' li').hide();
                         prevQuestion.find(_answers).show();
                         prevQuestion.find(_checkAnswerBtn).show();
@@ -528,7 +540,7 @@
                 // Back to question from responses
                 } else {
                     questionLI.find(_responses).fadeOut(300, function(){
-                        questionLI.removeClass(correctClass);
+                        questionLI.removeClass(correctClass).removeClass(incorrectClass);
                         questionLI.find(_responses + ' li').hide();
                         answers.fadeIn(500, kN(key,1)); // 1st notch on key must be on both sides of if/else, otherwise key won't turn
                         questionLI.find(_checkAnswerBtn).fadeIn(500, kN(key,2));
