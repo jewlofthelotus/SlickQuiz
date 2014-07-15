@@ -57,6 +57,7 @@
             answersClass           = 'answers',
             responsesClass         = 'responses',
             correctClass           = 'correctResponse',
+            incorrectClass         = 'incorrectResponse',
             correctResponseClass   = 'correct',
             incorrectResponseClass = 'incorrect',
             checkAnswerClass       = 'checkAnswer',
@@ -267,7 +268,8 @@
                         for (i in answers) {
                             if (answers.hasOwnProperty(i)) {
                                 answer   = answers[i],
-                                optionId = inputName + '_' + i.toString();
+                                optionId = inputName + '_' + i.toString(),
+                                answerStatus = answer.correct ? correctResponseClass : incorrectResponseClass;
 
                                 // If question has >1 true answers and is not a select any, use checkboxes; otherwise, radios
                                 var input = '<input id="' + optionId + '" name="' + inputName +
@@ -275,7 +277,7 @@
 
                                 var optionLabel = '<label for="' + optionId + '">' + answer.option + '</label>';
 
-                                var answerContent = $('<li></li>')
+                                var answerContent = $('<li class="' + answerStatus + '"></li>')
                                     .append(input)
                                     .append(optionLabel);
                                 answerHTML.append(answerContent);
@@ -444,6 +446,8 @@
 
                 if (correctResponse) {
                     questionLI.addClass(correctClass);
+                } else {
+                    questionLI.addClass(incorrectClass);
                 }
 
                 // Toggle appropriate response (either for display now and / or on completion)
