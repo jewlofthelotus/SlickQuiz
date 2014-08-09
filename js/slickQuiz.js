@@ -31,6 +31,8 @@
                 randomSortQuestions: false,
                 randomSortAnswers: false,
                 preventUnanswered: false,
+                disableScore: false,
+                disableRanking: false,
                 perQuestionResponseMessaging: true,
                 perQuestionResponseAnswers: false,
                 completionResponseMessaging: false,
@@ -568,21 +570,31 @@
             	keyNotch = internal.method.getKeyNotch; // a function that returns a jQ animation callback function
             	kN = keyNotch; // you specify the notch, you get a callback function for your animation
 
-                var levels    = [
-                                    quizValues.info.level1, // 80-100%
-                                    quizValues.info.level2, // 60-79%
-                                    quizValues.info.level3, // 40-59%
-                                    quizValues.info.level4, // 20-39%
-                                    quizValues.info.level5  // 0-19%
-                                ],
-                    score     = $(_element + ' ' + _correct).length,
-                    levelRank = plugin.method.calculateLevel(score),
-                    levelText = $.isNumeric(levelRank) ? levels[levelRank] : '';
+                var score = $(_element + ' ' + _correct).length;
 
-                $(_quizScore + ' span').html(plugin.config.scoreTemplateText
-                    .replace('%score', score).replace('%total', questionCount));
-                $(_quizLevel + ' span').html(levelText);
-                $(_quizLevel).addClass('level' + levelRank);
+                if (plugin.config.disableScore) {
+                    $(_quizScore).remove()
+                } else {
+                    $(_quizScore + ' span').html(plugin.config.scoreTemplateText
+                        .replace('%score', score).replace('%total', questionCount));
+                }
+
+                if (plugin.config.disableRanking) {
+                    $(_quizLevel).remove()
+                } else {
+                    var levels    = [
+                                        quizValues.info.level1, // 80-100%
+                                        quizValues.info.level2, // 60-79%
+                                        quizValues.info.level3, // 40-59%
+                                        quizValues.info.level4, // 20-39%
+                                        quizValues.info.level5  // 0-19%
+                                    ],
+                        levelRank = plugin.method.calculateLevel(score),
+                        levelText = $.isNumeric(levelRank) ? levels[levelRank] : '';
+
+                    $(_quizLevel + ' span').html(levelText);
+                    $(_quizLevel).addClass('level' + levelRank);
+                }
 
                 $quizArea.fadeOut(300, function() {
                     // If response messaging is set to show upon quiz completion, show it now

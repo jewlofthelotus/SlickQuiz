@@ -64,6 +64,10 @@ To initialize your quiz:
 
 **`displayQuestionNumber`** (Boolean) *Default: true;* - whether or not to display the number of the question along side the question itself, for example, the "1." in "1. What is the first letter of the alphabet?" Note: this may eventually be deprecated in favor of <code>questionTemplateText</code>
 
+**`disableScore`** (Boolean) *Default: false;* - Removes the score from the final results display. Eliminates the need for an element with class <code>quizScore</code> in the markup.
+
+**`disableRanking`** (Boolean) *Default: false;* - Removes the ranking leve from the final results display. Eliminates the need for an element with class <code>quizLevel</code> in the markup, as well as the need for JSON values for <code>level1</code> through <code>level5</code>.
+
 
 #### Question Options
 
