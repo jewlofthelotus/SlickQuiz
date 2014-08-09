@@ -56,7 +56,9 @@ To initialize your quiz:
 
 **`perQuestionResponseMessaging`** (Boolean) *Default: true;* - Displays correct / incorrect response messages after each question is submitted.
 
-**`completionResponseMessaging`** (Boolean) *Default: false;* - Displays all questions and selected answers with correct or incorrect response messages when the quiz is completed.
+**`perquestionResponseAnswers`** (Boolean) *Default: false;* - Keeps the answer options in display after the question is submitted. Note: this should be used in tandem with <code>perQuestionResponseMessaging</code>
+
+**`completionResponseMessaging`** (Boolean) *Default: false;* - Displays all questions and answers with correct or incorrect response messages when the quiz is completed.
 
 **`displayQuestionCount`** (Boolean) *Default: true;* - whether or not to display the number of questions and which question the user is on, for example "Question 3 of 10". Note: this may eventually be deprecated in favor of <code>questionCountText</code>
 

@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated July 14, 2014
- * @version 1.5.163
+ * @updated August 9, 2014
+ * @version 1.5.164
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -32,6 +32,7 @@
                 randomSortAnswers: false,
                 preventUnanswered: false,
                 perQuestionResponseMessaging: true,
+                perQuestionResponseAnswers: false,
                 completionResponseMessaging: false,
                 displayQuestionCount: true,   // Deprecate?
                 displayQuestionNumber: true,  // Deprecate?
@@ -464,7 +465,9 @@
                 // If perQuestionResponseMessaging is enabled, toggle response and navigation now
                 if (plugin.config.perQuestionResponseMessaging) {
                     $(checkButton).hide();
-                    questionLI.find(_answers).hide();
+                    if (!plugin.config.perQuestionResponseAnswers) {
+                        questionLI.find(_answers).hide();
+                    }
                     questionLI.find(_responses).show();
                     questionLI.find(_nextQuestionBtn).fadeIn(300, kN(key,1));
                     questionLI.find(_prevQuestionBtn).fadeIn(300, kN(key,2));
