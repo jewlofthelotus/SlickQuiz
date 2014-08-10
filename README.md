@@ -27,6 +27,8 @@ To initialize your quiz:
 
 **`nextQuestionText`** (String) *Default: 'Next &raquo;';* - the text to use on the next question button
 
+**`completeQuizText`** (String) *Default: '';* - the text to use for the last button the user will click before getting results; if left null / blank (default) - <code>nextQuestionText</code> will be used. Example: "Get Your Results!"
+
 **`backButtonText`** (String) *Default: '';* - the text to use on the back button; if left null / blank (default) - no back button will be displayed
 
 **`tryAgainText`** (String) *Default: '';* - the text to use on the try again button; if left null / blank - no try again button will be displayed
