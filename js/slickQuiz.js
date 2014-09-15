@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated August 24, 2014
- * @version 1.5.165
+ * @updated September 14, 2014
+ * @version 1.5.166
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -34,6 +34,7 @@
                 preventUnanswered: false,
                 disableScore: false,
                 disableRanking: false,
+                scoreAsPercentage: false,
                 perQuestionResponseMessaging: true,
                 perQuestionResponseAnswers: false,
                 completionResponseMessaging: false,
@@ -584,6 +585,9 @@
                 kN = keyNotch; // you specify the notch, you get a callback function for your animation
 
                 var score = $(_element + ' ' + _correct).length;
+                if (plugin.config.scoreAsPercentage) {
+                    score = (score / questionCount).toFixed(2)*100 + "%";
+                }
 
                 if (plugin.config.disableScore) {
                     $(_quizScore).remove()

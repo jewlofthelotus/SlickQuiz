@@ -70,6 +70,8 @@ To initialize your quiz:
 
 **`disableRanking`** (Boolean) *Default: false;* - Removes the ranking leve from the final results display. Eliminates the need for an element with class <code>quizLevel</code> in the markup, as well as the need for JSON values for <code>level1</code> through <code>level5</code>.
 
+**`scoreAsPercentage`** (Boolean) *Default: false;* - Returns the score as a percentage rather than the number of correct responses. If enabled, you'll also want to adjust <code>scoreTemplateText</code> to something like *'%score'*
+
 
 #### Question Options
 
