@@ -3,7 +3,7 @@
  * http://github.com/jewlofthelotus/SlickQuiz
  *
  * @updated October 25, 2014
- * @version 1.5.19
+ * @version 1.5.20
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -478,6 +478,7 @@
                     if (!plugin.config.perQuestionResponseAnswers) {
                         // Make sure answers don't highlight for a split second before they hide
                         questionLI.find(_answers).hide({
+                            duration: 0,
                             complete: function() {
                                 questionLI.addClass(completeClass);
                             }
@@ -592,16 +593,17 @@
                 keyNotch = internal.method.getKeyNotch; // a function that returns a jQ animation callback function
                 kN = keyNotch; // you specify the notch, you get a callback function for your animation
 
-                var score = $(_element + ' ' + _correct).length;
+                var score        = $(_element + ' ' + _correct).length,
+                    displayScore = score;
                 if (plugin.config.scoreAsPercentage) {
-                    score = (score / questionCount).toFixed(2)*100 + "%";
+                    displayScore = (score / questionCount).toFixed(2)*100 + "%";
                 }
 
                 if (plugin.config.disableScore) {
                     $(_quizScore).remove()
                 } else {
                     $(_quizScore + ' span').html(plugin.config.scoreTemplateText
-                        .replace('%score', score).replace('%total', questionCount));
+                        .replace('%score', displayScore).replace('%total', questionCount));
                 }
 
                 if (plugin.config.disableRanking) {
