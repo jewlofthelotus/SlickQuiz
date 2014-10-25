@@ -121,7 +121,7 @@ ul.responses li p span {
     font-weight: bold;
     font-size: 18px;
 }
-ul.answers li.correct, ul.responses li.correct p span {
+.complete ul.answers li.correct, ul.responses li.correct p span {
     color: #6C9F2E;
 }
 ul.responses li.incorrect p span {

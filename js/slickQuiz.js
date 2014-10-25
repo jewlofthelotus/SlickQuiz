@@ -61,6 +61,7 @@
             questionClass          = 'question',
             answersClass           = 'answers',
             responsesClass         = 'responses',
+            completeClass          = 'complete',
             correctClass           = 'correctResponse',
             incorrectClass         = 'incorrectResponse',
             correctResponseClass   = 'correct',
@@ -386,7 +387,7 @@
                     $(_element + ' input').prop('checked', false).prop('disabled', false);
 
                     $quizLevel.attr('class', 'quizLevel');
-                    $(_element + ' ' + _question).removeClass(correctClass).removeClass(incorrectClass);
+                    $(_element + ' ' + _question).removeClass(correctClass).removeClass(incorrectClass).remove(completeClass);
                     $(_element + ' ' + _answer).removeClass(correctResponseClass).removeClass(incorrectResponseClass);
 
                     $(_element + ' ' + _question          + ',' +
@@ -475,7 +476,14 @@
                 if (plugin.config.perQuestionResponseMessaging) {
                     $(checkButton).hide();
                     if (!plugin.config.perQuestionResponseAnswers) {
-                        questionLI.find(_answers).hide();
+                        // Make sure answers don't highlight for a split second before they hide
+                        questionLI.find(_answers).hide({
+                            complete: function() {
+                                questionLI.addClass(completeClass);
+                            }
+                        });
+                    } else {
+                        questionLI.addClass(completeClass);
                     }
                     questionLI.find('input').prop('disabled', true);
                     questionLI.find(_responses).show();
@@ -533,7 +541,7 @@
                 // Back to question from responses
                 if (responses.css('display') === 'block' ) {
                     questionLI.find(_responses).fadeOut(300, function(){
-                        questionLI.removeClass(correctClass).removeClass(incorrectClass);
+                        questionLI.removeClass(correctClass).removeClass(incorrectClass).removeClass(completeClass);
                         questionLI.find(_responses + ', ' + _response).hide();
                         questionLI.find(_answers).show();
                         questionLI.find(_answer).removeClass(correctResponseClass).removeClass(incorrectResponseClass);
@@ -555,7 +563,7 @@
                     var prevQuestion = questionLI.prev(_question);
 
                     questionLI.fadeOut(300, function() {
-                        prevQuestion.removeClass(correctClass).removeClass(incorrectClass);
+                        prevQuestion.removeClass(correctClass).removeClass(incorrectClass).removeClass(completeClass);
                         prevQuestion.find(_responses + ', ' + _response).hide();
                         prevQuestion.find(_answers).show();
                         prevQuestion.find(_answer).removeClass(correctResponseClass).removeClass(incorrectResponseClass);
