@@ -222,6 +222,7 @@
                     count = 1;
 
                 // Loop through questions object
+                var i;
                 for (i in questions) {
                     if (questions.hasOwnProperty(i)) {
                         var question = questions[i];
@@ -247,6 +248,7 @@
 
                         // Count the number of true values
                         var truths = 0;
+                        var answer;
                         for (i in question.a) {
                             if (question.a.hasOwnProperty(i)) {
                                 answer = question.a[i];
@@ -277,8 +279,8 @@
 
                         for (i in answers) {
                             if (answers.hasOwnProperty(i)) {
-                                answer   = answers[i],
-                                optionId = inputName + '_' + i.toString();
+                                answer   = answers[i];
+                                var optionId = inputName + '_' + i.toString();
 
                                 // If question has >1 true answers and is not a select any, use checkboxes; otherwise, radios
                                 var input = '<input id="' + optionId + '" name="' + inputName +
