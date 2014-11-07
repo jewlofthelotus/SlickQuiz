@@ -177,7 +177,7 @@
             // think of the key as a house key with notches on it
             getKey: function (notches) { // returns [], notches >= 1
                 var key = [];
-                for (i=0; i<notches; i++) key[i] = $.Deferred ();
+                for (var i=0; i<notches; i++) key[i] = $.Deferred ();
                 return key;
             },
 
@@ -360,7 +360,9 @@
                     var firstQuestion = $(_element + ' ' + _questions + ' li').first();
                     if (firstQuestion.length) {
                         firstQuestion.fadeIn(500, function () {
-                            if (options && options.callback) options.callback ();
+                            if (options && options.callback) {
+                                options.callback();
+                            }
                         });
                     }
                 }
@@ -435,7 +437,7 @@
 
                 // Collect the true answers needed for a correct response
                 var trueAnswers = [];
-                for (i in answers) {
+                for (var i in answers) {
                     if (answers.hasOwnProperty(i)) {
                         var answer = answers[i],
                             index  = parseInt(i, 10);
@@ -524,7 +526,9 @@
                 if (nextQuestion.length) {
                     currentQuestion.fadeOut(300, function(){
                         nextQuestion.find(_prevQuestionBtn).show().end().fadeIn(500, kN(key,1));
-                        if (!nextQuestion.find(_prevQuestionBtn).show().end().length) kN(key,1).apply (null, []); // 1st notch on key must be passed even if there's no "back" button
+                        if (!nextQuestion.find(_prevQuestionBtn).show().end().length) {
+                            kN(key,1).apply (null, []); // 1st notch on key must be passed even if there's no "back" button
+                        }
                     });
                 } else {
                     kN(key,1).apply (null, []); // 1st notch on key must be on both sides of if/else, otherwise key won't turn
@@ -601,18 +605,18 @@
                 var score        = $(_element + ' ' + _correct).length,
                     displayScore = score;
                 if (plugin.config.scoreAsPercentage) {
-                    displayScore = (score / questionCount).toFixed(2)*100 + "%";
+                    displayScore = (score / questionCount).toFixed(2)*100 + '%';
                 }
 
                 if (plugin.config.disableScore) {
-                    $(_quizScore).remove()
+                    $(_quizScore).remove();
                 } else {
                     $(_quizScore + ' span').html(plugin.config.scoreTemplateText
                         .replace('%score', displayScore).replace('%total', questionCount));
                 }
 
                 if (plugin.config.disableRanking) {
-                    $(_quizLevel).remove()
+                    $(_quizLevel).remove();
                 } else {
                     var levels    = [
                                         quizValues.info.level1, // 80-100%
