@@ -10,6 +10,9 @@
  * @license MIT
  */
 
+/*global quizJSON:false */
+'use strict';
+
 (function($){
     $.slickQuiz = function(element, options) {
         var plugin   = this,

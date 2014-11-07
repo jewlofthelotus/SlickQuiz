@@ -2,6 +2,8 @@
 
 // NOTE: pay attention to commas, IE struggles with those bad boys
 
+/*exported quizJSON */
+
 var quizJSON = {
     "info": {
         "name":    "Test Your Knowledge!!",
