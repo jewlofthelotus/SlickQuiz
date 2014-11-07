@@ -116,26 +116,26 @@
         // Reassign user-submitted deprecated options
         var depMsg = '';
 
-        if (options && typeof options.disableNext != 'undefined') {
-            if (typeof options.preventUnanswered == 'undefined') {
+        if (options && typeof options.disableNext !== 'undefined') {
+            if (typeof options.preventUnanswered === 'undefined') {
                 options.preventUnanswered = options.disableNext;
             }
             depMsg += 'The \'disableNext\' option has been deprecated, please use \'preventUnanswered\' in it\'s place.\n\n';
         }
 
-        if (options && typeof options.disableResponseMessaging != 'undefined') {
-            if (typeof options.preventUnanswered == 'undefined') {
+        if (options && typeof options.disableResponseMessaging !== 'undefined') {
+            if (typeof options.preventUnanswered === 'undefined') {
                 options.perQuestionResponseMessaging = options.disableResponseMessaging;
             }
             depMsg += 'The \'disableResponseMessaging\' option has been deprecated, please use' +
                       ' \'perQuestionResponseMessaging\' and \'completionResponseMessaging\' in it\'s place.\n\n';
         }
 
-        if (options && typeof options.randomSort != 'undefined') {
-            if (typeof options.randomSortQuestions == 'undefined') {
+        if (options && typeof options.randomSort !== 'undefined') {
+            if (typeof options.randomSortQuestions === 'undefined') {
                 options.randomSortQuestions = options.randomSort;
             }
-            if (typeof options.randomSortAnswers == 'undefined') {
+            if (typeof options.randomSortAnswers === 'undefined') {
                 options.randomSortAnswers = options.randomSort;
             }
             depMsg += 'The \'randomSort\' option has been deprecated, please use' +
@@ -143,7 +143,7 @@
         }
 
         if (depMsg !== '') {
-            if (typeof console != 'undefined') {
+            if (typeof console !== 'undefined') {
                 console.warn(depMsg);
             } else {
                 alert(depMsg);
@@ -155,7 +155,7 @@
         plugin.config = $.extend(defaults, options);
 
         // Set via json option or quizJSON variable (see slickQuiz-config.js)
-        var quizValues = (plugin.config.json ? plugin.config.json : typeof quizJSON != 'undefined' ? quizJSON : null);
+        var quizValues = (plugin.config.json ? plugin.config.json : typeof quizJSON !== 'undefined' ? quizJSON : null);
 
         // Get questions, possibly sorted randomly
         var questions = plugin.config.randomSortQuestions ?
@@ -273,7 +273,7 @@
                             inputName     = $element.attr('id') + '_question' + (count - 1),
                             inputType     = checkbox ? 'checkbox' : 'radio';
 
-                        if( count == quizValues.questions.length ) {
+                        if( count === quizValues.questions.length ) {
                             nextQuestionClass = nextQuestionClass + ' ' + lastQuestionClass;
                         }
 
@@ -315,7 +315,7 @@
                         }
 
                         var nextText = plugin.config.nextQuestionText;
-                        if (plugin.config.completeQuizText && count == questionCount) {
+                        if (plugin.config.completeQuizText && count === questionCount) {
                             nextText = plugin.config.completeQuizText;
                         }
 
@@ -338,7 +338,7 @@
                 $quizArea.append(quiz);
 
                 // Toggle the start button OR start the quiz if start button is disabled
-                if (plugin.config.skipStartButton || $quizStarter.length == 0) {
+                if (plugin.config.skipStartButton || $quizStarter.length === 0) {
                     $quizStarter.hide();
                     plugin.method.startQuiz.apply (this, [{callback: plugin.config.animationCallbacks.startQuiz}]); // TODO: determine why 'this' is being passed as arg to startQuiz method
                     kN(key,3).apply (null, []);
@@ -365,7 +365,7 @@
                     }
                 }
 
-                if (plugin.config.skipStartButton || $quizStarter.length == 0) {
+                if (plugin.config.skipStartButton || $quizStarter.length === 0) {
                     start({callback: kN(key,1)});
                 } else {
                     $quizStarter.fadeOut(300, function(){
@@ -557,7 +557,7 @@
                         questionLI.find(_nextQuestionBtn).hide();
 
                         // if question is first, don't show back button on question
-                        if (questionLI.attr('id') != 'question0') {
+                        if (questionLI.attr('id') !== 'question0') {
                             questionLI.find(_prevQuestionBtn).show();
                         } else {
                             questionLI.find(_prevQuestionBtn).hide();
@@ -577,7 +577,7 @@
                         prevQuestion.find(_nextQuestionBtn).hide();
                         prevQuestion.find(_checkAnswerBtn).show();
 
-                        if (prevQuestion.attr('id') != 'question0') {
+                        if (prevQuestion.attr('id') !== 'question0') {
                             prevQuestion.find(_prevQuestionBtn).show();
                         } else {
                             prevQuestion.find(_prevQuestionBtn).hide();
