@@ -6,7 +6,7 @@ html {
 }
 
 body {
-    width: 800px;
+    max-width: 800px;
     margin: 0 auto;
     border: 2px solid #ccc;
     border-top: none;
@@ -137,3 +137,26 @@ ul.responses li.correct p span {
     clear: both;
     margin-top: 20px;
 }
+
+@media screen and (max-width: 768px){
+h1 {
+    font-size: 20px;
+    margin: 0 0 20px;
+}
+h3 {
+    font-size: 15px;
+}
+body{
+    margin: 0px 5px;
+}
+ul.answers {
+    margin-left: 0px;
+    margin-bottom: 20px;
+}
+
+ul.responses li {
+    margin: 10px 0px 20px;
+}
+
+}
+
