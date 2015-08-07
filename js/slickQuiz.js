@@ -723,7 +723,6 @@
 
             $(_element + ' ' + _completeQuizBtn).on('click', function(e) {
                 e.preventDefault();
-                console.log('completeQuiz');
                 plugin.method.completeQuiz({callback: plugin.config.animationCallbacks.completeQuiz});
             })
 
