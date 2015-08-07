@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated August 7, 2015
- * @version 1.5.21
+ * @updated October 25, 2014
+ * @version 1.5.20
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -721,9 +721,9 @@
                 plugin.method.nextQuestion(this, {callback: plugin.config.animationCallbacks.nextQuestion});
             });
 
-            // Bind "completeQuiz" buttons
             $(_element + ' ' + _completeQuizBtn).on('click', function(e) {
                 e.preventDefault();
+                console.log('completeQuiz');
                 plugin.method.completeQuiz({callback: plugin.config.animationCallbacks.completeQuiz});
             })
 
