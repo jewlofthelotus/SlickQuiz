@@ -23,7 +23,8 @@ var quizJSON = {
                 {"option": "23",     "correct": false} // no comma here
             ],
             "correct": "<p><span>That's right!</span> The letter A is the first letter in the alphabet!</p>",
-            "incorrect": "<p><span>Uhh no.</span> It's the first letter of the alphabet. Did you actually <em>go</em> to kindergarden?</p>" // no comma here
+            "incorrect": "<p><span>Uhh no.</span> It's the first letter of the alphabet. Did you actually <em>go</em> to kindergarden?</p>", // no comma here
+            "level": "1"
         },
         { // Question 2 - Multiple Choice, Multiple True Answers, Select Any
             "q": "Which of the following best represents your preferred breakfast?",
@@ -35,7 +36,8 @@ var quizJSON = {
             ],
             "select_any": true,
             "correct": "<p><span>Nice!</span> Your cholestoral level is probably doing alright.</p>",
-            "incorrect": "<p><span>Hmmm.</span> You might want to reconsider your options.</p>" // no comma here
+            "incorrect": "<p><span>Hmmm.</span> You might want to reconsider your options.</p>", // no comma here
+            "level": "2"
         },
         { // Question 3 - Multiple Choice, Multiple True Answers, Select All
             "q": "Where are you right now? Select ALL that apply.",
