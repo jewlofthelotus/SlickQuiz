@@ -58,7 +58,7 @@ To initialize your quiz:
 
 **`perQuestionResponseMessaging`** (Boolean) *Default: true;* - Displays correct / incorrect response messages after each question is submitted.
 
-**`perquestionResponseAnswers`** (Boolean) *Default: false;* - Keeps the answer options in display after the question is submitted. Note: this should be used in tandem with <code>perQuestionResponseMessaging</code>
+**`perQuestionResponseAnswers`** (Boolean) *Default: false;* - Keeps the answer options in display after the question is submitted. Note: this should be used in tandem with <code>perQuestionResponseMessaging</code>
 
 **`completionResponseMessaging`** (Boolean) *Default: false;* - Displays all questions and answers with correct or incorrect response messages when the quiz is completed.
 
