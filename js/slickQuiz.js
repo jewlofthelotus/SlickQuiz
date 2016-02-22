@@ -109,6 +109,18 @@
             $quizLevel             = $(_quizLevel)
         ;
 
+        //Add a shuffle function to Array object prototype
+        Array.prototype.shuffle = function () {
+            var i = this.length, j, temp;
+            if ( i == 0 ) return;
+            while ( --i ) {
+                j = Math.floor( Math.random() * ( i + 1 ) );
+                temp = this[i];
+                this[i] = this[j];
+                this[j] = temp;
+            }
+            return this;
+        };
 
         // Reassign user-submitted deprecated options
         var depMsg = '';
@@ -156,7 +168,7 @@
 
         // Get questions, possibly sorted randomly
         var questions = plugin.config.randomSortQuestions ?
-                        quizValues.questions.sort(function() { return (Math.round(Math.random())-0.5); }) :
+                        quizValues.questions.shuffle() :
                         quizValues.questions;
 
         // Count the number of questions
@@ -258,7 +270,7 @@
 
                         // Get the answers
                         var answers = plugin.config.randomSortAnswers ?
-                            question.a.sort(function() { return (Math.round(Math.random())-0.5); }) :
+                            question.a.shuffle() :
                             question.a;
 
                         // prepare a name for the answer inputs based on the question
@@ -495,6 +507,14 @@
                     kN(key,1).apply (null, []); // 1st notch on key must be on both sides of if/else, otherwise key won't turn
                     kN(key,2).apply (null, []); // 2nd notch on key must be on both sides of if/else, otherwise key won't turn
                 }
+
+                // -----------------------------------------------------------
+                // start custom -------------------------------------
+                // -----------------------------------------------------------
+                window.diversificationQuiz.recordAnswer(questions[questionIndex], answer);
+                // -----------------------------------------------------------
+                // end custom -------------------------------------
+                // -----------------------------------------------------------
 
                 internal.method.turnKeyAndGo (key, options && options.callback ? options.callback : function () {});
             },
