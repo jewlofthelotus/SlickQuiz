@@ -508,14 +508,6 @@
                     kN(key,2).apply (null, []); // 2nd notch on key must be on both sides of if/else, otherwise key won't turn
                 }
 
-                // -----------------------------------------------------------
-                // start custom -------------------------------------
-                // -----------------------------------------------------------
-                window.diversificationQuiz.recordAnswer(questions[questionIndex], answer);
-                // -----------------------------------------------------------
-                // end custom -------------------------------------
-                // -----------------------------------------------------------
-
                 internal.method.turnKeyAndGo (key, options && options.callback ? options.callback : function () {});
             },
 
