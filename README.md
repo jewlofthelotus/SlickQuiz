@@ -180,4 +180,15 @@ See `js/slickQuiz-config.js`
     }
 
 
+## Adding HTML to Questions and Answers
+
+Standard HTML elements like images, videos embeds, headers, paragraphs, etc., can be used within text values like `q` and `a` options.
+
+    "q": "The Question? <img src='path/to/image.png' />",
+    "a": [
+        {"option": "an <b>incorrect</b> answer", "correct": false},
+        {"option": "a <b>correct</b> answer",    "correct": true},
+    ]
+
+
 Created by [Julie Cameron](http://juliecameron.com) while previously employed at [Quicken Loans](http://quickenloans.com), Detroit, MI
