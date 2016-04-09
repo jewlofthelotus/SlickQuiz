@@ -52,7 +52,8 @@
                 events: {
                     onStartQuiz: function (options) {},
                     onCompleteQuiz: function (options) {}  // reserved: options.questionCount, options.score
-                }
+                },
+                triggerComplete: null
             },
 
             // Class Name Strings (Used for building quiz and for selectors)
@@ -71,6 +72,7 @@
             lastQuestionClass      = 'lastQuestion',
             backToQuestionClass    = 'backToQuestion',
             tryAgainClass          = 'tryAgain',
+            completeQuizClass      = 'completeQuiz',
 
             // Sub-Quiz / Sub-Question Class Selectors
             _questionCount         = '.' + questionCountClass,
@@ -87,6 +89,7 @@
             _nextQuestionBtn       = '.' + nextQuestionClass,
             _prevQuestionBtn       = '.' + backToQuestionClass,
             _tryAgainBtn           = '.' + tryAgainClass,
+            _completeQuizBtn       = '.' + completeQuizClass,
 
             // Top Level Quiz Element Class Selectors
             _quizStarter           = _element + ' .startQuiz',
@@ -717,6 +720,11 @@
                 e.preventDefault();
                 plugin.method.nextQuestion(this, {callback: plugin.config.animationCallbacks.nextQuestion});
             });
+
+            $(_element + ' ' + _completeQuizBtn).on('click', function(e) {
+                e.preventDefault();
+                plugin.method.completeQuiz({callback: plugin.config.animationCallbacks.completeQuiz});
+            })
 
             // Accessibility (WAI-ARIA).
             var _qnid = $element.attr('id') + '-name';
