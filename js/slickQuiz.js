@@ -158,6 +158,10 @@
         var questions = plugin.config.randomSortQuestions ?
                         quizValues.questions.sort(function() { return (Math.round(Math.random())-0.5); }) :
                         quizValues.questions;
+        //var level = $('#difficulty :selected').val();
+        questions = questions.filter(function(q){
+           return q.level == level;
+        });
 
         // Count the number of questions
         var questionCount = questions.length;
@@ -199,6 +203,7 @@
         plugin.method = {
             // Sets up the questions and answers based on above array
             setupQuiz: function(options) { // use 'options' object to pass args
+            
                 var key, keyNotch, kN;
                 key = internal.method.getKey (3); // how many notches == how many jQ animations you will run
                 keyNotch = internal.method.getKeyNotch; // a function that returns a jQ animation callback function
@@ -342,7 +347,7 @@
                 }
 
                 internal.method.turnKeyAndGo (key, options && options.callback ? options.callback : function () {});
-            },
+           },
 
             // Starts the quiz (hides start button and displays first question)
             startQuiz: function(options) {
