@@ -463,6 +463,9 @@
 		$(".quizHeader").append('<div class="warningBox"><p>' + plugin.config.preventUnansweredText + '</p></div>');
                     return false;
                 }
+		 if (plugin.config.preventUnanswered && selectedAnswers.length > 0) {
+		    $(".warningBox").remove();
+		}
 
                 // Verify all/any true answers (and no false ones) were submitted
                 var correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers, selectAny);
