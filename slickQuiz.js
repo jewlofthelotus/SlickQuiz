@@ -458,8 +458,9 @@
                     selectedAnswers.push(parseInt(id.replace(/(.*\_question\d{1,}_)/, ''), 10));
                 });
 
-                if (plugin.config.preventUnanswered && selectedAnswers.length === 0) {
-                    alert(plugin.config.preventUnansweredText);
+               if (plugin.config.preventUnanswered && selectedAnswers.length === 0) {
+                    //alert(plugin.config.preventUnansweredText);
+		$(".quizHeader").append('<div class="warningBox"><p>' + plugin.config.preventUnansweredText + '</p></div>');
                     return false;
                 }
 
