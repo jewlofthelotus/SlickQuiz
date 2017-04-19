@@ -720,6 +720,15 @@
                 e.preventDefault();
                 plugin.method.nextQuestion(this, {callback: plugin.config.animationCallbacks.nextQuestion});
             });
+	    //Add spacebar to include expected behaviour for button elements
+			window.onkeydown = function(e){
+				if(e.which === 32){
+					var spaceB = document.querySelector('a.button:focus');
+					if(spaceB) {
+						spaceB.click();
+					}
+				}
+			};
 
             // Accessibility (WAI-ARIA).
             var _qnid = $element.attr('id') + '-name';
