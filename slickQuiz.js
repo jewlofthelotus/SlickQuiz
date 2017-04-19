@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated October 25, 2014
- * @version 1.5.20
+ * @updated April 19, 2017
+ * @version 1.5.21
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
