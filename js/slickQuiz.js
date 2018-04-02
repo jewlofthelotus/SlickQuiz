@@ -40,6 +40,13 @@
                 completionResponseMessaging: false,
                 displayQuestionCount: true,   // Deprecate?
                 displayQuestionNumber: true,  // Deprecate?
+                levelRanges: {
+                    4: {min: 0.81, max: 1},
+                    3: {min: 0.61, max: 0.8},
+                    2: {min: 0.41, max: 0.6},
+                    1: {min: 0.21, max: 0.4},
+                    0: {min: 0, max: 0.2}
+                },
                 animationCallbacks: { // only for the methods that have jQuery animations offering callback
                     setupQuiz: function () {},
                     startQuiz: function () {},
@@ -609,15 +616,14 @@
                 if (plugin.config.disableRanking) {
                     $(_quizLevel).remove()
                 } else {
-                    var levels    = [
-                                        quizValues.info.level1, // 80-100%
-                                        quizValues.info.level2, // 60-79%
-                                        quizValues.info.level3, // 40-59%
-                                        quizValues.info.level4, // 20-39%
-                                        quizValues.info.level5  // 0-19%
-                                    ],
-                        levelRank = plugin.method.calculateLevel(score),
-                        levelText = $.isNumeric(levelRank) ? levels[levelRank] : '';
+                    var levels = [];
+
+                    $.each(quizValues.info, function(levelNumber, levelText){
+                        levels.push(levelText);
+                    });
+
+                    var levelRank = plugin.method.calculateLevel(score),
+                      levelText = $.isNumeric(levelRank) ? levels[levelRank] : '';
 
                     $(_quizLevel + ' span').html(levelText);
                     $(_quizLevel).addClass('level' + levelRank);
@@ -658,19 +664,14 @@
             // Calculates knowledge level based on number of correct answers
             calculateLevel: function(correctAnswers) {
                 var percent = (correctAnswers / questionCount).toFixed(2),
-                    level   = null;
+                level   = null;
 
-                if (plugin.method.inRange(0, 0.20, percent)) {
-                    level = 4;
-                } else if (plugin.method.inRange(0.21, 0.40, percent)) {
-                    level = 3;
-                } else if (plugin.method.inRange(0.41, 0.60, percent)) {
-                    level = 2;
-                } else if (plugin.method.inRange(0.61, 0.80, percent)) {
-                    level = 1;
-                } else if (plugin.method.inRange(0.81, 1.00, percent)) {
-                    level = 0;
-                }
+                $.each(plugin.method.levelRanges, function(grade, range){
+                    if(plugin.method.inRange(range.min, range.max, percent)){
+                        level = grade;
+                        return;
+                    }
+                });
 
                 return level;
             },
