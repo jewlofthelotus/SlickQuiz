@@ -666,7 +666,7 @@
                 var percent = (correctAnswers / questionCount).toFixed(2),
                 level   = null;
 
-                $.each(plugin.method.levelRanges, function(grade, range){
+                $.each(plugin.config.levelRanges, function(grade, range){
                     if(plugin.method.inRange(range.min, range.max, percent)){
                         level = grade;
                         return;
