@@ -4,69 +4,73 @@
 
 var quizJSON = {
     "info": {
-        "name":    "Test Your Knowledge!!",
-        "main":    "<p>Think you're smart enough to be on Jeopardy? Find out with this super crazy knowledge quiz!</p>",
-        "results": "<h5>Learn More</h5><p>Etiam scelerisque, nunc ac egestas consequat, odio nibh euismod nulla, eget auctor orci nibh vel nisi. Aliquam erat volutpat. Mauris vel neque sit amet nunc gravida congue sed sit amet purus.</p>",
-        "level1":  "Jeopardy Ready",
-        "level2":  "Jeopardy Contender",
-        "level3":  "Jeopardy Amateur",
-        "level4":  "Jeopardy Newb",
-        "level5":  "Stay in school, kid..." // no comma here
+        "name":    "Are you ready to 'laissez les bons temps rouler'?",
+        "main":    "<p>Think you know everything there is to know about Festival International de Louisiane? Find out with this quiz!</p>",
+        "results": "<h5>Interested in learning more?</h5><p>The best way to find out about this celebrated annual festival is to show up for the weekend and have fun with the rest of the people attending from all over the world!</p>",
+        "level1":  "Do you run Festival yourself? You seem to know everything!",
+        "level2":  "Grab your dancing pants before heading out the door! You're a Festival regular!",
+        "level3":  "You know some things, but you'd be better off attending Festival to learn more.",
+        "level4":  "You definitely need to attend a few more years of Festival to study up!",
+        "level5":  "Find yourself a seasoned Festival buddy and get the facts! You just need a decade or so of attendance under your belt." // no comma here
     },
     "questions": [
         { // Question 1 - Multiple Choice, Single True Answer
-            "q": "What number is the letter A in the English alphabet?",
+            "q": "In what year was Festival International first held?",
             "a": [
-                {"option": "8",      "correct": false},
-                {"option": "14",     "correct": false},
-                {"option": "1",      "correct": true},
-                {"option": "23",     "correct": false} // no comma here
+                {"option": "1999",      "correct": false},
+                {"option": "1994",      "correct": false},
+                {"option": "1978",     "correct": false},
+                {"option": "1987",      "correct": true},
+                {"option": "1971",     "correct": false} // no comma here
             ],
-            "correct": "<p><span>That's right!</span> The letter A is the first letter in the alphabet!</p>",
-            "incorrect": "<p><span>Uhh no.</span> It's the first letter of the alphabet. Did you actually <em>go</em> to kindergarden?</p>" // no comma here
+            "correct": "<p><span>That's right!</span> It's a celebrated annual tradition now, but its very first year was in 1987!</p>",
+            "incorrect": "<p><span>Nope!</span> The actual first year it took place was 1987!</p>" // no comma here
         },
         { // Question 2 - Multiple Choice, Multiple True Answers, Select Any
-            "q": "Which of the following best represents your preferred breakfast?",
+            "q": "Which of the following is NOT part of the mission of Festival International?",
             "a": [
-                {"option": "Bacon and eggs",               "correct": false},
-                {"option": "Fruit, oatmeal, and yogurt",   "correct": true},
-                {"option": "Leftover pizza",               "correct": false},
-                {"option": "Eggs, fruit, toast, and milk", "correct": true} // no comma here
+                {"option": "Enrich the community with a celebration of its native cultures through performing arts.",               "correct": false},
+                {"option": "Develop culture and tourism, as well as enhance economic development by expanding Louisiana’s reputation as an arts center and a destination for artistic events.",   "correct": false},
+                {"option": "Educate the public of the historical achievements and artistic expressions of related global cultures while developing an appreciation for the arts.",               "correct": false},
+                {"option": "All of the above", "correct": true} // no comma here
             ],
-            "select_any": true,
-            "correct": "<p><span>Nice!</span> Your cholestoral level is probably doing alright.</p>",
-            "incorrect": "<p><span>Hmmm.</span> You might want to reconsider your options.</p>" // no comma here
+            "correct": "<p><span>Yes!</span> All of these are part of the celebrated mission of Festival International.</p>",
+            "incorrect": "<p><span>Hmmm.</span> You're not wrong. But actually, all three answers are correct!</p>" // no comma here
         },
         { // Question 3 - Multiple Choice, Multiple True Answers, Select All
-            "q": "Where are you right now? Select ALL that apply.",
+            "q": "During which month does Festival typically occur?",
             "a": [
-                {"option": "Planet Earth",           "correct": true},
-                {"option": "Pluto",                  "correct": false},
-                {"option": "At a computing device",  "correct": true},
-                {"option": "The Milky Way",          "correct": true} // no comma here
+                {"option": "September",           "correct": false},
+                {"option": "April",                  "correct": true},
+                {"option": "March",     "correct": false},
+                {"option": "October",          "correct": false} // no comma here
             ],
-            "correct": "<p><span>Brilliant!</span> You're seriously a genius, (wo)man.</p>",
-            "incorrect": "<p><span>Not Quite.</span> You're actually on Planet Earth, in The Milky Way, At a computer. But nice try.</p>" // no comma here
+            "correct": "<p><span>Absolutely correct!</span> You really do pay attention!</p>",
+            "incorrect": "<p><span>Not quite.</span></p>" // no comma here
         },
         { // Question 4
-            "q": "How many inches of rain does Michigan get on average per year?",
+            "q": "How many people typically make the pilgrammage to Lafayette in time for Festival?",
             "a": [
-                {"option": "149",    "correct": false},
-                {"option": "32",     "correct": true},
-                {"option": "3",      "correct": false},
-                {"option": "1291",   "correct": false} // no comma here
+                {"option": "35,000",    "correct": false},
+                {"option": "350",     "correct": false},
+                {"option": "350,000",      "correct": true},
+                {"option": "3.5 million",   "correct": false} // no comma here
             ],
-            "correct": "<p><span>Holy bananas!</span> I didn't actually expect you to know that! Correct!</p>",
-            "incorrect": "<p><span>Fail.</span> Sorry. You lose. It actually rains approximately 32 inches a year in Michigan.</p>" // no comma here
+            "correct": "<p><span>Holy beignets!</span> I didn't actually expect you to know that! Correct!</p>",
+            "incorrect": "<p><span>Not exactly.</span> According to tourism data from the area, roughly 350,000 people make the journey to Festival each year.</p>" // no comma here
         },
         { // Question 5
-            "q": "Is Earth bigger than a basketball?",
+            "q": "Which of the following is NOT a reason people love attending Festival each year?",
             "a": [
-                {"option": "Yes",    "correct": true},
-                {"option": "No",     "correct": false} // no comma here
+                {"option": "Eating the delicious food!",    "correct": false},
+                {"option": "Listening to amazing music!",     "correct": false},
+                {"option": "Looking at fantastic works of art!",    "correct": false},
+                {"option": "Having a great time with other people!",     "correct": false},
+                {"option": "Because attendance for the entire weekend is free!", "correct": false},
+                {"option": "None of the above",    "correct": true}// no comma here
             ],
-            "correct": "<p><span>Good Job!</span> You must be very observant!</p>",
-            "incorrect": "<p><span>ERRRR!</span> What planet Earth are <em>you</em> living on?!?</p>" // no comma here
+            "correct": "<p><span>Yes!</span> ALL of these are frequently cited reasons people look forward to Festival every year!</p>",
+            "incorrect": "<p><span>Well...</span> People actually do attend for that reason. And all of the others, too!</p>" // no comma here
         } // no comma here
     ]
 };

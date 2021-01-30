@@ -6,15 +6,15 @@ html {
 }
 
 body {
-    width: 800px;
+    width: 70%;
     margin: 0 auto;
-    border: 2px solid #ccc;
+    border: 1px solid #ccc;
     border-top: none;
     background: #fff;
-    padding: 20px;
-    font-family: Trebuchet, Arial,Helvetica,sans-serif;
-    font-size: 16px;
-    color: #353535;
+    padding: 30px;
+    font-family: 'Raleway', 'Calibri', 'Gotham', Helvetica, sans-serif;
+    font-size: 18px;
+    color: #262626;
     line-height: 1.5em;
 }
 
@@ -23,7 +23,7 @@ h1,h2,h3,h4,h5,h6 {font-weight: bold;}
 h1 {
     font-size: 26px;
     margin: 0 0 20px;
-    color: #0C4569;
+    color:#000000;
 }
 h2 {
     font-size: 22px;
@@ -57,7 +57,7 @@ ol li { list-style-type: decimal; margin-left: 20px; }
     width: auto;
     padding: 5px 15px;
     color:#ffffff;
-    background-color:darkcyan;
+    background-color:#2eb0ef;
     border: 1px solid #fff;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -65,11 +65,11 @@ ol li { list-style-type: decimal; margin-left: 20px; }
 	text-decoration: none;
 }
 .button:hover {
-    background-color:darkslategray;
+    background-color:#0082c9;
 }
 
 .startQuiz {
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 .tryAgain {
